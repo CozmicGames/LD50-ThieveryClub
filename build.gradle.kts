@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
     implementation("com.gratedgames:Kore:0.1.0")
+    implementation("com.github.czyzby:noise4j:0.1.0")
 }
 
 tasks.withType<KotlinCompile> {

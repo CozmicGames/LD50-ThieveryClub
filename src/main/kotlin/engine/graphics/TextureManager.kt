@@ -10,14 +10,20 @@ import com.gratedgames.log
 import com.gratedgames.utils.Disposable
 import com.gratedgames.utils.extensions.extension
 import com.gratedgames.utils.use
+import engine.Game
 import kotlin.reflect.KProperty
 
 class TextureManager : Disposable {
-    inner class Getter(val file: String, val filter: Texture.Filter) {
-        operator fun getValue(thisRef: Any, property: KProperty<*>) = getOrAdd(file, filter)
+    inner class Getter(private val file: String, filter: Texture.Filter) {
+        init {
+            if (file !in this@TextureManager)
+                add(file, filter)
+        }
+
+        operator fun getValue(thisRef: Any, property: KProperty<*>) = get(file) ?: Game.graphics2d.missingTexture.asRegion()
     }
 
-    private data class TextureKey(val filter: Texture.Filter)
+    data class TextureKey(val filter: Texture.Filter)
 
     private val textures = hashMapOf<TextureKey, TextureAtlas>()
     private val keys = hashMapOf<String, TextureKey>()
@@ -67,7 +73,7 @@ class TextureManager : Disposable {
         return requireNotNull(this[file])
     }
 
-    private fun getAtlas(key: TextureKey): TextureAtlas {
+    fun getAtlas(key: TextureKey): TextureAtlas {
         return textures.getOrPut(key) {
             TextureAtlas().also {
                 it.texture.setFilter(key.filter, key.filter)

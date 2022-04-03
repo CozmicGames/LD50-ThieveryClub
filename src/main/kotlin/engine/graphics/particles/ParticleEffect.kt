@@ -6,6 +6,7 @@ import engine.Game
 import engine.graphics.Renderer
 import engine.graphics.asRegion
 import engine.graphics.particles.data.*
+import engine.graphics.shaders.ParticleShader
 import kotlin.math.floor
 import kotlin.math.min
 
@@ -103,11 +104,13 @@ class ParticleEffect(maxParticles: Int, var emitRate: Float) {
         val textures = data.getArrayOrNull<TextureData>()
         val colors = data.getArrayOrNull<ColorData>()
 
-        repeat(data.numberOfAlive) {
-            val angle = angles?.get(it)?.angle ?: 0.0f
-            val color = colors?.get(it)?.color ?: Color.WHITE
-            val texture = textures?.get(it)?.region ?: Game.graphics2d.blankTexture.asRegion()
-            renderer.draw(texture, positions[it].x, positions[it].y, sizes[it].size, sizes[it].size, color, toRadians(angle))
+        renderer.withShader(ParticleShader) {
+            repeat(data.numberOfAlive) {
+                val angle = angles?.get(it)?.angle ?: 0.0f
+                val color = colors?.get(it)?.color ?: Color.WHITE
+                val texture = textures?.get(it)?.region ?: Game.graphics2d.blankTexture.asRegion()
+                renderer.draw(texture, positions[it].x, positions[it].y, sizes[it].size, sizes[it].size, color, toRadians(angle))
+            }
         }
     }
 }

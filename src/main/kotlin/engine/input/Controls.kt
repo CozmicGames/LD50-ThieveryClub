@@ -9,10 +9,9 @@ import com.gratedgames.utils.Updateable
 class Controls : Updateable, Disposable {
     private class Action : InputListener, Disposable {
         val state get() = value > 0.0f
-        val isTriggered get() = state && value != lastValue
 
         var value = 0.0f
-        var lastValue = 0.0f
+        var trigger = false
 
         val keys = hashSetOf<Key>()
         val mouseButtons = hashSetOf<MouseButton>()
@@ -24,7 +23,7 @@ class Controls : Updateable, Disposable {
         }
 
         fun update() {
-            lastValue = value
+            trigger = keys.any { Kore.input.isKeyJustDown(it) } || mouseButtons.any { Kore.input.isButtonJustDown(it) }
 
             if (isDeltaX)
                 value = Kore.input.deltaX.toFloat()
@@ -63,7 +62,7 @@ class Controls : Updateable, Disposable {
     }
 
     fun getTrigger(name: String): Boolean {
-        return actions[name]?.isTriggered ?: false
+        return actions[name]?.trigger ?: false
     }
 
     fun getValue(name: String): Float {

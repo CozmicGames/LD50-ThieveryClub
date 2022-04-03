@@ -78,7 +78,7 @@ class Canvas(width: Int = Kore.graphics.safeWidth, height: Int = Kore.graphics.s
         components.forEach {
             it.update(delta)
 
-            if (it.rectangle in camera.rectangle)
+            if (it.rectangle intersects camera.rectangle)
                 it.render(delta, renderer)
         }
 

@@ -18,6 +18,12 @@ class Graphics2D : Disposable {
         }
     }
 
+    val missingTexture = Kore.graphics.createTexture2D(Texture.Format.RGBA8_UNORM) {
+        Memory.of(0x000000FF, 0xFF00FFFF, 0xFF00FFFF, 0x000000FF).use {
+            setImage(1, 1, it, Texture.Format.RGBA8_UNORM)
+        }
+    }
+
     val defaultCamera = OrthographicCamera(Kore.graphics.safeWidth, Kore.graphics.safeHeight)
 
     private val resizeListener = { width: Int, height: Int ->
@@ -33,5 +39,7 @@ class Graphics2D : Disposable {
 
     override fun dispose() {
         Kore.removeResizeListener(resizeListener)
+        blankTexture.dispose()
+        missingTexture.dispose()
     }
 }

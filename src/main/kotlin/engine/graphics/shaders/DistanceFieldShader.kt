@@ -2,6 +2,9 @@ package engine.graphics.shaders
 
 object DistanceFieldShader : Shader(
     """
+    #section state
+    blend add source_alpha one_minus_source_alpha
+    
     #section uniforms
     float uDistanceFieldSmoothing
     

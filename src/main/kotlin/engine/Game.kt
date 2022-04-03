@@ -5,9 +5,12 @@ import com.gratedgames.Kore
 import com.gratedgames.utils.injector
 import engine.physics.Physics
 import engine.audio.SoundManager
+import engine.graphics.Canvas
 import engine.graphics.Graphics2D
+import engine.graphics.Renderer
 import engine.graphics.TextureManager
 import engine.input.Controls
+import engine.utils.Rumble
 import game.InitialGameState
 
 object Game : Application {
@@ -16,6 +19,9 @@ object Game : Application {
     val controls by Kore.context.injector(true) { Controls() }
     val graphics2d by Kore.context.injector(true) { Graphics2D() }
     val physics by Kore.context.injector(true) { Physics() }
+    val renderer by Kore.context.injector(true) { Renderer() }
+    val canvas by Kore.context.injector(true) { Canvas(renderer = renderer) }
+    val rumble by Kore.context.injector(true) { Rumble() }
 
     private lateinit var currentState: GameState
 

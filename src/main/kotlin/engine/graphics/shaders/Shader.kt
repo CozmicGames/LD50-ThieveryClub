@@ -33,9 +33,6 @@ open class Shader(source: String) {
             """
             $source
                 
-            #section state
-            blend add source_alpha one_minus_source_alpha
-            
             #section layout
             vec2 position
             vec2 texcoord

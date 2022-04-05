@@ -1,7 +1,7 @@
 package engine.physics
 
-import com.gratedgames.utils.Updateable
-import com.gratedgames.utils.maths.*
+import com.cozmicgames.utils.Updateable
+import com.cozmicgames.utils.maths.*
 import kotlin.math.*
 
 class Physics : Updateable {

@@ -1,16 +1,16 @@
 package engine.graphics.ui.immediate
 
-import com.gratedgames.Kore
-import com.gratedgames.graphics
-import com.gratedgames.graphics.safeHeight
-import com.gratedgames.graphics.safeWidth
-import com.gratedgames.input
-import com.gratedgames.input.CharListener
-import com.gratedgames.input.KeyListener
-import com.gratedgames.utils.Color
-import com.gratedgames.utils.Disposable
-import com.gratedgames.utils.extensions.clamp
-import com.gratedgames.utils.maths.*
+import com.cozmicgames.Kore
+import com.cozmicgames.graphics
+import com.cozmicgames.graphics.safeHeight
+import com.cozmicgames.graphics.safeWidth
+import com.cozmicgames.input
+import com.cozmicgames.input.CharListener
+import com.cozmicgames.input.KeyListener
+import com.cozmicgames.utils.Color
+import com.cozmicgames.utils.Disposable
+import com.cozmicgames.utils.extensions.clamp
+import com.cozmicgames.utils.maths.*
 import engine.graphics.Renderer
 import engine.graphics.TextureRegion
 import engine.graphics.font.BitmapFont

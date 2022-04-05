@@ -1,9 +1,9 @@
 package engine.graphics.font
 
-import com.gratedgames.graphics.Image
-import com.gratedgames.utils.Color
-import com.gratedgames.utils.collections.Array2D
-import com.gratedgames.utils.maths.distanceSquared
+import com.cozmicgames.graphics.Image
+import com.cozmicgames.utils.Color
+import com.cozmicgames.utils.collections.Array2D
+import com.cozmicgames.utils.maths.distanceSquared
 import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.min

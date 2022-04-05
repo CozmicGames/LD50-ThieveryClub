@@ -1,7 +1,7 @@
 package engine.graphics
 
-import com.gratedgames.input.Key
-import com.gratedgames.utils.maths.Rectangle
+import com.cozmicgames.input.Key
+import com.cozmicgames.utils.maths.Rectangle
 
 interface Component {
     val rectangle: Rectangle

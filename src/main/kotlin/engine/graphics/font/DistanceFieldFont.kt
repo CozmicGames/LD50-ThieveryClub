@@ -1,15 +1,15 @@
 package engine.graphics.font
 
-import com.gratedgames.graphics.Font
-import com.gratedgames.graphics.Image
+import com.cozmicgames.graphics.Font
+import com.cozmicgames.graphics.Image
 import engine.graphics.font.DrawableFont.Companion.defaultChars
-import com.gratedgames.graphics.gpu.Texture
-import com.gratedgames.graphics.gpu.Texture2D
+import com.cozmicgames.graphics.gpu.Texture
+import com.cozmicgames.graphics.gpu.Texture2D
 import engine.graphics.shaders.DistanceFieldShader
-import com.gratedgames.graphics.toTexture2D
-import com.gratedgames.utils.Color
-import com.gratedgames.utils.Disposable
-import com.gratedgames.utils.rectpack.RectPacker
+import com.cozmicgames.graphics.toTexture2D
+import com.cozmicgames.utils.Color
+import com.cozmicgames.utils.Disposable
+import com.cozmicgames.utils.rectpack.RectPacker
 
 class DistanceFieldFont(val font: Font, override val drawableCharacters: String = defaultChars(), padding: Int = 4, spread: Float = 1.0f, downscale: Int = 1, color: Color = Color.WHITE) : DrawableFont, Disposable {
     override val size = font.size.toFloat()

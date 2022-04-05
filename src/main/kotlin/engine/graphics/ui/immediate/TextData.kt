@@ -1,10 +1,10 @@
 package engine.graphics.ui.immediate
 
-import com.gratedgames.Kore
-import com.gratedgames.input
-import com.gratedgames.input.Key
-import com.gratedgames.input.Keys
-import com.gratedgames.utils.extensions.clamp
+import com.cozmicgames.Kore
+import com.cozmicgames.input
+import com.cozmicgames.input.Key
+import com.cozmicgames.input.Keys
+import com.cozmicgames.utils.extensions.clamp
 import kotlin.math.max
 import kotlin.math.min
 

@@ -1,14 +1,14 @@
 package engine.graphics.ui.immediate
 
-import com.gratedgames.Kore
-import com.gratedgames.graphics
-import com.gratedgames.graphics.gpu.ScissorRect
-import com.gratedgames.graphics.gpu.Texture2D
-import com.gratedgames.utils.Color
-import com.gratedgames.utils.concurrency.Lock
-import com.gratedgames.utils.maths.Corners
-import com.gratedgames.utils.maths.Vector2
-import com.gratedgames.utils.maths.VectorPath
+import com.cozmicgames.Kore
+import com.cozmicgames.graphics
+import com.cozmicgames.graphics.gpu.ScissorRect
+import com.cozmicgames.graphics.gpu.Texture2D
+import com.cozmicgames.utils.Color
+import com.cozmicgames.utils.concurrency.Lock
+import com.cozmicgames.utils.maths.Corners
+import com.cozmicgames.utils.maths.Vector2
+import com.cozmicgames.utils.maths.VectorPath
 import engine.graphics.TextureRegion
 import engine.graphics.drawRect
 import engine.graphics.font.GlyphLayout

@@ -1,7 +1,7 @@
 package engine.graphics.sprite
 
-import com.gratedgames.Kore
-import com.gratedgames.log
+import com.cozmicgames.Kore
+import com.cozmicgames.log
 import engine.graphics.Drawable
 import engine.graphics.Ninepatch
 import engine.utils.Transform

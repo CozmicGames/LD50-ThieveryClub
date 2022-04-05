@@ -1,9 +1,9 @@
 package engine.render
 
-import com.gratedgames.Kore
-import com.gratedgames.graphics
-import com.gratedgames.utils.Color
-import com.gratedgames.utils.Disposable
+import com.cozmicgames.Kore
+import com.cozmicgames.graphics
+import com.cozmicgames.utils.Color
+import com.cozmicgames.utils.Disposable
 
 class RenderGraph(presentRenderFunction: RenderFunction) : Disposable {
     sealed class Node(val pass: RenderPass, val renderFunction: RenderFunction) : Disposable {

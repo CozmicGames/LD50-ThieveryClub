@@ -1,12 +1,12 @@
 package engine.graphics
 
-import com.gratedgames.Kore
-import com.gratedgames.graphics
-import com.gratedgames.graphics.Image
-import com.gratedgames.graphics.gpu.Texture
-import com.gratedgames.graphics.setImage
-import com.gratedgames.utils.Disposable
-import com.gratedgames.utils.rectpack.RectPacker
+import com.cozmicgames.Kore
+import com.cozmicgames.graphics
+import com.cozmicgames.graphics.Image
+import com.cozmicgames.graphics.gpu.Texture
+import com.cozmicgames.graphics.setImage
+import com.cozmicgames.utils.Disposable
+import com.cozmicgames.utils.rectpack.RectPacker
 
 class TextureAtlas(format: Texture.Format = Texture.Format.RGBA8_UNORM) : Disposable {
     val texture = Kore.graphics.createTexture2D(format)

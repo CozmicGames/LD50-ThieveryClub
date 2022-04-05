@@ -1,7 +1,7 @@
 package game.utils
 
-import com.gratedgames.utils.Color
-import com.gratedgames.utils.maths.Vector2
+import com.cozmicgames.utils.Color
+import com.cozmicgames.utils.maths.Vector2
 import engine.graphics.particles.ParticleEffect
 import engine.graphics.particles.generators.ColorGenerator
 import engine.graphics.particles.generators.RandomVelocityGenerator

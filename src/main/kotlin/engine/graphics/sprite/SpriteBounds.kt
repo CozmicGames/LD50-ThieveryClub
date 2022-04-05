@@ -1,7 +1,7 @@
 package engine.graphics.sprite
 
-import com.gratedgames.utils.maths.Rectangle
-import com.gratedgames.utils.maths.VectorPath
+import com.cozmicgames.utils.maths.Rectangle
+import com.cozmicgames.utils.maths.VectorPath
 
 class SpriteBounds {
     val path = VectorPath()

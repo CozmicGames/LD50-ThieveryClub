@@ -1,41 +1,64 @@
 package game.levels
 
-import com.gratedgames.utils.Disposable
+import com.cozmicgames.utils.Disposable
+import com.cozmicgames.utils.Properties
 import engine.Game
 import engine.graphics.sprite.StaticSprite
 import engine.physics.AxisAlignedRectangleShape
 import engine.physics.Body
 import engine.utils.Transform
 
-abstract class Tile(x: Int, y: Int, textureName: String, isSolid: Boolean) : Disposable {
-    val texture by Game.textures(textureName)
-    val transform = Transform()
-    val sprite = StaticSprite(texture, transform)
-    val body: Body?
+abstract class Tile(textureName: String, val isSolid: Boolean) : Disposable {
+    private val texture by Game.textures(textureName)
+    private val transform = Transform()
+    private val sprite = StaticSprite(texture, transform)
+    private var body: Body? = null
 
-    init {
+    lateinit var level: Level
+
+    var x = 0
+        private set
+
+    var y = 0
+        private set
+
+    val left: Tile? get() = level.getTile(x - 1, y)
+    val right: Tile? get() = level.getTile(x + 1, y)
+    val top: Tile? get() = level.getTile(x, y - 1)
+    val bottom: Tile? get() = level.getTile(x, y + 1)
+
+    internal fun initialize(x: Int, y: Int, level: Level) {
+        this.level = level
+        this.x = x
+        this.y = y
+
         transform.x = x * Level.TILE_SIZE
         transform.y = y * Level.TILE_SIZE
         transform.scaleX = Level.TILE_SIZE
         transform.scaleY = Level.TILE_SIZE
 
         if (isSolid) {
-            body = Body(transform)
+            val body = Body(transform)
             body.setShape(AxisAlignedRectangleShape())
             body.setStatic()
             Game.physics.addBody(body)
-        } else
-            body = null
+            this.body = body
+        }
 
         Game.canvas.addComponent(sprite)
     }
 
     open fun update(delta: Float) {}
 
+    open fun write(properties: Properties) {}
+
+    open fun read(properties: Properties) {}
+
     override fun dispose() {
         Game.canvas.removeComponent(sprite)
 
-        if (body != null)
-            Game.physics.removeBody(body)
+        body?.let {
+            Game.physics.removeBody(it)
+        }
     }
 }

@@ -1,10 +1,10 @@
 package engine.graphics.ui.immediate
 
-import com.gratedgames.Kore
-import com.gratedgames.input
-import com.gratedgames.utils.Color
-import com.gratedgames.utils.maths.Corners
-import com.gratedgames.utils.maths.Rectangle
+import com.cozmicgames.Kore
+import com.cozmicgames.input
+import com.cozmicgames.utils.Color
+import com.cozmicgames.utils.maths.Corners
+import com.cozmicgames.utils.maths.Rectangle
 import engine.graphics.font.GlyphLayout
 import kotlin.math.max
 

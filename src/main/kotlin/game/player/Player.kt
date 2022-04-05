@@ -1,6 +1,6 @@
 package game.player
 
-import com.gratedgames.utils.Disposable
+import com.cozmicgames.utils.Disposable
 import engine.Game
 import engine.graphics.sprite.StaticSprite
 import engine.physics.AxisAlignedRectangleShape
@@ -16,6 +16,9 @@ class Player(x: Float, y: Float) : Disposable {
     private val body = Body(transform)
     private val controller = PlatformerController(body)
 
+    var isFacingRight = true
+        private set
+
     init {
         transform.x = x
         transform.y = y
@@ -26,7 +29,6 @@ class Player(x: Float, y: Float) : Disposable {
         body.calculateMassAndInertia()
         body.restitution = 0.0f
         Game.physics.addBody(body)
-
         Game.canvas.addComponent(sprite)
     }
 
@@ -36,6 +38,11 @@ class Player(x: Float, y: Float) : Disposable {
         movement -= Game.controls.getValue("move_left")
         val jump = Game.controls.getTrigger("move_jump")
         val crouch = Game.controls.getState("move_crouch")
+
+        if (movement != 0.0f)
+            isFacingRight = movement > 0.0f
+
+        sprite.isFlippedX = !isFacingRight
 
         controller.move(movement, crouch, jump, delta)
         controller.update()

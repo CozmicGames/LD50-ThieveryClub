@@ -1,6 +1,6 @@
 package engine
 
-import com.gratedgames.*
+import com.cozmicgames.*
 
 private const val CONFIG_FILE = "config.txt"
 

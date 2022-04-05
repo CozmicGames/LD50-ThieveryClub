@@ -1,6 +1,6 @@
 package engine.graphics.ui.constrained
 
-import com.gratedgames.utils.maths.Rectangle
+import com.cozmicgames.utils.maths.Rectangle
 
 abstract class Constraint {
     internal enum class Type {

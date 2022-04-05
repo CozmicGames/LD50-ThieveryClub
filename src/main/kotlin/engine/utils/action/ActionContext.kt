@@ -1,7 +1,7 @@
 package engine.utils.action
 
-import com.gratedgames.utils.Disposable
-import com.gratedgames.utils.Time
+import com.cozmicgames.utils.Disposable
+import com.cozmicgames.utils.Time
 import kotlin.concurrent.thread
 
 class ActionContext() : Disposable {

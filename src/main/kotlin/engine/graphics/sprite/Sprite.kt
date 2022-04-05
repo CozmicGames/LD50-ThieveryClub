@@ -3,7 +3,7 @@ package engine.graphics.sprite
 import engine.graphics.Drawable
 import engine.graphics.Renderer
 import engine.graphics.TextureRegion
-import com.gratedgames.utils.Color
+import com.cozmicgames.utils.Color
 import engine.graphics.Component
 import engine.graphics.shaders.DefaultShader
 import engine.graphics.shaders.Shader
@@ -12,6 +12,9 @@ import engine.utils.Transform
 abstract class Sprite(val transform: Transform) : Drawable, Component {
     val color = Color.WHITE.copy()
     val bounds = SpriteBounds()
+
+    var isFlippedX = false
+    var isFlippedY = false
 
     protected var isDirty = true
 
@@ -35,6 +38,10 @@ abstract class Sprite(val transform: Transform) : Drawable, Component {
     }
 
     override fun render(delta: Float, renderer: Renderer) {
-        renderer.draw(this)
+        renderer.withFlippedX(isFlippedX) {
+            renderer.withFlippedY(isFlippedY) {
+                renderer.draw(this)
+            }
+        }
     }
 }

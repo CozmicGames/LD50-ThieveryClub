@@ -1,11 +1,11 @@
 package engine.audio
 
-import com.gratedgames.*
-import com.gratedgames.audio.Sound
-import com.gratedgames.files.Files
-import com.gratedgames.utils.Disposable
-import com.gratedgames.utils.extensions.extension
-import com.gratedgames.utils.use
+import com.cozmicgames.*
+import com.cozmicgames.audio.Sound
+import com.cozmicgames.files.Files
+import com.cozmicgames.utils.Disposable
+import com.cozmicgames.utils.extensions.extension
+import com.cozmicgames.utils.use
 import kotlin.reflect.KProperty
 
 class SoundManager : Disposable {

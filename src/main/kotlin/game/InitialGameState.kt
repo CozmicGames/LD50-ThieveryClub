@@ -1,9 +1,12 @@
 package game
 
-import com.gratedgames.Kore
-import com.gratedgames.graphics
-import com.gratedgames.input.Keys
-import com.gratedgames.utils.Color
+import com.cozmicgames.Kore
+import com.cozmicgames.files
+import com.cozmicgames.graphics
+import com.cozmicgames.input.Keys
+import com.cozmicgames.utils.Color
+import com.cozmicgames.utils.Properties
+import com.cozmicgames.utils.use
 import engine.Game
 import engine.GameState
 import game.levels.Level
@@ -15,7 +18,8 @@ class InitialGameState : GameState {
     lateinit var player: Player
 
     override fun onCreate() {
-        level = Level(50, 10, TestGenerator())
+        level = Level()
+        level.generate(50, 10, TestGenerator())
         player = Player(300.0f, 300.0f)
 
         Game.controls.setActionKeyInput("move_right", Keys.KEY_D)

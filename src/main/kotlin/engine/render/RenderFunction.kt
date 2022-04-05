@@ -1,6 +1,6 @@
 package engine.render
 
-import com.gratedgames.graphics.gpu.Texture2D
+import com.cozmicgames.graphics.gpu.Texture2D
 
 abstract class RenderFunction {
     sealed class Dependency(val getNode: () -> RenderGraph.Node) {

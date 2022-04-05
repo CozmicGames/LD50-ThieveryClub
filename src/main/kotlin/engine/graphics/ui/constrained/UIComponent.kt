@@ -1,13 +1,13 @@
 package engine.graphics.ui.constrained
 
-import com.gratedgames.Kore
-import com.gratedgames.graphics
-import com.gratedgames.input.Key
-import com.gratedgames.utils.Disposable
-import com.gratedgames.utils.events.EventContext
-import com.gratedgames.utils.events.EventListener
-import com.gratedgames.utils.maths.Rectangle
-import com.gratedgames.utils.maths.Vector2
+import com.cozmicgames.Kore
+import com.cozmicgames.graphics
+import com.cozmicgames.input.Key
+import com.cozmicgames.utils.Disposable
+import com.cozmicgames.utils.events.EventContext
+import com.cozmicgames.utils.events.EventListener
+import com.cozmicgames.utils.maths.Rectangle
+import com.cozmicgames.utils.maths.Vector2
 import engine.graphics.Canvas
 import engine.graphics.ui.constrained.transitions.Animator
 import engine.graphics.ui.constrained.transitions.Transition

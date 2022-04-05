@@ -1,17 +1,17 @@
 package engine.physics
 
-import com.gratedgames.Kore
-import com.gratedgames.utils.events.EventContext
-import com.gratedgames.utils.maths.Vector2
-import com.gratedgames.utils.maths.smoothDamp
+import com.cozmicgames.Kore
+import com.cozmicgames.utils.events.EventContext
+import com.cozmicgames.utils.maths.Vector2
+import com.cozmicgames.utils.maths.smoothDamp
 import engine.Game
 
 class PlatformerController(var body: Body) {
     class LandedEvent(val body: Body)
 
-    var jumpForce = 50.0f
+    var jumpForce = 100.0f
     var crouchSpeedFactor = 0.5f
-    var movementSpeed = 200.0f
+    var movementSpeed = 100.0f
     var movementSmoothing = 0.05f
     var doAllowAirControl = false
     var airControlSpeedFactor = 0.5f

@@ -1,7 +1,7 @@
 package engine.graphics.ui.immediate
 
-import com.gratedgames.utils.Disposable
-import com.gratedgames.utils.maths.VectorPath
+import com.cozmicgames.utils.Disposable
+import com.cozmicgames.utils.maths.VectorPath
 import engine.graphics.Renderer
 
 class ImmediateUIContext(val renderer: Renderer, private val ownsRenderer: Boolean) : Disposable {

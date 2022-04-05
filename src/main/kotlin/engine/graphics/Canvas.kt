@@ -1,14 +1,14 @@
 package engine.graphics
 
-import com.gratedgames.Kore
-import com.gratedgames.graphics
-import com.gratedgames.graphics.safeHeight
-import com.gratedgames.graphics.safeWidth
-import com.gratedgames.input
-import com.gratedgames.input.Key
-import com.gratedgames.utils.Disposable
-import com.gratedgames.utils.maths.OrthographicCamera
-import com.gratedgames.utils.maths.Vector2
+import com.cozmicgames.Kore
+import com.cozmicgames.graphics
+import com.cozmicgames.graphics.safeHeight
+import com.cozmicgames.graphics.safeWidth
+import com.cozmicgames.input
+import com.cozmicgames.input.Key
+import com.cozmicgames.utils.Disposable
+import com.cozmicgames.utils.maths.OrthographicCamera
+import com.cozmicgames.utils.maths.Vector2
 
 class Canvas(width: Int = Kore.graphics.safeWidth, height: Int = Kore.graphics.safeHeight, val renderer: Renderer = Renderer()) : Disposable {
     var width = width

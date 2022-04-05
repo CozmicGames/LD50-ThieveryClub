@@ -1,16 +1,16 @@
 package engine.graphics
 
 import engine.graphics.font.GlyphLayout
-import com.gratedgames.graphics.gpu.GraphicsBuffer
-import com.gratedgames.memory.IntBuffer
-import com.gratedgames.memory.Struct
-import com.gratedgames.memory.StructBuffer
-import com.gratedgames.memory.clear
-import com.gratedgames.utils.Color
-import com.gratedgames.utils.Disposable
-import com.gratedgames.utils.maths.Matrix3x2
-import com.gratedgames.utils.maths.Vector2
-import com.gratedgames.utils.maths.VectorPath
+import com.cozmicgames.graphics.gpu.GraphicsBuffer
+import com.cozmicgames.memory.IntBuffer
+import com.cozmicgames.memory.Struct
+import com.cozmicgames.memory.StructBuffer
+import com.cozmicgames.memory.clear
+import com.cozmicgames.utils.Color
+import com.cozmicgames.utils.Disposable
+import com.cozmicgames.utils.maths.Matrix3x2
+import com.cozmicgames.utils.maths.Vector2
+import com.cozmicgames.utils.maths.VectorPath
 import engine.graphics.sprite.Sprite
 import kotlin.math.*
 

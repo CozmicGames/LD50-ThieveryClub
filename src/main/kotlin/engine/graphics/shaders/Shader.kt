@@ -1,12 +1,12 @@
 package engine.graphics.shaders
 
-import com.gratedgames.Kore
-import com.gratedgames.files
-import com.gratedgames.files.Files
-import com.gratedgames.files.readToString
-import com.gratedgames.graphics.gpu.VertexLayout
-import com.gratedgames.graphics.gpu.pipeline.PipelineDefinition
-import com.gratedgames.utils.extensions.removeComments
+import com.cozmicgames.Kore
+import com.cozmicgames.files
+import com.cozmicgames.files.Files
+import com.cozmicgames.files.readToString
+import com.cozmicgames.graphics.gpu.VertexLayout
+import com.cozmicgames.graphics.gpu.pipeline.PipelineDefinition
+import com.cozmicgames.utils.extensions.removeComments
 
 open class Shader(source: String) {
     companion object {

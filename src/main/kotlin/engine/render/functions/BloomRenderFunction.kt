@@ -1,14 +1,14 @@
 package engine.render.functions
 
-import com.gratedgames.Kore
-import com.gratedgames.graphics
-import com.gratedgames.graphics.Primitive
-import com.gratedgames.graphics.gpu.getFloatUniform
-import com.gratedgames.graphics.gpu.getTexture2DUniform
-import com.gratedgames.graphics.gpu.pipeline.PipelineDefinition
-import com.gratedgames.graphics.gpu.update
-import com.gratedgames.utils.Color
-import com.gratedgames.utils.Disposable
+import com.cozmicgames.Kore
+import com.cozmicgames.graphics
+import com.cozmicgames.graphics.Primitive
+import com.cozmicgames.graphics.gpu.getFloatUniform
+import com.cozmicgames.graphics.gpu.getTexture2DUniform
+import com.cozmicgames.graphics.gpu.pipeline.PipelineDefinition
+import com.cozmicgames.graphics.gpu.update
+import com.cozmicgames.utils.Color
+import com.cozmicgames.utils.Disposable
 import engine.render.RenderFunction
 import engine.render.colorRenderTargetDependency
 

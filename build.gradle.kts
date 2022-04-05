@@ -4,7 +4,7 @@ plugins {
     kotlin("jvm") version "1.6.10-RC"
 }
 
-group = "com.gratedgames"
+group = "com.cozmicgames"
 version = "0.0.1"
 
 repositories {
@@ -13,7 +13,8 @@ repositories {
 }
 
 dependencies {
-    implementation("com.gratedgames:Kore:0.1.0")
+    implementation(kotlin("reflect"))
+    implementation("com.cozmicgames:Kore:0.1.0")
     implementation("com.github.czyzby:noise4j:0.1.0")
 }
 

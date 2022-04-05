@@ -1,8 +1,8 @@
 package engine.graphics.ui.constrained
 
-import com.gratedgames.Kore
-import com.gratedgames.graphics
-import com.gratedgames.utils.Color
+import com.cozmicgames.Kore
+import com.cozmicgames.graphics
+import com.cozmicgames.utils.Color
 import engine.graphics.ui.UIStyle
 import engine.graphics.ui.color
 import engine.graphics.ui.font

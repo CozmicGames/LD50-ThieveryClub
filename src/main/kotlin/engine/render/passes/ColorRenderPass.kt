@@ -1,6 +1,6 @@
 package engine.render.passes
 
-import com.gratedgames.graphics.gpu.Texture
+import com.cozmicgames.graphics.gpu.Texture
 import engine.render.RenderPass
 import engine.render.standardResolution
 

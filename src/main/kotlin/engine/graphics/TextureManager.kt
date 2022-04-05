@@ -1,15 +1,15 @@
 package engine.graphics
 
-import com.gratedgames.Kore
-import com.gratedgames.files
-import com.gratedgames.files.Files
-import com.gratedgames.graphics
-import com.gratedgames.graphics.Image
-import com.gratedgames.graphics.gpu.Texture
-import com.gratedgames.log
-import com.gratedgames.utils.Disposable
-import com.gratedgames.utils.extensions.extension
-import com.gratedgames.utils.use
+import com.cozmicgames.Kore
+import com.cozmicgames.files
+import com.cozmicgames.files.Files
+import com.cozmicgames.graphics
+import com.cozmicgames.graphics.Image
+import com.cozmicgames.graphics.gpu.Texture
+import com.cozmicgames.log
+import com.cozmicgames.utils.Disposable
+import com.cozmicgames.utils.extensions.extension
+import com.cozmicgames.utils.use
 import engine.Game
 import kotlin.reflect.KProperty
 

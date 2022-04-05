@@ -1,10 +1,10 @@
 package engine.graphics.ui
 
-import com.gratedgames.utils.Color
-import com.gratedgames.utils.Disposable
-import com.gratedgames.utils.maths.Vector2
-import com.gratedgames.utils.maths.Vector3
-import com.gratedgames.utils.maths.Vector4
+import com.cozmicgames.utils.Color
+import com.cozmicgames.utils.Disposable
+import com.cozmicgames.utils.maths.Vector2
+import com.cozmicgames.utils.maths.Vector3
+import com.cozmicgames.utils.maths.Vector4
 import engine.graphics.font.BitmapFont
 import engine.graphics.font.DrawableFont
 import kotlin.reflect.KProperty

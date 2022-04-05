@@ -1,11 +1,11 @@
 package engine.render
 
-import com.gratedgames.Kore
-import com.gratedgames.graphics
-import com.gratedgames.graphics.gpu.Framebuffer
-import com.gratedgames.graphics.gpu.Texture
-import com.gratedgames.graphics.gpu.Texture2D
-import com.gratedgames.utils.Disposable
+import com.cozmicgames.Kore
+import com.cozmicgames.graphics
+import com.cozmicgames.graphics.gpu.Framebuffer
+import com.cozmicgames.graphics.gpu.Texture
+import com.cozmicgames.graphics.gpu.Texture2D
+import com.cozmicgames.utils.Disposable
 
 open class RenderPass(val resolution: Resolution, block: RenderPass.() -> Unit = {}) : Disposable {
     interface Resolution {

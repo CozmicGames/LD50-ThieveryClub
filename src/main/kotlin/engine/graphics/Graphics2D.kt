@@ -1,15 +1,15 @@
 package engine.graphics
 
-import com.gratedgames.Kore
-import com.gratedgames.graphics
-import com.gratedgames.graphics.gpu.Texture
-import com.gratedgames.graphics.safeHeight
-import com.gratedgames.graphics.safeWidth
-import com.gratedgames.memory.Memory
-import com.gratedgames.memory.of
-import com.gratedgames.utils.Disposable
-import com.gratedgames.utils.maths.OrthographicCamera
-import com.gratedgames.utils.use
+import com.cozmicgames.Kore
+import com.cozmicgames.graphics
+import com.cozmicgames.graphics.gpu.Texture
+import com.cozmicgames.graphics.safeHeight
+import com.cozmicgames.graphics.safeWidth
+import com.cozmicgames.memory.Memory
+import com.cozmicgames.memory.of
+import com.cozmicgames.utils.Disposable
+import com.cozmicgames.utils.maths.OrthographicCamera
+import com.cozmicgames.utils.use
 
 class Graphics2D : Disposable {
     val blankTexture = Kore.graphics.createTexture2D(Texture.Format.RGBA8_UNORM) {

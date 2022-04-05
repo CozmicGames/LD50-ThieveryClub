@@ -1,8 +1,8 @@
 package engine.utils
 
-import com.gratedgames.utils.Properties
-import com.gratedgames.utils.maths.Matrix3x2
-import com.gratedgames.utils.maths.Vector2
+import com.cozmicgames.utils.Properties
+import com.cozmicgames.utils.maths.Matrix3x2
+import com.cozmicgames.utils.maths.Vector2
 
 class Transform(parent: Transform? = null) : Savable {
     private var isDirty = true

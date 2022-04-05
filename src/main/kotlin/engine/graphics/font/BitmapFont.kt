@@ -1,13 +1,13 @@
 package engine.graphics.font
 
-import com.gratedgames.graphics.Font
-import com.gratedgames.graphics.Image
-import com.gratedgames.graphics.gpu.Texture
+import com.cozmicgames.graphics.Font
+import com.cozmicgames.graphics.Image
+import com.cozmicgames.graphics.gpu.Texture
 import engine.graphics.font.DrawableFont.Companion.defaultChars
-import com.gratedgames.graphics.gpu.Texture2D
-import com.gratedgames.graphics.toTexture2D
-import com.gratedgames.utils.Disposable
-import com.gratedgames.utils.rectpack.RectPacker
+import com.cozmicgames.graphics.gpu.Texture2D
+import com.cozmicgames.graphics.toTexture2D
+import com.cozmicgames.utils.Disposable
+import com.cozmicgames.utils.rectpack.RectPacker
 
 class BitmapFont(val font: Font, override val drawableCharacters: String = defaultChars(), padding: Int = 4, val scale: Float = 1.0f) : DrawableFont, Disposable {
     override val size get() = font.size * scale

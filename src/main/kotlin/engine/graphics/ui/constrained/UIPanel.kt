@@ -1,8 +1,8 @@
 package engine.graphics.ui.constrained
 
-import com.gratedgames.utils.Color
-import com.gratedgames.utils.maths.Corners
-import com.gratedgames.utils.maths.VectorPath
+import com.cozmicgames.utils.Color
+import com.cozmicgames.utils.maths.Corners
+import com.cozmicgames.utils.maths.VectorPath
 import engine.graphics.Renderer
 import engine.graphics.ui.*
 

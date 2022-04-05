@@ -1,9 +1,9 @@
 package engine.graphics.ui.immediate
 
-import com.gratedgames.files.ReadStream
-import com.gratedgames.files.WriteStream
-import com.gratedgames.utils.maths.Vector2
-import com.gratedgames.utils.maths.Vector2i
+import com.cozmicgames.files.ReadStream
+import com.cozmicgames.files.WriteStream
+import com.cozmicgames.utils.maths.Vector2
+import com.cozmicgames.utils.maths.Vector2i
 import kotlin.reflect.KProperty
 
 abstract class ImmediateUIState {

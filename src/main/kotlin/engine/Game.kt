@@ -1,8 +1,8 @@
 package engine
 
-import com.gratedgames.Application
-import com.gratedgames.Kore
-import com.gratedgames.utils.injector
+import com.cozmicgames.Application
+import com.cozmicgames.Kore
+import com.cozmicgames.utils.injector
 import engine.physics.Physics
 import engine.audio.SoundManager
 import engine.graphics.Canvas

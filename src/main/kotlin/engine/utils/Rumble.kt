@@ -1,8 +1,8 @@
 package engine.utils
 
-import com.gratedgames.utils.Updateable
-import com.gratedgames.utils.maths.Vector3
-import com.gratedgames.utils.maths.randomFloat
+import com.cozmicgames.utils.Updateable
+import com.cozmicgames.utils.maths.Vector3
+import com.cozmicgames.utils.maths.randomFloat
 
 class Rumble : Updateable {
     private var rumbleTimeLeft = 0.0

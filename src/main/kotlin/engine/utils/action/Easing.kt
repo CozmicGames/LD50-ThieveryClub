@@ -1,6 +1,6 @@
 package engine.utils.action
 
-import com.gratedgames.utils.extensions.clamp
+import com.cozmicgames.utils.extensions.clamp
 
 enum class Easing(private val f: (Float) -> Float) {
     LINEAR({ it }),

@@ -1,15 +1,14 @@
 package engine.graphics.ui.immediate
 
-import com.gratedgames.Kore
-import com.gratedgames.graphics
-import com.gratedgames.graphics.safeHeight
-import com.gratedgames.graphics.safeWidth
-import com.gratedgames.input
-import com.gratedgames.utils.Color
-import com.gratedgames.utils.maths.Corners
-import com.gratedgames.utils.maths.Vector2
-import com.gratedgames.utils.maths.VectorPath
-import de.cozmic.*
+import com.cozmicgames.Kore
+import com.cozmicgames.graphics
+import com.cozmicgames.graphics.safeHeight
+import com.cozmicgames.graphics.safeWidth
+import com.cozmicgames.input
+import com.cozmicgames.utils.Color
+import com.cozmicgames.utils.maths.Corners
+import com.cozmicgames.utils.maths.Vector2
+import com.cozmicgames.utils.maths.VectorPath
 import kotlin.math.ceil
 
 object Gizmos {

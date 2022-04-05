@@ -1,7 +1,7 @@
 package engine.graphics.particles
 
-import com.gratedgames.utils.Color
-import com.gratedgames.utils.maths.toRadians
+import com.cozmicgames.utils.Color
+import com.cozmicgames.utils.maths.toRadians
 import engine.Game
 import engine.graphics.Renderer
 import engine.graphics.asRegion

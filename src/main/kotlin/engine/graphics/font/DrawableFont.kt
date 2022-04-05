@@ -1,6 +1,6 @@
 package engine.graphics.font
 
-import com.gratedgames.graphics.gpu.Texture2D
+import com.cozmicgames.graphics.gpu.Texture2D
 import engine.graphics.shaders.DefaultShader
 import engine.graphics.shaders.Shader
 

@@ -1,26 +1,24 @@
 package game.levels.generators
 
-import com.gratedgames.utils.collections.Array2D
-import com.gratedgames.utils.maths.Vector2i
+import game.levels.Level
 import game.levels.LevelGenerator
-import game.levels.Tile
 import game.levels.tiles.GroundTile
 
 class TestGenerator : LevelGenerator {
-    override fun generate(tiles: Array2D<Tile>, startPoint: Vector2i) {
-        for (x in 0 until tiles.width) {
+    override fun generate(level: Level) {
+        for (x in 0 until level.width) {
             repeat(4) {
-                tiles[x, it] = GroundTile(x, it)
+                level.setTile(x, it, GroundTile())
             }
         }
 
         repeat(5) {
-            tiles[5 + it, 5] = GroundTile(5 + it, 5)
-            tiles[5 + it, 6] = GroundTile(5 + it, 6)
+            level.setTile(it + 5, 5, GroundTile())
+            level.setTile(it + 5, 6, GroundTile())
         }
 
         repeat(5) {
-            tiles[20 + it, 5] = GroundTile(20 + it, 5)
+            level.setTile(it + 20, 5, GroundTile())
         }
     }
 }

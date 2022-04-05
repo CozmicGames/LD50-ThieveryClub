@@ -1,6 +1,6 @@
 package engine.graphics.animation
 
-import com.gratedgames.utils.maths.randomInt
+import com.cozmicgames.utils.maths.randomInt
 import engine.graphics.TextureRegion
 import kotlin.math.max
 import kotlin.math.min

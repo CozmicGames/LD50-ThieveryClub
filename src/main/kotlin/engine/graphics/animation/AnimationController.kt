@@ -1,7 +1,7 @@
 package engine.graphics.animation
 
-import com.gratedgames.Kore
-import com.gratedgames.log
+import com.cozmicgames.Kore
+import com.cozmicgames.log
 
 class AnimationController(private val animations: Map<String, Animation>, currentAnimation: String) {
     var currentAnimation = currentAnimation

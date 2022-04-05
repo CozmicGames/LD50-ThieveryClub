@@ -1,10 +1,10 @@
 package engine.input
 
-import com.gratedgames.Kore
-import com.gratedgames.input
-import com.gratedgames.input.*
-import com.gratedgames.utils.Disposable
-import com.gratedgames.utils.Updateable
+import com.cozmicgames.Kore
+import com.cozmicgames.input
+import com.cozmicgames.input.*
+import com.cozmicgames.utils.Disposable
+import com.cozmicgames.utils.Updateable
 
 class Controls : Updateable, Disposable {
     private class Action : InputListener, Disposable {

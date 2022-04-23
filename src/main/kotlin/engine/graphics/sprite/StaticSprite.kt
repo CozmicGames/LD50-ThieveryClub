@@ -4,7 +4,7 @@ import engine.graphics.Drawable
 import engine.graphics.TextureRegion
 import engine.utils.Transform
 
-class StaticSprite(override val texture: TextureRegion, transform: Transform = Transform()) : Sprite(transform) {
+class StaticSprite(override var texture: TextureRegion, transform: Transform = Transform()) : Sprite(transform) {
     override val vertices = arrayOf(
         Drawable.Vertex(-0.5f, -0.5f, 0.0f, 0.0f),
         Drawable.Vertex(0.5f, -0.5f, 1.0f, 0.0f),

@@ -59,7 +59,7 @@ fun ImmediateUICommandList.drawRect(x: Float, y: Float, width: Float, height: Fl
             roundedRect(x, y, width, height, cornerRounding, roundedCorners)
         else
             rect(x, y, width, height)
-    }, thickness, true, color)
+    }, thickness, true, color, 0.0f)
 }
 
 fun ImmediateUICommandList.drawRectFilled(x: Float, y: Float, width: Float, height: Float, roundedCorners: Int, cornerRounding: Float, color: Color) = addCommand {

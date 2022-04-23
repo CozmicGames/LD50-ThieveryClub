@@ -24,16 +24,16 @@ abstract class Tile(textureName: String, val isSolid: Boolean) : Disposable {
 
     val left: Tile? get() = level.getTile(x - 1, y)
     val right: Tile? get() = level.getTile(x + 1, y)
-    val top: Tile? get() = level.getTile(x, y - 1)
-    val bottom: Tile? get() = level.getTile(x, y + 1)
+    val top: Tile? get() = level.getTile(x, y + 1)
+    val bottom: Tile? get() = level.getTile(x, y - 1)
 
     internal fun initialize(x: Int, y: Int, level: Level) {
         this.level = level
         this.x = x
         this.y = y
 
-        transform.x = x * Level.TILE_SIZE
-        transform.y = y * Level.TILE_SIZE
+        transform.x = x * Level.TILE_SIZE + Level.TILE_SIZE * 0.5f
+        transform.y = y * Level.TILE_SIZE + Level.TILE_SIZE * 0.5f
         transform.scaleX = Level.TILE_SIZE
         transform.scaleY = Level.TILE_SIZE
 

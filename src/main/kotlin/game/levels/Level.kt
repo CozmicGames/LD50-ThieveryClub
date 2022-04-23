@@ -32,10 +32,10 @@ class Level : Disposable {
         return tiles?.get(x, y)
     }
 
-    fun setTile(x: Int, y: Int, tile: Tile) {
+    fun setTile(x: Int, y: Int, tile: Tile?) {
         tiles?.get(x, y)?.dispose()
         tiles?.set(x, y, tile)
-        tile.initialize(x, y, this)
+        tile?.initialize(x, y, this)
     }
 
     fun update(delta: Float) {

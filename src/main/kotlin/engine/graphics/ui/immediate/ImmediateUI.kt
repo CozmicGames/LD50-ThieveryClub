@@ -156,29 +156,30 @@ class ImmediateUI private constructor(private val context: ImmediateUIContext, v
         return list
     }
 
-    fun setLastElement(x: Float, y: Float, width: Float, height: Float): Element {
+    fun setLastElement(x: Float, y: Float, width: Float, height: Float, applyOffset: Boolean = true): Element {
         return setLastElement(if (isSameLine)
             object : Element(x, y, width, height) {
-                override val nextX get() = x + width + style.offsetToNextX
+                override val nextX get() = x + width + if (applyOffset) style.offsetToNextX else 0.0f
                 override val nextY get() = y
             }
         else
             object : Element(x, y, width, height) {
                 override val nextX get() = x
-                override val nextY get() = y + height + style.offsetToNextY
-            })
+                override val nextY get() = y + height + if (applyOffset) style.offsetToNextY else 0.0f
+            }, applyOffset
+        )
     }
 
-    fun setLastElement(element: Element): Element {
+    fun setLastElement(element: Element, applyOffset: Boolean = true): Element {
         lineHeight = if (isSameLine)
-            max(lineHeight, element.height + style.offsetToNextY)
+            max(lineHeight, if (applyOffset) element.height + style.offsetToNextY else element.height)
         else
-            element.height + style.offsetToNextY
+            if (applyOffset) element.height + style.offsetToNextY else element.height
 
         lastElement = element
 
         currentGroup?.let {
-            it.width = max(it.width, element.x + element.width - it.x + style.elementPadding)
+            it.width = max(it.width, element.x + element.width - it.x + if (applyOffset) style.elementPadding else 0.0f)
 
             if (!isSameLine)
                 it.height += lineHeight
@@ -736,9 +737,9 @@ class ImmediateUI private constructor(private val context: ImmediateUIContext, v
     fun end() {
         transform.setToOrtho2D(Kore.graphics.safeInsetLeft.toFloat(), Kore.graphics.safeWidth.toFloat(), Kore.graphics.safeHeight.toFloat(), Kore.graphics.safeInsetTop.toFloat())
         context.renderer.render(transform) {
-            it.flipY = true
-            commandList.process(context)
-            it.flipY = false
+            it.withFlippedY(true) {
+                commandList.process(context)
+            }
         }
     }
 

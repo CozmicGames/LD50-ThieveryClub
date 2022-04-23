@@ -69,14 +69,14 @@ class Controls : Updateable, Disposable {
         return actions[name]?.value ?: 0.0f
     }
 
-    fun setActionKeyInput(name: String, key: Key) {
+    fun setActionKeyInput(name: String, vararg keys: Key) {
         val action = actions.getOrPut(name) { Action() }
-        action.keys += key
+        action.keys += keys
     }
 
-    fun removeActionKeyInput(name: String, key: Key) {
+    fun removeActionKeyInput(name: String, vararg keys: Key) {
         val action = actions.getOrPut(name) { Action() }
-        action.keys -= key
+        action.keys -= keys
     }
 
     fun clearActionKeyInput(name: String) {

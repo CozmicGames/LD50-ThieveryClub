@@ -3,6 +3,7 @@ package engine
 import com.cozmicgames.Application
 import com.cozmicgames.Kore
 import com.cozmicgames.utils.injector
+import common.InitialGameState
 import engine.physics.Physics
 import engine.audio.SoundManager
 import engine.graphics.Canvas
@@ -11,7 +12,6 @@ import engine.graphics.Renderer
 import engine.graphics.TextureManager
 import engine.input.Controls
 import engine.utils.Rumble
-import game.InitialGameState
 
 object Game : Application {
     val sounds by Kore.context.injector(true) { SoundManager() }

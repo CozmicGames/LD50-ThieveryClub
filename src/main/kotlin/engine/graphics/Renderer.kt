@@ -9,7 +9,7 @@ import engine.graphics.shaders.DefaultShader
 import engine.graphics.shaders.Shader
 import com.cozmicgames.utils.Color
 import com.cozmicgames.utils.Disposable
-import com.cozmicgames.utils.collections.Stack
+import com.cozmicgames.utils.collections.DynamicStack
 import com.cozmicgames.utils.maths.Camera
 import com.cozmicgames.utils.maths.Matrix4x4
 import com.cozmicgames.utils.maths.VectorPath
@@ -24,7 +24,7 @@ class Renderer : Disposable {
     private val indexBuffer = Kore.graphics.createBuffer(GraphicsBuffer.Usage.DYNAMIC)
     private val pipelines = hashMapOf<Shader, Pipeline>()
     private val path = VectorPath()
-    private val scissorStack = Stack<ScissorRect?>()
+    private val scissorStack = DynamicStack<ScissorRect?>()
     private var forceUpdateUniforms = false
     private var forceUpdateShader = false
 

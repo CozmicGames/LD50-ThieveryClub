@@ -1,10 +1,9 @@
 package leveleditor.commands
 
 import com.cozmicgames.utils.collections.Array2D
-import common.levels.Level
 import common.levels.TileType
-import leveleditor.LevelRegion
 import leveleditor.LevelEditor
+import leveleditor.LevelRegion
 
 class SetTilesCommand(region: LevelRegion, private val tiles: Array2D<TileType?>) : LevelEditor.Command {
     override val isUndoable get() = true

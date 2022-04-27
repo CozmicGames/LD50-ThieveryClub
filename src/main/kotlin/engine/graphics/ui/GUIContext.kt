@@ -1,10 +1,12 @@
-package engine.graphics.ui.immediate
+package engine.graphics.ui
 
 import com.cozmicgames.utils.Disposable
 import com.cozmicgames.utils.maths.VectorPath
 import engine.graphics.Renderer
 
-class ImmediateUIContext(val renderer: Renderer, private val ownsRenderer: Boolean) : Disposable {
+class GUIContext(val renderer: Renderer, private val ownsRenderer: Boolean) : Disposable {
+    constructor() : this(Renderer(), true)
+
     private val path = VectorPath()
 
     fun path(block: VectorPath.() -> Unit): VectorPath {

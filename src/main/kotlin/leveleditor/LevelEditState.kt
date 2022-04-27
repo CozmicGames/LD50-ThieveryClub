@@ -12,13 +12,15 @@ import common.levels.Level
 import common.levels.TileSet
 import common.levels.TileType
 import common.levels.createTestTileSet
-import common.utils.selectableImage
 import engine.Game
 import engine.GameState
 import engine.graphics.Canvas
 import engine.graphics.render
-import engine.graphics.ui.immediate.ImmediateUI
-import engine.graphics.ui.immediate.TextData
+import engine.graphics.ui.GUI
+import engine.graphics.ui.TextData
+import engine.graphics.ui.widgets.selectableImage
+import engine.graphics.ui.widgets.textButton
+import engine.graphics.ui.widgets.textField
 import engine.utils.unproject
 
 class LevelEditState(val width: Int, val height: Int, val backgroundColor: Color = Color.SKY) : GameState {
@@ -28,7 +30,7 @@ class LevelEditState(val width: Int, val height: Int, val backgroundColor: Color
 
     private var selectedTileType: TileType? = null
 
-    private lateinit var ui: ImmediateUI
+    private lateinit var ui: GUI
     private lateinit var textData: TextData
     private lateinit var levelCanvas: Canvas
     private lateinit var tileSet: TileSet
@@ -37,7 +39,7 @@ class LevelEditState(val width: Int, val height: Int, val backgroundColor: Color
     private var name = "level${id++}"
 
     override fun onCreate() {
-        ui = ImmediateUI()
+        ui = GUI()
         textData = TextData(name) {}
         levelCanvas = Canvas()
         tileSet = createTestTileSet() //TODO: load from file
@@ -83,14 +85,14 @@ class LevelEditState(val width: Int, val height: Int, val backgroundColor: Color
             }
         }
 
-        ui.begin()
+        ui.begin(delta)
         selectType(tileSet)
 
         if (!Kore.input.isKeyDown(Keys.KEY_CONTROL))
             setTile(mouseTileX, mouseTileY)
 
         ui.sameLine {
-            ui.button("Clear") {
+            ui.textButton("Clear") {
                 level.clear()
             }
 
@@ -98,7 +100,7 @@ class LevelEditState(val width: Int, val height: Int, val backgroundColor: Color
                 name = textData.text
             }
 
-            ui.button("Save") {
+            ui.textButton("Save") {
                 val properties = level.write()
                 Kore.files.writeResource("$name.txt", false).use {
                     it.writeString(properties.write())

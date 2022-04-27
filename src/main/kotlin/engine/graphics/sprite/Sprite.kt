@@ -1,12 +1,10 @@
 package engine.graphics.sprite
 
+import com.cozmicgames.utils.Color
+import engine.graphics.Component
 import engine.graphics.Drawable
 import engine.graphics.Renderer
 import engine.graphics.TextureRegion
-import com.cozmicgames.utils.Color
-import engine.graphics.Component
-import engine.graphics.shaders.DefaultShader
-import engine.graphics.shaders.Shader
 import engine.utils.Transform
 
 abstract class Sprite(val transform: Transform) : Drawable, Component {

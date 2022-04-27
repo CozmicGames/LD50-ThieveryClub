@@ -2,14 +2,12 @@ package engine.graphics.font
 
 import com.cozmicgames.graphics.Font
 import com.cozmicgames.graphics.Image
-import com.cozmicgames.graphics.gpu.Texture
-import engine.graphics.font.DrawableFont.Companion.defaultChars
 import com.cozmicgames.graphics.gpu.Texture2D
 import com.cozmicgames.graphics.toTexture2D
-import com.cozmicgames.utils.Disposable
 import com.cozmicgames.utils.rectpack.RectPacker
+import engine.graphics.font.DrawableFont.Companion.defaultChars
 
-class BitmapFont(val font: Font, override val drawableCharacters: String = defaultChars(), padding: Int = 4, val scale: Float = 1.0f) : DrawableFont, Disposable {
+class BitmapFont(val font: Font, override val drawableCharacters: String = defaultChars(), padding: Int = 4, val scale: Float = 1.0f) : DrawableFont {
     override val size get() = font.size * scale
 
     override val texture: Texture2D
@@ -44,7 +42,7 @@ class BitmapFont(val font: Font, override val drawableCharacters: String = defau
 
                 val charImage = charImages[rect.id] ?: continue
 
-                image.drawImage(charImage, x, y, (charImage.width * scale).toInt(), (charImage.height * scale).toInt())
+                image.setImage(charImage, x, y, (charImage.width * scale).toInt(), (charImage.height * scale).toInt())
 
                 val u0 = x.toFloat() / image.width
                 val v0 = y.toFloat() / image.height

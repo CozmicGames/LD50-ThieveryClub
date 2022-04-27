@@ -3,8 +3,8 @@ package engine.pathfinding.algorithms
 import com.cozmicgames.utils.collections.Array2D
 import com.cozmicgames.utils.collections.PriorityList
 import com.cozmicgames.utils.concurrency.threadLocal
-import engine.pathfinding.algorithms.heurisitcs.ClosestHeuristic
 import engine.pathfinding.*
+import engine.pathfinding.algorithms.heurisitcs.ClosestHeuristic
 import kotlin.math.max
 
 class AStarPathFinder(val map: TileBasedMap, val heuristic: Heuristic = ClosestHeuristic) : PathFinder {

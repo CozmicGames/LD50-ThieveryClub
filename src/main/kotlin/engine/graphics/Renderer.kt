@@ -2,11 +2,9 @@ package engine.graphics
 
 import com.cozmicgames.Kore
 import com.cozmicgames.graphics
-import com.cozmicgames.graphics.*
-import engine.graphics.font.GlyphLayout
+import com.cozmicgames.graphics.IndexDataType
+import com.cozmicgames.graphics.Primitive
 import com.cozmicgames.graphics.gpu.*
-import engine.graphics.shaders.DefaultShader
-import engine.graphics.shaders.Shader
 import com.cozmicgames.utils.Color
 import com.cozmicgames.utils.Disposable
 import com.cozmicgames.utils.collections.DynamicStack
@@ -14,6 +12,9 @@ import com.cozmicgames.utils.maths.Camera
 import com.cozmicgames.utils.maths.Matrix4x4
 import com.cozmicgames.utils.maths.VectorPath
 import engine.Game
+import engine.graphics.font.GlyphLayout
+import engine.graphics.shaders.DefaultShader
+import engine.graphics.shaders.Shader
 import engine.graphics.sprite.Sprite
 import engine.utils.CommandList
 

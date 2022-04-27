@@ -1,4 +1,4 @@
-package engine.graphics.ui.immediate
+package engine.graphics.ui
 
 import com.cozmicgames.Kore
 import com.cozmicgames.input
@@ -32,6 +32,22 @@ class TextData(text: String = "", var onEnter: TextData.() -> Unit) {
                 Keys.KEY_ENTER -> onEnter(this)
             }
         }
+
+        if (Kore.input.isKeyDown(Keys.KEY_CONTROL) && key == Keys.KEY_V) {
+            val clipboard = Kore.clipboard
+            if (clipboard != null) {
+                if (isSelectionActive)
+                    removeSelection(clipboard)
+                else
+                    addTextAtCursor(clipboard)
+            }
+        }
+
+        if (Kore.input.isKeyDown(Keys.KEY_CONTROL) && key == Keys.KEY_C)
+            Kore.clipboard = getSelection()
+
+        if (Kore.input.isKeyDown(Keys.KEY_CONTROL) && key == Keys.KEY_X)
+            Kore.clipboard = removeSelection()
     }
 
     fun onCharAction(char: Char) {
@@ -53,7 +69,11 @@ class TextData(text: String = "", var onEnter: TextData.() -> Unit) {
     }
 
     fun moveCursor(amount: Int) {
-        cursor += amount
+        if (isSelectionActive)
+            cursor = getFrontSelectionPosition() + amount
+        else
+            cursor += amount
+
         resetSelection()
 
         cursor = cursor.clamp(0, text.length)
@@ -75,7 +95,7 @@ class TextData(text: String = "", var onEnter: TextData.() -> Unit) {
             else -> this.text = this.text.substring(0, cursor) + text + this.text.substring(cursor, this.text.length)
         }
 
-        cursor++
+        cursor += text.length
 
         hasChanged = true
     }
@@ -121,6 +141,7 @@ class TextData(text: String = "", var onEnter: TextData.() -> Unit) {
 
         hasChanged = true
 
+        cursor = cursor0 + replacement.length
         resetSelection()
 
         return selectedString
@@ -133,9 +154,10 @@ class TextData(text: String = "", var onEnter: TextData.() -> Unit) {
         val cursor0 = getFrontSelectionPosition()
         val cursor1 = getEndSelectionPosition()
 
-        return text.substring(cursor0 + 1, cursor1)
+        return text.substring(cursor0, cursor1)
     }
 
     fun getFrontSelectionPosition() = min(cursor, cursor + selectionLength)
+
     fun getEndSelectionPosition() = max(cursor, cursor + selectionLength)
 }

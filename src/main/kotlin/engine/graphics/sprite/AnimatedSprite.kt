@@ -1,7 +1,7 @@
 package engine.graphics.sprite
 
-import engine.graphics.animation.AnimationController
 import engine.graphics.Drawable
+import engine.graphics.animation.AnimationController
 import engine.utils.Transform
 
 class AnimatedSprite(val controller: AnimationController, transform: Transform = Transform()) : Sprite(transform) {

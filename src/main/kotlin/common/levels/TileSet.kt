@@ -42,7 +42,7 @@ class TileSet {
                 val left = ruleProperties.getString("left") ?: continue
                 val right = ruleProperties.getString("right") ?: continue
 
-                tileType.addRule(top, bottom, left, right, path)
+                tileType.rules.add(TileType.Rule(top, bottom, left, right, path))
             }
 
             internalTileTypes.add(tileType)
@@ -63,10 +63,10 @@ class TileSet {
             for (tileTypeRule in tileType.rules) {
                 val tileTypeRuleProperties = Properties()
 
-                tileTypeRuleProperties.setString("top", tileTypeRule.top)
-                tileTypeRuleProperties.setString("bottom", tileTypeRule.bottom)
-                tileTypeRuleProperties.setString("left", tileTypeRule.left)
-                tileTypeRuleProperties.setString("right", tileTypeRule.right)
+                tileTypeRule.top?.let { tileTypeRuleProperties.setString("top", it) }
+                tileTypeRule.bottom?.let { tileTypeRuleProperties.setString("bottom", it) }
+                tileTypeRule.left?.let { tileTypeRuleProperties.setString("left", it) }
+                tileTypeRule.right?.let { tileTypeRuleProperties.setString("right", it) }
                 tileTypeRuleProperties.setString("path", tileTypeRule.path)
 
                 tileTypeRulesProperties.add(tileTypeRuleProperties)

@@ -7,19 +7,24 @@ import com.cozmicgames.utils.Color
 import com.cozmicgames.utils.injector
 import engine.Game
 import engine.GameState
+import engine.graphics.asRegion
 import engine.graphics.render.RenderGraph
 import engine.graphics.render.onRender
 import engine.graphics.render.passes.ColorRenderPass
 import engine.graphics.render.present.SimplePresentFunction
-import engine.graphics.ui.immediate.ImmediateUI
+import engine.graphics.ui.GUI
+import engine.graphics.ui.widgets.image
+import engine.graphics.ui.widgets.label
+import engine.graphics.ui.widgets.slider
+import engine.graphics.ui.widgets.textButton
 import game.graphics.LightmapRenderFunction
 import game.graphics.MainRenderFunction
 import game.graphics.RenderManager
-import game.states.TestState
 import leveleditor.LevelEditState
+import tileseteditor.TileSetEditState
 
 class InitialGameState : GameState {
-    private lateinit var ui: ImmediateUI
+    private lateinit var ui: GUI
     private var sizeX = 0.0f
     private var sizeY = 0.0f
 
@@ -31,7 +36,7 @@ class InitialGameState : GameState {
         Game.controls.setActionKeyInput("move_jump", Keys.KEY_SPACE)
         Game.controls.setActionKeyInput("move_crouch", Keys.KEY_SHIFT)
 
-        ui = ImmediateUI()
+        ui = GUI()
     }
 
     override fun onFrame(delta: Float): GameState {
@@ -39,19 +44,27 @@ class InitialGameState : GameState {
 
         var returnState: GameState = this
 
-        ui.begin()
+        ui.begin(delta)
         ui.label("Thievery Club - V0.0.1")
+
         ui.sameLine {
             ui.label("Width ${10 + (sizeX * 90).toInt()}")
             ui.slider(sizeX) { sizeX = it }
         }
+
         ui.sameLine {
             ui.label("Height ${10 + (sizeY * 90).toInt()}")
             ui.slider(sizeY) { sizeY = it }
         }
-        ui.button("New level") {
+
+        ui.textButton("New level") {
             returnState = LevelEditState(10 + (sizeX * 90).toInt(), 10 + (sizeY * 90).toInt())
         }
+
+        ui.textButton("New Tileset") {
+            returnState = TileSetEditState()
+        }
+
         ui.end()
 
         return returnState

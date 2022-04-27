@@ -1,8 +1,8 @@
 package engine.graphics
 
 import com.cozmicgames.graphics.gpu.Texture2D
-import engine.graphics.shaders.Shader
 import com.cozmicgames.utils.Disposable
+import engine.graphics.shaders.Shader
 import engine.utils.CommandList
 
 class DrawCommand(contextSize: Int = 4) : Disposable {

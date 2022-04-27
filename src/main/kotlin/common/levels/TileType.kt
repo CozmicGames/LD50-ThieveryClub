@@ -3,26 +3,43 @@ package common.levels
 import engine.Game
 import engine.graphics.TextureRegion
 
-class TileType(val name: String, val defaultPath: String, val isSolid: Boolean) {
-    class Rule(val top: String, val left: String, val right: String, val bottom: String, val path: String) {
+class TileType(var name: String, defaultPath: String, var isSolid: Boolean) {
+    class Rule(val top: String?, val left: String?, val right: String?, val bottom: String?, val path: String) {
         val texture by Game.textures(path)
     }
 
-    private val internalRules = arrayListOf<Rule>()
+    var defaultPath = defaultPath
+        set(value) {
+            if (field == value)
+                return
 
-    val defaultTexture by Game.textures(defaultPath)
-    val rules get() = internalRules.toList()
+            defaultTexture = Game.textures.getOrAdd(value)
+            field = value
+        }
 
-    fun addRule(top: String, left: String, right: String, bottom: String, path: String) {
-        internalRules.add(Rule(top, left, right, bottom, path))
-    }
+    val rules = arrayListOf<Rule>()
+
+    var defaultTexture = Game.textures.getOrAdd(defaultPath)
+        private set
 
     fun getTexture(tile: Tile): TextureRegion {
-        val rule = internalRules.firstOrNull {
-            it.top == tile.top?.name && it.left == tile.left?.name && it.right == tile.right?.name && it.bottom == tile.bottom?.name
-        } ?: return defaultTexture
+        for (rule in rules) {
+            if (rule.top != null && rule.top != tile.top?.name)
+                continue
 
-        return rule.texture
+            if (rule.left != null && rule.left != tile.left?.name)
+                continue
+
+            if (rule.right != null && rule.right != tile.right?.name)
+                continue
+
+            if (rule.bottom != null && rule.bottom != tile.bottom?.name)
+                continue
+
+            return rule.texture
+        }
+
+        return defaultTexture
     }
 }
 

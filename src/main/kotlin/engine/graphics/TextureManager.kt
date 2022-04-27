@@ -29,13 +29,17 @@ class TextureManager : Disposable {
     private val keys = hashMapOf<String, TextureKey>()
 
     fun add(file: String, filter: Texture.Filter = Texture.Filter.NEAREST) {
-        if (!Kore.files.exists(file, Files.Type.ASSET)) {
+        val image = if (Kore.files.exists(file, Files.Type.ASSET)) {
+            Kore.files.readAsset(file).use {
+                Kore.graphics.readImage(it, file.extension)
+            }
+        } else if (Kore.files.exists(file, Files.Type.RESOURCE)) {
+            Kore.files.readResource(file).use {
+                Kore.graphics.readImage(it, file.extension)
+            }
+        } else {
             Kore.log.error(this::class, "Texture file not found: $file")
             return
-        }
-
-        val image = Kore.files.readAsset(file).use {
-            Kore.graphics.readImage(it, file.extension)
         }
 
         if (image == null) {
@@ -70,7 +74,7 @@ class TextureManager : Disposable {
         if (file !in this)
             add(file, filter)
 
-        return requireNotNull(this[file])
+        return this[file] ?: Game.graphics2d.missingTexture.asRegion()
     }
 
     fun getAtlas(key: TextureKey): TextureAtlas {

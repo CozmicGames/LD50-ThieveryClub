@@ -7,20 +7,21 @@ import com.cozmicgames.graphics.safeHeight
 import com.cozmicgames.graphics.safeWidth
 import com.cozmicgames.memory.Memory
 import com.cozmicgames.memory.of
+import com.cozmicgames.utils.Color
 import com.cozmicgames.utils.Disposable
 import com.cozmicgames.utils.maths.OrthographicCamera
 import com.cozmicgames.utils.use
 
 class Graphics2D : Disposable {
     val blankTexture = Kore.graphics.createTexture2D(Texture.Format.RGBA8_UNORM) {
-        Memory.of(0xFFFFFFFF.toInt()).use {
+        Memory.of(Color.WHITE.bits).use {
             setImage(1, 1, it, Texture.Format.RGBA8_UNORM)
         }
     }
 
     val missingTexture = Kore.graphics.createTexture2D(Texture.Format.RGBA8_UNORM) {
-        Memory.of(0x000000FF, 0xFF00FFFF, 0xFF00FFFF, 0x000000FF).use {
-            setImage(1, 1, it, Texture.Format.RGBA8_UNORM)
+        Memory.of(Color.MAGENTA.bits, Color.BLACK.bits, Color.BLACK.bits, Color.MAGENTA.bits).use {
+            setImage(2, 2, it, Texture.Format.RGBA8_UNORM)
         }
     }
 

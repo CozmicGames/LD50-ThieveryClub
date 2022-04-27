@@ -1,10 +1,11 @@
 package engine.graphics.font
 
 import com.cozmicgames.graphics.gpu.Texture2D
+import com.cozmicgames.utils.Disposable
 import engine.graphics.shaders.DefaultShader
 import engine.graphics.shaders.Shader
 
-interface DrawableFont {
+interface DrawableFont : Disposable {
     companion object {
         fun defaultChars() = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 \"!`?'.,;:()[]{}<>|/@\\^\$-%+=#_&~*"
     }

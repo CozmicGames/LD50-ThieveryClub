@@ -4,13 +4,13 @@ import com.cozmicgames.Application
 import com.cozmicgames.Kore
 import com.cozmicgames.utils.injector
 import common.InitialGameState
-import engine.physics.Physics
 import engine.audio.SoundManager
 import engine.graphics.Canvas
 import engine.graphics.Graphics2D
 import engine.graphics.Renderer
 import engine.graphics.TextureManager
 import engine.input.Controls
+import engine.physics.Physics
 import engine.utils.Rumble
 
 object Game : Application {

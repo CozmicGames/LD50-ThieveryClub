@@ -1,6 +1,5 @@
 package engine.graphics
 
-import engine.graphics.font.GlyphLayout
 import com.cozmicgames.graphics.gpu.GraphicsBuffer
 import com.cozmicgames.memory.IntBuffer
 import com.cozmicgames.memory.Struct
@@ -11,6 +10,7 @@ import com.cozmicgames.utils.Disposable
 import com.cozmicgames.utils.maths.Matrix3x2
 import com.cozmicgames.utils.maths.Vector2
 import com.cozmicgames.utils.maths.VectorPath
+import engine.graphics.font.GlyphLayout
 import engine.graphics.sprite.Sprite
 import kotlin.math.*
 

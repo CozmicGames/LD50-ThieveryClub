@@ -7,9 +7,15 @@ import engine.utils.Gradient
 import engine.utils.GradientColor
 
 /**
- * TODO: Finish
+ * Adds a gradient to the widget.
+ *
+ * @param gradient The gradient to add.
+ * @param width The width of the gradient. Defaults to [style.elementSize] * 10.
+ * @param height The height of the gradient. Defaults to [style.elementSizeWithPadding].
+ *
+ * TODO: Add gradient editor
  */
-fun GUI.gradient(gradient: Gradient, width: Float = 100.0f, height: Float = 50.0f, element: GUIElement = getLastElement()): GUIElement {
+fun GUI.gradient(gradient: Gradient, width: Float = style.elementSize * 10.0f, height: Float = style.elementSizeWithPadding, element: GUIElement = getLastElement()): GUIElement {
     val (x, y) = element
 
     lateinit var last: GradientColor

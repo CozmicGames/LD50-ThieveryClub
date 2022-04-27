@@ -24,4 +24,6 @@ open class GUIStyle {
     open var roundedCorners = Corners.ALL
     open var offsetToNextX = 4.0f
     open var offsetToNextY = 4.0f
+
+    val elementSizeWithPadding get() = elementSize + elementPadding * 2.0f
 }

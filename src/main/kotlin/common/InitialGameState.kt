@@ -4,24 +4,23 @@ import com.cozmicgames.Kore
 import com.cozmicgames.graphics
 import com.cozmicgames.input.Keys
 import com.cozmicgames.utils.Color
+import com.cozmicgames.utils.collections.FixedSizeStack
 import com.cozmicgames.utils.injector
 import engine.Game
 import engine.GameState
-import engine.graphics.asRegion
 import engine.graphics.render.RenderGraph
 import engine.graphics.render.onRender
 import engine.graphics.render.passes.ColorRenderPass
 import engine.graphics.render.present.SimplePresentFunction
 import engine.graphics.ui.GUI
-import engine.graphics.ui.widgets.image
-import engine.graphics.ui.widgets.label
-import engine.graphics.ui.widgets.slider
-import engine.graphics.ui.widgets.textButton
+import engine.graphics.ui.TextData
+import engine.graphics.ui.widgets.*
 import game.graphics.LightmapRenderFunction
 import game.graphics.MainRenderFunction
 import game.graphics.RenderManager
 import leveleditor.LevelEditState
 import tileseteditor.TileSetEditState
+import kotlin.math.min
 
 class InitialGameState : GameState {
     private lateinit var ui: GUI
@@ -44,7 +43,7 @@ class InitialGameState : GameState {
 
         var returnState: GameState = this
 
-        ui.begin(delta)
+        ui.begin()
         ui.label("Thievery Club - V0.0.1")
 
         ui.sameLine {
@@ -64,7 +63,6 @@ class InitialGameState : GameState {
         ui.textButton("New Tileset") {
             returnState = TileSetEditState()
         }
-
         ui.end()
 
         return returnState

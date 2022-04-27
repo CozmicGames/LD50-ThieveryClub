@@ -144,9 +144,7 @@ fun GUICommandList.drawImage(x: Float, y: Float, width: Float, height: Float, re
     renderer.draw(region, x, y, width, height, color)
 }
 
-fun GUICommandList.drawText(x: Float, y: Float, layout: GlyphLayout, foregroundColor: Color, backgroundColor: Color?) = addCommand {
-    if (backgroundColor != null)
-        renderer.drawRect(x + layout.width * 0.5f, y + layout.height * 0.5f, layout.width, layout.height, backgroundColor)
+fun GUICommandList.drawText(x: Float, y: Float, layout: GlyphLayout, foregroundColor: Color) = addCommand {
     renderer.draw(layout, x, y, foregroundColor)
 }
 

@@ -294,11 +294,15 @@ inline fun Renderer.begin(camera: Camera) = begin(camera.projectionView)
 fun Renderer.drawTriangle(x0: Float, y0: Float, x1: Float, y1: Float, x2: Float, y2: Float, color0: Color, color1: Color = color0, color2: Color = color0) {
     require(isActive)
 
+    texture = Game.graphics2d.blankTexture
+
     context.drawTriangle(x0, y0, x1, y1, x2, y2, color0, color1, color2)
 }
 
 fun Renderer.drawRect(x: Float, y: Float, width: Float, height: Float, color00: Color, color01: Color = color00, color11: Color = color00, color10: Color = color00) {
     require(isActive)
+
+    texture = Game.graphics2d.blankTexture
 
     context.drawRect(x, y, width, height, color00, color01, color11, color10)
 }

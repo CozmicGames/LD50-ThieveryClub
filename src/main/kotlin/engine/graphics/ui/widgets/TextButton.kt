@@ -38,7 +38,7 @@ fun GUI.textButton(text: String, element: GUIElement = getLastElement(), action:
         style.normalColor
 
     currentCommandList.drawRectFilled(rectangle.x, rectangle.y, rectangle.width, rectangle.height, style.roundedCorners, style.cornerRounding, color)
-    currentCommandList.drawText(textX, textY, layout, style.fontColor, null)
+    currentCommandList.drawText(textX, textY, layout, style.fontColor)
 
     return setLastElement(x, y, rectangle.width, rectangle.height)
 }

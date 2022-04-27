@@ -6,7 +6,20 @@ import engine.graphics.ui.*
 import kotlin.math.max
 import kotlin.math.min
 
-fun GUI.plot(values: Iterable<Float>, type: GUI.PlotType, width: Float = 120.0f, height: Float = 80.0f, min: Float? = null, max: Float? = null, element: GUIElement = getLastElement()): GUIElement {
+/**
+ * Adds a plot to the screen.
+ * A plot is a graph that can be used to display data.
+ *
+ * @param values The values to plot.
+ * @param type The type of plot to display.
+ * @param width The width of the plot. Defaults to [style.elementSize] * 10.
+ * @param height The height of the plot. Defaults to the same as [width].
+ * @param min The minimum value of the plot. If null, the minimum value in [values] will be used. Defaults to null.
+ * @param max The maximum value of the plot. If null, the maximum value in [values] will be used. Defaults to null.
+ *
+ * @see [PlotType].
+ */
+fun GUI.plot(values: Iterable<Float>, type: GUI.PlotType, width: Float = style.elementSize * 10.0f, height: Float = width, min: Float? = null, max: Float? = null, element: GUIElement = getLastElement()): GUIElement {
     val (x, y) = element
 
     var count = 0
@@ -35,7 +48,7 @@ fun GUI.plot(values: Iterable<Float>, type: GUI.PlotType, width: Float = 120.0f,
             slotX += slotWidth * 0.5f
             values.forEach {
                 val slotY = y + style.elementPadding + (slotMaxHeight - getSlotHeight(it))
-                currentCommandList.drawCircleFilled(slotX, slotY, 3.0f, style.highlightColor)
+                currentCommandList.drawCircleFilled(slotX, slotY, style.elementSize * 0.33f, style.highlightColor)
                 slotX += slotWidth
             }
         }
@@ -58,10 +71,10 @@ fun GUI.plot(values: Iterable<Float>, type: GUI.PlotType, width: Float = 120.0f,
                 else {
                     val lastSlotX = slotX - slotWidth
                     val lastSlotY = y + style.elementPadding + (slotMaxHeight - getSlotHeight(lastValue))
-                    currentCommandList.drawLine(lastSlotX, lastSlotY, slotX, slotY, 2.5f, style.highlightColor)
+                    currentCommandList.drawLine(lastSlotX, lastSlotY, slotX, slotY, style.elementSize * 0.25f, style.highlightColor)
                 }
 
-                currentCommandList.drawCircleFilled(slotX, slotY, 3.0f, style.highlightColor)
+                currentCommandList.drawCircleFilled(slotX, slotY, style.elementSize * 0.33f, style.highlightColor)
                 slotX += slotWidth
                 lastValue = it
             }

@@ -161,12 +161,6 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
      */
     val drawableFont = BitmapFont(style.font, scale = style.fontSize / style.font.size)
 
-    /**
-     * The time counter, in seconds.
-     */
-    var time = 0.0
-        private set
-
     init {
         Kore.input.addKeyListener(keyListener)
         Kore.input.addCharListener(charListener)
@@ -427,7 +421,7 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
 
         isSameLine = false
 
-        return setLastElement(lastElement.nextX, lastElement.nextY, 0.0f, lineHeight)
+        return setLastElement(lastElement.nextX, lastElement.nextY, getLastElement().nextX - lastElement.nextX, lineHeight)
     }
 
     /**
@@ -460,11 +454,20 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
         return setLastElement(group.x, group.y, group.width, group.height)
     }
 
-    fun begin(delta: Float) {
-        time += delta
+    /**
+     * Begin GUI rendering.
+     * This must be called before any widget function.
+     */
+    fun begin() {
         lastElement = null
     }
 
+    /**
+     * End GUI rendering.
+     * This must be called after all widget functions.
+     * It will render the GUI by flushing the command list.
+     * It will also reset the command list.
+     */
     fun end() {
         transform.setToOrtho2D(Kore.graphics.safeInsetLeft.toFloat(), Kore.graphics.safeWidth.toFloat(), Kore.graphics.safeHeight.toFloat(), Kore.graphics.safeInsetTop.toFloat())
         context.renderer.render(transform) {
@@ -474,6 +477,9 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
         }
     }
 
+    /**
+     * Disposes the GUI and all its resources.
+     */
     override fun dispose() {
         Kore.input.removeKeyListener(keyListener)
         Kore.input.removeCharListener(charListener)

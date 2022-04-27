@@ -32,7 +32,7 @@ class TileSetEditState : GameState {
     override fun onFrame(delta: Float): GameState {
         Kore.graphics.clear(Color.DARK_GRAY)
 
-        ui.begin(delta)
+        ui.begin()
         selectType()
         editCurrentType()
         ui.end()

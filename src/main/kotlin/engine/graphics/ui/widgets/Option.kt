@@ -5,9 +5,16 @@ import engine.graphics.ui.GUI
 import engine.graphics.ui.GUIElement
 import engine.graphics.ui.drawCircleFilled
 
+/**
+ * Adds an option to the GUI.
+ *
+ * @param option The id of the option.
+ * @param selectedOption The id of the selected option.
+ * @param action The action to perform when the option is selected. It receives the option id as a parameter.
+ */
 fun GUI.option(option: Int, selectedOption: Int, element: GUIElement = getLastElement(), action: (Int) -> Unit): GUIElement {
     val (x, y) = element
-    val size = style.elementSize
+    val size = style.elementSizeWithPadding
 
     val rectangle = Rectangle(x, y, size, size)
     val state = getState(rectangle, GUI.ButtonBehaviour.DEFAULT)

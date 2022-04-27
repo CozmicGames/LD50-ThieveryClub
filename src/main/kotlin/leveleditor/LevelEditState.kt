@@ -85,7 +85,7 @@ class LevelEditState(val width: Int, val height: Int, val backgroundColor: Color
             }
         }
 
-        ui.begin(delta)
+        ui.begin()
         selectType(tileSet)
 
         if (!Kore.input.isKeyDown(Keys.KEY_CONTROL))

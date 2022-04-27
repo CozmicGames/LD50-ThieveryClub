@@ -8,6 +8,11 @@ import engine.graphics.ui.GUIElement
 import engine.graphics.ui.drawRectFilled
 import engine.graphics.ui.drawRectMultiColor
 
+/**
+ * Adds a color picker to the GUI.
+ *
+ * @param color The color to edit.
+ */
 fun GUI.colorEdit(color: Color, element: GUIElement = getLastElement()): GUIElement {
     val (x, y) = element
 

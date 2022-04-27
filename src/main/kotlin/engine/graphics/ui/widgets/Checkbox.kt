@@ -5,16 +5,22 @@ import engine.graphics.ui.GUI
 import engine.graphics.ui.GUIElement
 import engine.graphics.ui.drawRectFilled
 
-fun GUI.checkBox(checked: Boolean, element: GUIElement = getLastElement(), action: (Boolean) -> Unit): GUIElement {
+/**
+ * Adds a checkbox to the GUI.
+ *
+ * @param isChecked Whether the checkbox is checked or not.
+ * @param action The action to perform when the checkbox is clicked. It receives if the checkbox is checked or not.
+ */
+fun GUI.checkBox(isChecked: Boolean, element: GUIElement = getLastElement(), action: (Boolean) -> Unit): GUIElement {
     val (x, y) = element
-    val size = style.elementSize
+    val size = style.elementSizeWithPadding
 
     val rectangle = Rectangle(x, y, size, size)
     val state = getState(rectangle, GUI.ButtonBehaviour.DEFAULT)
 
     currentCommandList.drawRectFilled(x, y, size, size, style.roundedCorners, style.cornerRounding, if (GUI.State.HOVERED in state) style.hoverColor else style.normalColor)
     val isClicked = GUI.State.ACTIVE in state
-    var newChecked = checked
+    var newChecked = isChecked
 
     if (isClicked) {
         newChecked = !newChecked

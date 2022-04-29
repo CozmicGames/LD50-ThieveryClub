@@ -137,7 +137,6 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
      * The current scissor rectangle, if one is present.
      */
     var currentScissorRectangle: Rectangle? = null
-        private set
 
     /**
      * The current text data, if one is present.
@@ -159,7 +158,7 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
     /**
      * The font used for text rendering.
      */
-    val drawableFont = BitmapFont(style.font, scale = style.fontSize / style.font.size)
+    val drawableFont = BitmapFont(style.font, size = style.fontSize)
 
     init {
         Kore.input.addKeyListener(keyListener)
@@ -352,8 +351,8 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
      *
      * @param size The size of the blank line.
      */
-    fun blankLine(size: Float = style.elementSize, element: GUIElement = getLastElement()): GUIElement {
-        val (x, y) = element
+    fun blankLine(size: Float = style.elementSize): GUIElement {
+        val (x, y) = getLastElement()
         return setLastElement(x, y, 0.0f, size)
     }
 
@@ -363,8 +362,8 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
      *
      * @param width The width of the spacing. Defaults to [style.elementSize].
      */
-    fun spacing(width: Float = style.elementSize, element: GUIElement = getLastElement()): GUIElement {
-        val (x, y) = element
+    fun spacing(width: Float = style.elementSize): GUIElement {
+        val (x, y) = getLastElement()
         return setLastElement(x, y, width, 0.0f)
     }
 
@@ -430,12 +429,14 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
      *
      * @param block The block to execute.
      */
-    fun group(backgroundColor: Color? = null, element: GUIElement = getLastElement(), block: () -> Unit): GUIElement {
+    fun group(backgroundColor: Color? = null, block: () -> Unit): GUIElement {
+        val (x, y) = getLastElement()
+
         val previousGroup = currentGroup
         val previousSameLine = isSameLine
         val previousLineHeight = lineHeight
 
-        val group = GUIGroup(element.nextX, element.nextY, 0.0f, 0.0f)
+        val group = GUIGroup(x, y, 0.0f, 0.0f)
         currentGroup = group
         isSameLine = false
         lineHeight = 0.0f

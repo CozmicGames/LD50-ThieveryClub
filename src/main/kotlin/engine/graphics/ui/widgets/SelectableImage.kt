@@ -12,13 +12,13 @@ import engine.graphics.ui.drawRect
  * Adds a selectable image to the GUI.
  *
  * @param texture The texture to use for the image.
- * @param width The width of the image. Defaults to [style.elementSizeWithPadding].
+ * @param width The width of the image. Defaults to [style.elementSize].
  * @param height The height of the image. Defaults to the same as [width].
  * @param isSelected Whether the image is selected.
  * @param action The action to perform when the image is clicked.
  */
-fun GUI.selectableImage(texture: TextureRegion, width: Float = style.elementSizeWithPadding, height: Float = width, isSelected: Boolean, element: GUIElement = getLastElement(), action: () -> Unit): GUIElement {
-    val (x, y) = element
+fun GUI.selectableImage(texture: TextureRegion, width: Float = style.elementSize, height: Float = width, isSelected: Boolean, action: () -> Unit): GUIElement {
+    val (x, y) = getLastElement()
 
     val rectangle = Rectangle()
     rectangle.x = x

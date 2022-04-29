@@ -11,12 +11,12 @@ import engine.graphics.ui.drawImage
  * Adds an image button to the GUI.
  *
  * @param texture The texture to use for the image.
- * @param width The width of the image. Defaults to [style.elementSizeWithPadding].
+ * @param width The width of the image. Defaults to [style.elementSize].
  * @param height The height of the image. Defaults to the same as [width].
  * @param action The action to perform when the image is clicked.
  */
-fun GUI.imageButton(texture: TextureRegion, width: Float = style.elementSizeWithPadding, height: Float = width, element: GUIElement = getLastElement(), action: () -> Unit): GUIElement {
-    val (x, y) = element
+fun GUI.imageButton(texture: TextureRegion, width: Float = style.elementSize, height: Float = width, action: () -> Unit): GUIElement {
+    val (x, y) = getLastElement()
 
     val rectangle = Rectangle()
     rectangle.x = x

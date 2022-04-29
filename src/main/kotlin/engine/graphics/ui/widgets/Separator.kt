@@ -7,11 +7,11 @@ import engine.graphics.ui.drawRectFilled
 
 /**
  * Adds a separator element.
- * The separator is a horizontal line the width of the given [srcElement].
+ * The separator is a horizontal line the width of the given [element].
  *
  * @param element The element.
  */
-fun GUI.separator(srcElement: GUIElement, element: GUIElement = getLastElement()) = separator(srcElement.width, element)
+fun GUI.separator(element: GUIElement) = separator(element.width)
 
 /**
  * Adds a separator element.
@@ -20,12 +20,12 @@ fun GUI.separator(srcElement: GUIElement, element: GUIElement = getLastElement()
  * @param width The width of the separator. Defaults to [style.elementSize] * 10.
  * @param element The element. Defaults to the last element.
  */
-fun GUI.separator(width: Float = style.elementSize * 10.0f, element: GUIElement = getLastElement()): GUIElement {
-    val (x, y) = element
+fun GUI.separator(width: Float = style.elementSize * 10.0f): GUIElement {
+    val (x, y) = getLastElement()
     val separatorX = x + style.elementPadding
-    val separatorY = y + style.elementSizeWithPadding * 0.4f
+    val separatorY = y + style.elementSize * 0.4f
     val separatorWidth = width - style.elementPadding * 2.0f
-    val separatorHeight = style.elementSizeWithPadding * 0.2f
+    val separatorHeight = style.elementSize * 0.2f
     currentCommandList.drawRectFilled(separatorX, separatorY, separatorWidth, separatorHeight, Corners.NONE, 0.0f, style.normalColor)
-    return setLastElement(x, y, width, style.elementSizeWithPadding)
+    return setLastElement(x, y, width, style.elementSize)
 }

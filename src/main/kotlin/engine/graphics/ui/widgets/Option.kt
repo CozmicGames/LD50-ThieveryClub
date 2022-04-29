@@ -12,9 +12,9 @@ import engine.graphics.ui.drawCircleFilled
  * @param selectedOption The id of the selected option.
  * @param action The action to perform when the option is selected. It receives the option id as a parameter.
  */
-fun GUI.option(option: Int, selectedOption: Int, element: GUIElement = getLastElement(), action: (Int) -> Unit): GUIElement {
-    val (x, y) = element
-    val size = style.elementSizeWithPadding
+fun GUI.option(option: Int, selectedOption: Int, action: (Int) -> Unit): GUIElement {
+    val (x, y) = getLastElement()
+    val size = style.elementSize
 
     val rectangle = Rectangle(x, y, size, size)
     val state = getState(rectangle, GUI.ButtonBehaviour.DEFAULT)
@@ -31,7 +31,7 @@ fun GUI.option(option: Int, selectedOption: Int, element: GUIElement = getLastEl
     if (newChecked) {
         val middleX = x + style.elementPadding
         val middleY = y + style.elementPadding
-        val middleSize = size - style.elementPadding * 2.0f
+        val middleSize = style.fontSize
 
         currentCommandList.drawCircleFilled(middleX + middleSize * 0.5f, middleY + middleSize * 0.5f, middleSize * 0.5f, style.highlightColor)
     }

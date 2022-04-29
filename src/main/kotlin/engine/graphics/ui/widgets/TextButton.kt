@@ -13,8 +13,8 @@ import engine.graphics.ui.drawText
  * @param text The text of the button.
  * @param action The function to execute when the button is clicked.
  */
-fun GUI.textButton(text: String, element: GUIElement = getLastElement(), action: () -> Unit): GUIElement {
-    val (x, y) = element
+fun GUI.textButton(text: String, action: () -> Unit): GUIElement {
+    val (x, y) = getLastElement()
 
     val rectangle = Rectangle()
     rectangle.x = x
@@ -24,8 +24,8 @@ fun GUI.textButton(text: String, element: GUIElement = getLastElement(), action:
     val textX = x + style.elementPadding
     val textY = y + style.elementPadding
 
-    rectangle.width = layout.width + 2.0f * style.elementPadding
-    rectangle.height = layout.height + 2.0f * style.elementPadding
+    rectangle.width = layout.width + style.elementPadding * 2.0f
+    rectangle.height = layout.height + style.elementPadding * 2.0f
 
     val state = getState(rectangle, GUI.ButtonBehaviour.DEFAULT)
 

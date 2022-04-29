@@ -11,12 +11,12 @@ import engine.utils.GradientColor
  *
  * @param gradient The gradient to add.
  * @param width The width of the gradient. Defaults to [style.elementSize] * 10.
- * @param height The height of the gradient. Defaults to [style.elementSizeWithPadding].
+ * @param height The height of the gradient. Defaults to [style.elementSize].
  *
  * TODO: Add gradient editor
  */
-fun GUI.gradient(gradient: Gradient, width: Float = style.elementSize * 10.0f, height: Float = style.elementSizeWithPadding, element: GUIElement = getLastElement()): GUIElement {
-    val (x, y) = element
+fun GUI.gradient(gradient: Gradient, width: Float = style.elementSize * 10.0f, height: Float = style.elementSize): GUIElement {
+    val (x, y) = getLastElement()
 
     lateinit var last: GradientColor
     var isFirst = true

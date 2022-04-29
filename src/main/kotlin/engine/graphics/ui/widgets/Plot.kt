@@ -19,8 +19,8 @@ import kotlin.math.min
  *
  * @see [PlotType].
  */
-fun GUI.plot(values: Iterable<Float>, type: GUI.PlotType, width: Float = style.elementSize * 10.0f, height: Float = width, min: Float? = null, max: Float? = null, element: GUIElement = getLastElement()): GUIElement {
-    val (x, y) = element
+fun GUI.plot(values: Iterable<Float>, type: GUI.PlotType, width: Float = style.elementSize * 10.0f, height: Float = width, min: Float? = null, max: Float? = null): GUIElement {
+    val (x, y) = getLastElement()
 
     var count = 0
     var minValue = Float.MAX_VALUE

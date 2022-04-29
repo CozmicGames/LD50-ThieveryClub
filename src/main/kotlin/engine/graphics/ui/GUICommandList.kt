@@ -15,6 +15,8 @@ import engine.graphics.font.GlyphLayout
 class GUICommandList {
     private val commands = arrayListOf<GUIContext.() -> Unit>()
 
+    val isEmpty get() = commands.isEmpty()
+
     fun addCommand(command: GUIContext.() -> Unit) {
         commands += command
     }

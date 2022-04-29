@@ -13,8 +13,8 @@ import engine.graphics.ui.drawText
  * @param text The text of the label.
  * @param backgroundColor The background color of the label. Defaults to [style.backgroundColor]. If null, no background is drawn.
  */
-fun GUI.label(text: String, backgroundColor: Color? = style.backgroundColor, element: GUIElement = getLastElement()): GUIElement {
-    val (x, y) = element
+fun GUI.label(text: String, backgroundColor: Color? = style.backgroundColor): GUIElement {
+    val (x, y) = getLastElement()
     val layout = GlyphLayout(text, drawableFont)
     val textX = x + style.elementPadding
     val textY = y + style.elementPadding

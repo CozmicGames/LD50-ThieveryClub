@@ -10,9 +10,7 @@ import com.cozmicgames.utils.rectpack.RectPacker
 import engine.graphics.font.DrawableFont.Companion.defaultChars
 import engine.graphics.shaders.DistanceFieldShader
 
-class DistanceFieldFont(val font: Font, override val drawableCharacters: String = defaultChars(), padding: Int = 4, spread: Float = 1.0f, downscale: Int = 1, color: Color = Color.WHITE) : DrawableFont {
-    override val size = font.size.toFloat()
-
+class DistanceFieldFont(val font: Font, override val drawableCharacters: String = defaultChars(), override val size: Float = 14.0f, padding: Int = 4, spread: Float = 1.0f, downscale: Int = 1, color: Color = Color.WHITE) : DrawableFont {
     override val texture: Texture2D
 
     override val requiredShader get() = DistanceFieldShader
@@ -23,7 +21,7 @@ class DistanceFieldFont(val font: Font, override val drawableCharacters: String 
         val charImages = hashMapOf<Int, Image>()
 
         drawableCharacters.forEach {
-            charImages[it.code] = DistanceFieldGenerator.generate(font.getCharImage(it) ?: requireNotNull(font.getCharImage(' ')), spread, downscale, color)
+            charImages[it.code] = DistanceFieldGenerator.generate(font.getCharImage(it, size) ?: requireNotNull(font.getCharImage(' ', size)), spread, downscale, color)
         }
 
         var image = Image(128, 128)

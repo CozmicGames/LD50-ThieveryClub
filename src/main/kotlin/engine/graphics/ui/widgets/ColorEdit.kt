@@ -13,8 +13,8 @@ import engine.graphics.ui.drawRectMultiColor
  *
  * @param color The color to edit.
  */
-fun GUI.colorEdit(color: Color, element: GUIElement = getLastElement()): GUIElement {
-    val (x, y) = element
+fun GUI.colorEdit(color: Color): GUIElement {
+    val (x, y) = getLastElement()
 
     val hsv = color.toHSV()
     var newAlpha = color.a

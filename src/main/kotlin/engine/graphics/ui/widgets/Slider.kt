@@ -13,12 +13,12 @@ import engine.graphics.ui.drawRectFilled
  * @param width The width of the slider. Defaults to [style.elementSize] * 10.
  * @param action The action to perform when the slider is changed. It is passed the new amount, between 0 and 1.
  */
-fun GUI.slider(amount: Float, width: Float = style.elementSize * 10.0f, element: GUIElement = getLastElement(), action: (Float) -> Unit): GUIElement {
-    val (x, y) = element
+fun GUI.slider(amount: Float, width: Float = style.elementSize * 10.0f, action: (Float) -> Unit): GUIElement {
+    val (x, y) = getLastElement()
 
-    val handleRadius = style.elementSizeWithPadding * 0.5f
+    val handleRadius = style.elementSize * 0.5f
 
-    val sliderHeight = style.elementSizeWithPadding / 3.0f
+    val sliderHeight = style.elementSize / 3.0f
     val sliderWidth = width - handleRadius * 2.0f
     val sliderX = x + handleRadius
     val sliderY = y + sliderHeight
@@ -32,7 +32,7 @@ fun GUI.slider(amount: Float, width: Float = style.elementSize * 10.0f, element:
     rectangle.x = x
     rectangle.y = y
     rectangle.width = width
-    rectangle.height = style.elementSizeWithPadding
+    rectangle.height = style.elementSize
 
     val state = getState(rectangle, GUI.ButtonBehaviour.REPEATED)
 
@@ -50,5 +50,5 @@ fun GUI.slider(amount: Float, width: Float = style.elementSize * 10.0f, element:
     } else
         currentCommandList.drawCircleFilled(handleX, handleY, handleRadius, style.normalColor)
 
-    return setLastElement(x, y, width, style.elementSizeWithPadding)
+    return setLastElement(x, y, width, style.elementSize)
 }

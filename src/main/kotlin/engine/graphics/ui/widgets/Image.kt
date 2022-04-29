@@ -11,13 +11,13 @@ import engine.graphics.ui.drawRect
  * Adds an image element.
  *
  * @param texture The texture of the image.
- * @param width The width of the image. Defaults to [style.elementSizeWithPadding].
+ * @param width The width of the image. Defaults to [style.elementSize].
  * @param height The height of the image. Defaults to the same value as [width].
  * @param color The color to tint the image with. Defaults to [Color.WHITE].
  * @param borderThickness The thickness of the border. Defaults to 4.0f.
  */
-fun GUI.image(texture: TextureRegion, width: Float = style.elementSizeWithPadding, height: Float = width, color: Color = Color.WHITE, borderThickness: Float = style.strokeThickness, element: GUIElement = getLastElement()): GUIElement {
-    val (x, y) = element
+fun GUI.image(texture: TextureRegion, width: Float = style.elementSize, height: Float = width, color: Color = Color.WHITE, borderThickness: Float = style.strokeThickness): GUIElement {
+    val (x, y) = getLastElement()
 
     currentCommandList.drawImage(x, y, width, height, texture, color)
 

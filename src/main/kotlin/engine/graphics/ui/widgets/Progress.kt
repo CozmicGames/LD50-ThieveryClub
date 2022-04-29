@@ -13,9 +13,9 @@ import engine.graphics.ui.drawRectFilled
  * @param width The width of the progress bar. Defaults to [style.elementSize] * 10.
  * @param color The color of the progress bar. Defaults to [style.highlightColor].
  */
-fun GUI.progress(progress: Float, width: Float = style.elementSize * 10.0f, color: Color = style.highlightColor, element: GUIElement = getLastElement()): GUIElement {
-    val (x, y) = element
-    val height = style.elementSizeWithPadding
+fun GUI.progress(progress: Float, width: Float = style.elementSize * 10.0f, color: Color = style.highlightColor): GUIElement {
+    val (x, y) = getLastElement()
+    val height = style.elementSize
 
     currentCommandList.drawRectFilled(x, y, width, height, style.roundedCorners, style.cornerRounding, style.normalColor)
 

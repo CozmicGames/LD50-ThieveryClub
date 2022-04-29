@@ -18,8 +18,8 @@ import kotlin.math.sin
  * @param minWidth The minimum width of the text field. Should be more than 0, so it can be selected if the text is empty. Defaults to [style.elementSize].
  * @param action The action to perform when the text changed. Defaults to a no-op.
  */
-fun GUI.textField(textData: TextData, minWidth: Float = style.elementSize, element: GUIElement = getLastElement(), action: () -> Unit = {}): GUIElement {
-    val (x, y) = element
+fun GUI.textField(textData: TextData, minWidth: Float = style.elementSize, action: () -> Unit = {}): GUIElement {
+    val (x, y) = getLastElement()
 
     val layout = GlyphLayout(textData.text, drawableFont)
     val rectangle = Rectangle()
@@ -87,7 +87,7 @@ fun GUI.textField(textData: TextData, minWidth: Float = style.elementSize, eleme
                 cursorY = 0.0f
             }
 
-            currentCommandList.drawRectFilled(x + cursorX + style.elementPadding, y + cursorY + style.elementPadding, 1.0f, style.elementSize, Corners.NONE, 0.0f, style.cursorColor)
+            currentCommandList.drawRectFilled(x + cursorX + style.elementPadding, y + cursorY + style.elementPadding, 1.0f, style.fontSize, Corners.NONE, 0.0f, style.cursorColor)
         }
     }
 

@@ -3,14 +3,17 @@ package tileseteditor
 import com.cozmicgames.Kore
 import com.cozmicgames.graphics
 import com.cozmicgames.utils.Color
+import com.cozmicgames.utils.maths.Vector2
 import common.levels.TileSet
 import common.levels.TileType
 import common.utils.plusButton
 import engine.GameState
 import engine.graphics.asRegion
 import engine.graphics.ui.GUI
+import engine.graphics.ui.GUIStyle
 import engine.graphics.ui.TextData
 import engine.graphics.ui.widgets.*
+import kotlin.random.Random
 
 class TileSetEditState : GameState {
     private lateinit var ui: GUI
@@ -18,6 +21,7 @@ class TileSetEditState : GameState {
     private lateinit var tileTypeNameTextData: TextData
     private lateinit var tileTypeDefaultPathTextData: TextData
 
+    val s = Vector2()
     private var selectedTileType: TileType? = null
 
     override fun onCreate() {
@@ -35,6 +39,13 @@ class TileSetEditState : GameState {
         ui.begin()
         selectType()
         editCurrentType()
+
+        ui.scrollPane(width = 50.0f, height = 100.0f, scroll = s) {
+            repeat(10) {
+                ui.label("The number of this is $it")
+            }
+        }
+
         ui.end()
 
         return this

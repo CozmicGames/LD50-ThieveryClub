@@ -8,12 +8,9 @@ import common.levels.TileSet
 import common.levels.TileType
 import common.utils.plusButton
 import engine.GameState
-import engine.graphics.asRegion
 import engine.graphics.ui.GUI
-import engine.graphics.ui.GUIStyle
 import engine.graphics.ui.TextData
 import engine.graphics.ui.widgets.*
-import kotlin.random.Random
 
 class TileSetEditState : GameState {
     private lateinit var ui: GUI
@@ -39,12 +36,6 @@ class TileSetEditState : GameState {
         ui.begin()
         selectType()
         editCurrentType()
-
-        ui.scrollPane(width = 50.0f, height = 100.0f, scroll = s) {
-            repeat(10) {
-                ui.label("The number of this is $it")
-            }
-        }
 
         ui.end()
 

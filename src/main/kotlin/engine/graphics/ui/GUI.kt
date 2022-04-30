@@ -5,13 +5,13 @@ import com.cozmicgames.graphics
 import com.cozmicgames.graphics.safeHeight
 import com.cozmicgames.graphics.safeWidth
 import com.cozmicgames.input
-import com.cozmicgames.input.CharListener
-import com.cozmicgames.input.KeyListener
+import com.cozmicgames.input.*
 import com.cozmicgames.utils.Color
 import com.cozmicgames.utils.Disposable
 import com.cozmicgames.utils.maths.Matrix4x4
 import com.cozmicgames.utils.maths.Rectangle
 import com.cozmicgames.utils.maths.Vector2
+import com.cozmicgames.utils.maths.smoothDamp
 import engine.graphics.font.BitmapFont
 import engine.graphics.render
 import kotlin.math.max
@@ -105,13 +105,19 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
     private var isSameLine = false
     private var lineHeight = 0.0f
 
-    private val keyListener: KeyListener = { key, down ->
-        if (down)
-            currentTextData?.onKeyAction(key)
-    }
+    private val inputListener = object : InputListener {
+        override fun onKey(key: Key, down: Boolean) {
+            if (down)
+                currentTextData?.onKeyAction(key)
+        }
 
-    private val charListener: CharListener = {
-        currentTextData?.onCharAction(it)
+        override fun onChar(char: Char) {
+            currentTextData?.onCharAction(char)
+        }
+
+        override fun onScroll(amount: Float) {
+            currentScrollAmount.y -= amount * style.scrollSpeed
+        }
     }
 
     /**
@@ -156,13 +162,17 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
         get() = field.set(Kore.input.lastX.toFloat(), (Kore.graphics.height - Kore.input.lastY).toFloat())
 
     /**
+     * The current scroll amount.
+     */
+    val currentScrollAmount = Vector2()
+
+    /**
      * The font used for text rendering.
      */
     val drawableFont = BitmapFont(style.font, size = style.fontSize)
 
     init {
-        Kore.input.addKeyListener(keyListener)
-        Kore.input.addCharListener(charListener)
+        Kore.input.addListener(inputListener)
     }
 
     /**
@@ -470,6 +480,10 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
      * It will also reset the command list.
      */
     fun end() {
+        currentScrollAmount.mul(0.9f)
+        if (currentScrollAmount.lengthSquared > 0.01f)
+            currentScrollAmount.setZero()
+
         transform.setToOrtho2D(Kore.graphics.safeInsetLeft.toFloat(), Kore.graphics.safeWidth.toFloat(), Kore.graphics.safeHeight.toFloat(), Kore.graphics.safeInsetTop.toFloat())
         context.renderer.render(transform) {
             it.withFlippedY(true) {
@@ -482,8 +496,7 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
      * Disposes the GUI and all its resources.
      */
     override fun dispose() {
-        Kore.input.removeKeyListener(keyListener)
-        Kore.input.removeCharListener(charListener)
+        Kore.input.removeListener(inputListener)
         drawableFont.dispose()
         context.dispose()
     }

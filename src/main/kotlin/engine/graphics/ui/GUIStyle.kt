@@ -25,6 +25,7 @@ open class GUIStyle {
     open var roundedCorners = Corners.ALL
     open var offsetToNextX = 4.0f
     open var offsetToNextY = 4.0f
+    open var scrollSpeed = 5.0f
 
     val elementPadding get() = (elementSize - fontSize) * 0.5f
 }

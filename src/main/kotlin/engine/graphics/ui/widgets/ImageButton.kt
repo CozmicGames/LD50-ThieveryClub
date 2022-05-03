@@ -36,5 +36,5 @@ fun GUI.imageButton(texture: TextureRegion, width: Float = style.elementSize, he
 
     currentCommandList.drawImage(x, y, width, height, texture, color)
 
-    return setLastElement(x, y, width, height, false)
+    return setLastElement(x, y, width, height)
 }

@@ -38,5 +38,5 @@ fun GUI.selectableImage(texture: TextureRegion, width: Float = style.elementSize
     else if (isSelected)
         currentCommandList.drawRect(x, y, width, height, style.roundedCorners, style.cornerRounding, style.strokeThickness, style.highlightColor)
 
-    return setLastElement(x, y, width, height, false)
+    return setLastElement(x, y, width, height)
 }

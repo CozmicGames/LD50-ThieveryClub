@@ -3,6 +3,7 @@ package engine.graphics.ui.widgets
 import com.cozmicgames.Kore
 import com.cozmicgames.graphics
 import com.cozmicgames.input
+import com.cozmicgames.utils.Color
 import com.cozmicgames.utils.maths.Rectangle
 import com.cozmicgames.utils.maths.Vector2
 import engine.graphics.ui.*
@@ -52,28 +53,28 @@ fun GUI.scrollArea(maxWidth: Float? = null, maxHeight: Float? = null, scroll: Ve
         contentWidth = content.width
         areaWidth = contentWidth + style.elementPadding * 2.0f
     } else {
-        areaWidth = min(content.width + style.elementPadding * 2.0f, maxWidth)
+        areaWidth = min(content.width + style.elementPadding * 2.0f, maxWidth) + style.elementPadding * 2.0f
         contentWidth = areaWidth - style.elementPadding * 2.0f
 
         if (scroll.x < 0.0f)
             scroll.x = 0.0f
 
-        if (scroll.x > content.width - areaWidth)
-            scroll.x = content.width - areaWidth
+        if (scroll.x > content.width - contentWidth)
+            scroll.x = content.width - contentWidth
     }
 
     if (maxHeight == null) {
         contentHeight = content.height
         areaHeight = contentHeight + style.elementPadding * 2.0f
     } else {
-        areaHeight = min(content.height + style.elementPadding * 2.0f, maxHeight)
+        areaHeight = min(content.height + style.elementPadding * 2.0f, maxHeight) + style.elementPadding * 2.0f
         contentHeight = areaHeight - style.elementPadding * 2.0f
 
         if (scroll.y < 0.0f)
             scroll.y = 0.0f
 
-        if (scroll.y > content.height - areaHeight)
-            scroll.y = content.height - areaHeight
+        if (scroll.y > content.height - contentHeight)
+            scroll.y = content.height - contentHeight
     }
 
     var totalWidth = areaWidth
@@ -96,10 +97,10 @@ fun GUI.scrollArea(maxWidth: Float? = null, maxHeight: Float? = null, scroll: Ve
         val scrollbarX = x
         val scrollbarY = y + contentHeight + style.elementPadding * 2.0f
         val scrollbarWidth = areaWidth
-        val scrollbarHeight = style.elementSize * 0.5f
+        val scrollbarHeight = style.scrollbarSize
 
-        val scrollbarGripX = scrollbarX + scroll.x * areaWidth / content.width
-        val scrollbarGripWidth = (areaWidth / content.width) * scrollbarWidth
+        val scrollbarGripX = scrollbarX + scroll.x * contentWidth / content.width
+        val scrollbarGripWidth = (contentWidth / content.width) * scrollbarWidth + style.elementPadding
 
         val scrollbarState = getState(rectangle.apply {
             this.x = scrollbarX
@@ -118,7 +119,7 @@ fun GUI.scrollArea(maxWidth: Float? = null, maxHeight: Float? = null, scroll: Ve
         val scrollbarColor = if (GUI.State.HOVERED in scrollbarState) style.hoverColor else style.normalColor
 
         val scrollbarGripColor = if (GUI.State.ACTIVE in scrollbarGripState && GUI.State.HOVERED in scrollbarGripState) {
-            scroll.x += Kore.input.deltaX * content.width / areaWidth
+            scroll.x += Kore.input.deltaX * content.width / contentWidth
             style.highlightColor
         } else if (GUI.State.HOVERED in scrollbarGripState)
             style.normalColor
@@ -135,11 +136,11 @@ fun GUI.scrollArea(maxWidth: Float? = null, maxHeight: Float? = null, scroll: Ve
     if (areaHeight - style.elementPadding * 2.0f < content.height) {
         val scrollbarX = x + contentWidth + style.elementPadding * 2.0f
         val scrollbarY = y
-        val scrollbarWidth = style.elementSize * 0.5f
+        val scrollbarWidth = style.scrollbarSize
         val scrollbarHeight = areaHeight
 
-        val scrollbarGripY = scrollbarY + scroll.y * areaHeight / content.height
-        val scrollbarGripHeight = (areaHeight / content.height) * scrollbarHeight
+        val scrollbarGripY = scrollbarY + scroll.y * contentHeight / content.height
+        val scrollbarGripHeight = (contentHeight / content.height) * scrollbarHeight + style.elementPadding
 
         val scrollbarState = getState(rectangle.apply {
             this.x = scrollbarX
@@ -158,7 +159,7 @@ fun GUI.scrollArea(maxWidth: Float? = null, maxHeight: Float? = null, scroll: Ve
         val scrollbarColor = if (GUI.State.HOVERED in scrollbarState) style.hoverColor else style.normalColor
 
         val scrollbarGripColor = if (GUI.State.ACTIVE in scrollbarGripState && GUI.State.HOVERED in scrollbarGripState) {
-            scroll.y -= Kore.input.deltaY * content.height / areaHeight
+            scroll.y -= Kore.input.deltaY * content.height / contentHeight
             style.highlightColor
         } else if (GUI.State.HOVERED in scrollbarGripState)
             style.normalColor

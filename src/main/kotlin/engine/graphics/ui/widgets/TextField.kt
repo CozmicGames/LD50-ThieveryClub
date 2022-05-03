@@ -3,7 +3,6 @@ package engine.graphics.ui.widgets
 import com.cozmicgames.Kore
 import com.cozmicgames.graphics
 import com.cozmicgames.input
-import com.cozmicgames.input.Keys
 import com.cozmicgames.utils.maths.Corners
 import com.cozmicgames.utils.maths.Rectangle
 import engine.graphics.font.GlyphLayout
@@ -87,7 +86,7 @@ fun GUI.textField(textData: TextData, minWidth: Float = style.elementSize, actio
                 cursorY = 0.0f
             }
 
-            currentCommandList.drawRectFilled(x + cursorX + style.elementPadding, y + cursorY + style.elementPadding, 1.0f, style.fontSize, Corners.NONE, 0.0f, style.cursorColor)
+            currentCommandList.drawRectFilled(x + cursorX + style.elementPadding, y + cursorY + style.elementPadding, 1.0f, style.contentSize, Corners.NONE, 0.0f, style.cursorColor)
         }
     }
 

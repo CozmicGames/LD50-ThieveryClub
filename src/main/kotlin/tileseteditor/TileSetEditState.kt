@@ -8,6 +8,7 @@ import common.levels.TileSet
 import common.levels.TileType
 import common.utils.plusButton
 import engine.GameState
+import engine.graphics.ui.ComboboxData
 import engine.graphics.ui.GUI
 import engine.graphics.ui.TextData
 import engine.graphics.ui.widgets.*
@@ -18,9 +19,10 @@ class TileSetEditState : GameState {
     private lateinit var tileTypeNameTextData: TextData
     private lateinit var tileTypeDefaultPathTextData: TextData
 
-    val s = Vector2()
     private var selectedTileType: TileType? = null
 
+    private val d = ComboboxData("Hello", "World", "Together", "Number", "Name")
+val s =Vector2()
     override fun onCreate() {
         ui = GUI()
         tileSet = TileSet()
@@ -76,6 +78,16 @@ class TileSetEditState : GameState {
             ui.textButton("Delete") {
                 tileSet.remove(it)
                 selectedTileType = null
+            }
+
+
+            ui.sameLine {
+                ui.combobox(d, 50.0f)
+            }
+
+
+            ui.textButton("Test") {
+                println("Test")
             }
         }
     }

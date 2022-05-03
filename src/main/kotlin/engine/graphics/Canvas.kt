@@ -31,11 +31,6 @@ class Canvas(width: Int = Kore.graphics.safeWidth, height: Int = Kore.graphics.s
             component.onCharAction(char)
     }
 
-    private val mouseListener = { x: Int, y: Int ->
-        for (component in components)
-            component.onMouseAction(x, y)
-    }
-
     private val touchListener = { x: Int, y: Int, pointer: Int, down: Boolean ->
         for (component in components)
             component.onTouchAction(x, y, pointer, down)
@@ -55,7 +50,6 @@ class Canvas(width: Int = Kore.graphics.safeWidth, height: Int = Kore.graphics.s
     init {
         Kore.input.addKeyListener(keyListener)
         Kore.input.addCharListener(charListener)
-        Kore.input.addMouseListener(mouseListener)
         Kore.input.addTouchListener(touchListener)
         Kore.input.addScrollListener(scrollListener)
         Kore.addDropListener(dropListener)
@@ -105,7 +99,6 @@ class Canvas(width: Int = Kore.graphics.safeWidth, height: Int = Kore.graphics.s
 
         Kore.input.removeKeyListener(keyListener)
         Kore.input.removeCharListener(charListener)
-        Kore.input.removeMouseListener(mouseListener)
         Kore.input.removeTouchListener(touchListener)
         Kore.input.removeScrollListener(scrollListener)
         Kore.removeDropListener(dropListener)

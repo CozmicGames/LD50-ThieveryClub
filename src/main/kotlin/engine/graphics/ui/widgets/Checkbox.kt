@@ -30,7 +30,7 @@ fun GUI.checkBox(isChecked: Boolean, action: (Boolean) -> Unit): GUIElement {
     if (newChecked) {
         val checkMarkX = x + style.elementPadding
         val checkMarkY = y + style.elementPadding
-        val checkMarkSize = style.fontSize
+        val checkMarkSize = style.contentSize
 
         currentCommandList.drawRectFilled(checkMarkX, checkMarkY, checkMarkSize, checkMarkSize, style.roundedCorners, style.cornerRounding, style.highlightColor)
     }

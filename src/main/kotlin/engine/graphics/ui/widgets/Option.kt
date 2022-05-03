@@ -31,7 +31,7 @@ fun GUI.option(option: Int, selectedOption: Int, action: (Int) -> Unit): GUIElem
     if (newChecked) {
         val middleX = x + style.elementPadding
         val middleY = y + style.elementPadding
-        val middleSize = style.fontSize
+        val middleSize = style.contentSize
 
         currentCommandList.drawCircleFilled(middleX + middleSize * 0.5f, middleY + middleSize * 0.5f, middleSize * 0.5f, style.highlightColor)
     }

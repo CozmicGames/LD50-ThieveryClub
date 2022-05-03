@@ -8,10 +8,10 @@ import com.cozmicgames.input
 import com.cozmicgames.input.*
 import com.cozmicgames.utils.Color
 import com.cozmicgames.utils.Disposable
+import com.cozmicgames.utils.Time
 import com.cozmicgames.utils.maths.Matrix4x4
 import com.cozmicgames.utils.maths.Rectangle
 import com.cozmicgames.utils.maths.Vector2
-import com.cozmicgames.utils.maths.smoothDamp
 import engine.graphics.font.BitmapFont
 import engine.graphics.render
 import kotlin.math.max
@@ -104,6 +104,8 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
     private val transform = Matrix4x4()
     private var isSameLine = false
     private var lineHeight = 0.0f
+    private var tooltipCounter = 0.0f
+    private var lastTime = Time.current
 
     private val inputListener = object : InputListener {
         override fun onKey(key: Key, down: Boolean) {
@@ -120,11 +122,19 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
         }
     }
 
+    private val layers = arrayListOf<GUILayer>()
+    private var currentLayerIndex = 0
+
     /**
      * The last element that was added to the GUI.
      */
     var lastElement: GUIElement? = null
         private set
+
+    /**
+     * The current layer.
+     */
+    val currentLayer get() = layers[currentLayerIndex]
 
     /**
      * The current command list.
@@ -150,6 +160,11 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
     var currentTextData: TextData? = null
 
     /**
+     * The current combobox data, if one is present.
+     */
+    var currentComboBoxData: ComboboxData<*>? = null
+
+    /**
      * The current touch position.
      */
     val touchPosition = Vector2()
@@ -169,10 +184,101 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
     /**
      * The font used for text rendering.
      */
-    val drawableFont = BitmapFont(style.font, size = style.fontSize)
+    val drawableFont = BitmapFont(style.font, size = style.contentSize)
+
+    /**
+     * Whether a tooltip should be shown, based on the time the pointer stands still.
+     */
+    val shouldShowTooltip get() = tooltipCounter >= style.tooltipDelay
 
     init {
         Kore.input.addListener(inputListener)
+        layers.add(GUILayer())
+        currentCommandList = currentLayer.commands
+    }
+
+    /**
+     * Executes [block] in a new layer on top of the current one.
+     * Also sets the current command list for the time [block] runs to the new layer's command list.
+     * Afterwards the current command list is set back to the previous one.
+     *
+     * @param block The block to execute.
+     */
+    fun layerUp(block: () -> Unit) {
+        currentLayerIndex++
+        if (currentLayerIndex >= layers.size)
+            layers.add(GUILayer())
+
+        val previousCommandList = currentCommandList
+        currentCommandList = currentLayer.commands
+
+        block()
+
+        currentCommandList = previousCommandList
+        currentLayerIndex--
+    }
+
+    /**
+     * Executes [block] in a new layer below of the current one.
+     * Also sets the current command list for the time [block] runs to the new layer's command list.
+     * Afterwards the current command list is set back to the previous one.
+     *
+     * @param block The block to execute.
+     */
+    fun layerDown(block: () -> Unit) {
+        currentLayerIndex--
+        if (currentLayerIndex < 0) {
+            currentLayerIndex = 0
+            layers.add(0, GUILayer())
+        }
+
+        val previousCommandList = currentCommandList
+        currentCommandList = currentLayer.commands
+
+        block()
+
+        currentCommandList = previousCommandList
+        currentLayerIndex++
+    }
+
+    /**
+     * Executes [block] on the top layer.
+     * Also sets the current command list for the time [block] runs to the top layer's command list.
+     * Afterwards the current command list and current layer is set back to the previous one.
+     *
+     * @param block The block to execute.
+     */
+    fun topLayer(block: () -> Unit) {
+        val previousLayerIndex = currentLayerIndex
+        currentLayerIndex = layers.size - 1
+
+        val previousCommandList = currentCommandList
+        currentCommandList = currentLayer.commands
+
+        block()
+
+        currentCommandList = previousCommandList
+        currentLayerIndex = previousLayerIndex
+    }
+
+    /**
+     * Executes [block] on the bottom layer.
+     * Also sets the current command list for the time [block] runs to the bottom layer's command list.
+     * Afterwards the current command list and current layer is set back to the previous one.
+     *
+     * @param block The block to execute.
+     */
+    fun bottomLayer(block: () -> Unit) {
+        val previousLayerIndex = currentLayerIndex
+        currentLayerIndex = 0
+
+        val previousCommandList = currentCommandList
+        currentCommandList = currentLayer.commands
+
+        block()
+
+        currentCommandList = previousCommandList
+        currentLayerIndex = previousLayerIndex
     }
 
     /**
@@ -202,21 +308,20 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
      * @param y The y position of the element.
      * @param width The width of the element.
      * @param height The height of the element.
-     * @param applyOffsets Whether to apply offsets from the GUI's style to the element.
      *
      * @return The element.
      */
-    fun setLastElement(x: Float, y: Float, width: Float, height: Float, applyOffsets: Boolean = true): GUIElement {
+    fun setLastElement(x: Float, y: Float, width: Float, height: Float): GUIElement {
         return setLastElement(if (isSameLine)
             object : GUIElement(x, y, width, height) {
-                override val nextX get() = x + width + if (applyOffsets) style.offsetToNextX else 0.0f
+                override val nextX get() = x + width
                 override val nextY get() = y
             }
         else
             object : GUIElement(x, y, width, height) {
                 override val nextX get() = x
-                override val nextY get() = y + height + if (applyOffsets) style.offsetToNextY else 0.0f
-            }, applyOffsets
+                override val nextY get() = y + height
+            }
         )
     }
 
@@ -228,20 +333,21 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
      * All GUI functions must end with this and should return the element.
      *
      * @param element The element.
-     * @param applyOffsets Whether to apply offsets from the GUI's style to the element.
      *
      * @return The element.
      */
-    fun setLastElement(element: GUIElement, applyOffsets: Boolean = true): GUIElement {
+    fun setLastElement(element: GUIElement): GUIElement {
+        currentLayer.addElement(element)
+
         lineHeight = if (isSameLine)
-            max(lineHeight, if (applyOffsets) element.height + style.offsetToNextY else element.height)
+            max(lineHeight, element.height)
         else
-            if (applyOffsets) element.height + style.offsetToNextY else element.height
+            element.height
 
         lastElement = element
 
         currentGroup?.let {
-            it.width = max(it.width, element.x + element.width - it.x + if (applyOffsets) style.elementPadding else 0.0f)
+            it.width = max(it.width, element.x + element.width - it.x + style.elementPadding)
 
             if (!isSameLine)
                 it.height += lineHeight
@@ -388,6 +494,14 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
     fun getState(rectangle: Rectangle, behaviour: ButtonBehaviour = ButtonBehaviour.NONE): Int {
         var state = 0
 
+        for (layerIndex in layers.indices.reversed()) {
+            if (layerIndex == currentLayerIndex)
+                break
+
+            if (layers[layerIndex].contains(touchPosition.x, touchPosition.y))
+                return state
+        }
+
         currentScissorRectangle?.let {
             if (touchPosition !in it || !(it intersects rectangle))
                 return state
@@ -471,6 +585,15 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
      */
     fun begin() {
         lastElement = null
+
+        val currentTime = Time.current
+        val deltaTime = (currentTime - lastTime).toFloat()
+        lastTime = currentTime
+
+        if (touchPosition.x == lastTouchPosition.x && touchPosition.y == lastTouchPosition.y)
+            tooltipCounter += deltaTime
+        else
+            tooltipCounter = 0.0f
     }
 
     /**
@@ -485,9 +608,14 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
             currentScrollAmount.setZero()
 
         transform.setToOrtho2D(Kore.graphics.safeInsetLeft.toFloat(), Kore.graphics.safeWidth.toFloat(), Kore.graphics.safeHeight.toFloat(), Kore.graphics.safeInsetTop.toFloat())
+
         context.renderer.render(transform) {
-            it.withFlippedY(true) {
-                commandList.process(context)
+            it.withFlippedX(false) {
+                it.withFlippedY(true) {
+                    layers.forEach {
+                        it.process(context)
+                    }
+                }
             }
         }
     }

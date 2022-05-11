@@ -102,7 +102,7 @@ class LevelEditState(val width: Int, val height: Int, val backgroundColor: Color
 
             ui.textButton("Save") {
                 val properties = level.write()
-                Kore.files.writeResource("$name.txt", false).use {
+                Kore.files.local("$name.txt").write(false).use {
                     it.writeString(properties.write())
                 }
             }

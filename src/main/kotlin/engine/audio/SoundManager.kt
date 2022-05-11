@@ -4,7 +4,9 @@ import com.cozmicgames.Kore
 import com.cozmicgames.audio
 import com.cozmicgames.audio.Sound
 import com.cozmicgames.files
+import com.cozmicgames.files.FileHandle
 import com.cozmicgames.files.Files
+import com.cozmicgames.files.extension
 import com.cozmicgames.log
 import com.cozmicgames.utils.Disposable
 import com.cozmicgames.utils.extensions.extension
@@ -12,19 +14,19 @@ import com.cozmicgames.utils.use
 import kotlin.reflect.KProperty
 
 class SoundManager : Disposable {
-    inner class Getter(val file: String) {
+    inner class Getter(val file: FileHandle) {
         operator fun getValue(thisRef: Any, property: KProperty<*>) = getOrAdd(file)
     }
 
-    private val sounds = hashMapOf<String, Sound>()
+    private val sounds = hashMapOf<FileHandle, Sound>()
 
-    fun add(file: String) {
-        if (!Kore.files.exists(file, Files.Type.ASSET)) {
+    fun add(file: FileHandle) {
+        if (!file.exists) {
             Kore.log.error(this::class, "Sound file not found: $file")
             return
         }
 
-        val sound = Kore.files.readAsset(file).use {
+        val sound = file.read().use {
             Kore.audio.readSound(it, file.extension)
         }
 
@@ -36,21 +38,21 @@ class SoundManager : Disposable {
         add(file, sound)
     }
 
-    operator fun contains(file: String) = file in sounds
+    operator fun contains(file: FileHandle) = file in sounds
 
-    fun add(file: String, sound: Sound) {
+    fun add(file: FileHandle, sound: Sound) {
         sounds[file] = sound
     }
 
-    fun remove(file: String) {
+    fun remove(file: FileHandle) {
         sounds.remove(file)
     }
 
-    operator fun get(file: String): Sound? {
+    operator fun get(file: FileHandle): Sound? {
         return sounds[file]
     }
 
-    fun getOrAdd(file: String): Sound {
+    fun getOrAdd(file: FileHandle): Sound {
         if (file !in this)
             add(file)
 
@@ -64,5 +66,5 @@ class SoundManager : Disposable {
         }
     }
 
-    operator fun invoke(file: String) = Getter(file)
+    operator fun invoke(file: FileHandle) = Getter(file)
 }

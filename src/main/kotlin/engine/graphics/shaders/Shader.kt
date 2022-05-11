@@ -2,6 +2,7 @@ package engine.graphics.shaders
 
 import com.cozmicgames.Kore
 import com.cozmicgames.files
+import com.cozmicgames.files.FileHandle
 import com.cozmicgames.files.Files
 import com.cozmicgames.files.readToString
 import com.cozmicgames.graphics.gpu.VertexLayout
@@ -10,8 +11,8 @@ import com.cozmicgames.utils.extensions.removeComments
 
 open class Shader(source: String) {
     companion object {
-        private fun loadSource(file: String, type: Files.Type): String {
-            val text = Kore.files.readToString(file, type)
+        private fun loadSource(file: FileHandle): String {
+            val text = file.readToString()
             return text.removeComments()
         }
 
@@ -24,7 +25,7 @@ open class Shader(source: String) {
         }
     }
 
-    constructor(file: String, type: Files.Type) : this(loadSource(file, type))
+    constructor(file: FileHandle) : this(loadSource(file))
 
     private val definition = PipelineDefinition()
 

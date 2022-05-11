@@ -33,7 +33,7 @@ fun GUI.textField(textData: TextData, minWidth: Float = style.elementSize, actio
     if (GUI.State.HOVERED in state && GUI.State.ACTIVE in state) {
         currentTextData = textData
         textData.setCursor(max(0, layout.findCursorIndex(touchPosition.x - x + style.elementPadding, touchPosition.y - y + style.elementPadding)))
-    } else if (Kore.input.justTouched)
+    } else if (Kore.input.justTouchedDown)
         currentTextData = null
 
     currentCommandList.drawRectFilled(rectangle.x, rectangle.y, rectangle.width, rectangle.height, style.roundedCorners, style.cornerRounding, style.backgroundColor)

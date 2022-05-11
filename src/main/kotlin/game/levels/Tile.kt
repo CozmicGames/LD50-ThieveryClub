@@ -1,5 +1,7 @@
 package game.levels
 
+import com.cozmicgames.Kore
+import com.cozmicgames.files
 import com.cozmicgames.utils.Disposable
 import com.cozmicgames.utils.Properties
 import engine.Game
@@ -9,7 +11,7 @@ import engine.physics.Body
 import engine.utils.Transform
 
 abstract class Tile(textureName: String, val isSolid: Boolean) : Disposable {
-    private val texture by Game.textures(textureName)
+    private val texture by Game.textures(Kore.files.asset(textureName))
     private val transform = Transform()
     private val sprite = StaticSprite(texture, transform)
     private var body: Body? = null

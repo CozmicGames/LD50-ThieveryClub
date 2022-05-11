@@ -1,11 +1,23 @@
 package common.levels
 
+import com.cozmicgames.Kore
+import com.cozmicgames.files
 import engine.Game
 import engine.graphics.TextureRegion
 
 class TileType(var name: String, defaultPath: String, var isSolid: Boolean) {
-    class Rule(val top: String?, val left: String?, val right: String?, val bottom: String?, val path: String) {
-        val texture by Game.textures(path)
+    class Rule(path: String, var top: String? = null, var left: String? = null, var right: String? = null, var bottom: String? = null) {
+        var path = path
+            set(value) {
+                if (field == value)
+                    return
+
+                texture = Game.textures.getOrAdd(Kore.files.absolute(value))
+                field = value
+            }
+
+        var texture = Game.textures.getOrAdd(Kore.files.absolute(path))
+            private set
     }
 
     var defaultPath = defaultPath
@@ -13,27 +25,31 @@ class TileType(var name: String, defaultPath: String, var isSolid: Boolean) {
             if (field == value)
                 return
 
-            defaultTexture = Game.textures.getOrAdd(value)
+            defaultTexture = Game.textures.getOrAdd(Kore.files.absolute(value))
             field = value
         }
 
     val rules = arrayListOf<Rule>()
 
-    var defaultTexture = Game.textures.getOrAdd(defaultPath)
+    var defaultTexture = Game.textures.getOrAdd(Kore.files.absolute(defaultPath))
         private set
 
     fun getTexture(tile: Tile): TextureRegion {
+        return getTexture(tile.left, tile.right, tile.top, tile.bottom)
+    }
+
+    fun getTexture(left: TileType? = null, right: TileType? = null, top: TileType? = null, bottom: TileType? = null): TextureRegion {
         for (rule in rules) {
-            if (rule.top != null && rule.top != tile.top?.name)
+            if (rule.top != null && rule.top != top?.name)
                 continue
 
-            if (rule.left != null && rule.left != tile.left?.name)
+            if (rule.left != null && rule.left != left?.name)
                 continue
 
-            if (rule.right != null && rule.right != tile.right?.name)
+            if (rule.right != null && rule.right != right?.name)
                 continue
 
-            if (rule.bottom != null && rule.bottom != tile.bottom?.name)
+            if (rule.bottom != null && rule.bottom != bottom?.name)
                 continue
 
             return rule.texture

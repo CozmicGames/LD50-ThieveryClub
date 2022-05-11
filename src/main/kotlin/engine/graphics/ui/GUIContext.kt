@@ -4,7 +4,7 @@ import com.cozmicgames.utils.Disposable
 import com.cozmicgames.utils.maths.VectorPath
 import engine.graphics.Renderer
 
-class GUIContext(val renderer: Renderer, private val ownsRenderer: Boolean) : Disposable {
+class GUIContext(val renderer: Renderer, private val ownsRenderer: Boolean = false) : Disposable {
     constructor() : this(Renderer(), true)
 
     private val path = VectorPath()

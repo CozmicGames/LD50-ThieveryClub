@@ -1,26 +1,24 @@
 package engine.graphics
 
 import com.cozmicgames.Kore
-import com.cozmicgames.files
-import com.cozmicgames.files.Files
+import com.cozmicgames.files.FileHandle
 import com.cozmicgames.graphics
 import com.cozmicgames.graphics.Image
 import com.cozmicgames.graphics.gpu.Texture
+import com.cozmicgames.graphics.loadImage
 import com.cozmicgames.log
 import com.cozmicgames.utils.Disposable
-import com.cozmicgames.utils.extensions.extension
-import com.cozmicgames.utils.use
 import engine.Game
 import kotlin.reflect.KProperty
 
 class TextureManager : Disposable {
-    inner class Getter(private val file: String, filter: Texture.Filter) {
+    inner class Getter(private val fileHandle: FileHandle, filter: Texture.Filter) {
         init {
-            if (file !in this@TextureManager)
-                add(file, filter)
+            if (fileHandle !in this@TextureManager)
+                add(fileHandle, filter)
         }
 
-        operator fun getValue(thisRef: Any, property: KProperty<*>) = get(file) ?: Game.graphics2d.missingTexture.asRegion()
+        operator fun getValue(thisRef: Any, property: KProperty<*>) = get(fileHandle) ?: Game.graphics2d.missingTexture.asRegion()
     }
 
     data class TextureKey(val filter: Texture.Filter)
@@ -28,27 +26,23 @@ class TextureManager : Disposable {
     private val textures = hashMapOf<TextureKey, TextureAtlas>()
     private val keys = hashMapOf<String, TextureKey>()
 
-    fun add(file: String, filter: Texture.Filter = Texture.Filter.NEAREST) {
-        val image = if (Kore.files.exists(file, Files.Type.ASSET)) {
-            Kore.files.readAsset(file).use {
-                Kore.graphics.readImage(it, file.extension)
-            }
-        } else if (Kore.files.exists(file, Files.Type.RESOURCE)) {
-            Kore.files.readResource(file).use {
-                Kore.graphics.readImage(it, file.extension)
-            }
-        } else {
-            Kore.log.error(this::class, "Texture file not found: $file")
+    fun add(fileHandle: FileHandle, filter: Texture.Filter = Texture.Filter.NEAREST) {
+        val image = if (fileHandle.exists)
+            Kore.graphics.loadImage(fileHandle)
+        else {
+            Kore.log.error(this::class, "Texture file not found: $fileHandle")
             return
         }
 
         if (image == null) {
-            Kore.log.error(this::class, "Failed to load texture file: $file")
+            Kore.log.error(this::class, "Failed to load texture file: $fileHandle")
             return
         }
 
-        add(file, image, filter)
+        add(fileHandle.toString(), image, filter)
     }
+
+    operator fun contains(fileHandle: FileHandle) = fileHandle.toString() in keys
 
     operator fun contains(name: String) = name in keys
 
@@ -64,17 +58,19 @@ class TextureManager : Disposable {
         textures[key]?.remove(file)
     }
 
-    operator fun get(file: String): TextureRegion? {
-        val key = keys[file] ?: return null
+    operator fun get(fileHandle: FileHandle) = get(fileHandle.toString())
+
+    operator fun get(name: String): TextureRegion? {
+        val key = keys[name] ?: return null
         val texture = textures[key] ?: return null
-        return texture[file]
+        return texture[name]
     }
 
-    fun getOrAdd(file: String, filter: Texture.Filter = Texture.Filter.NEAREST): TextureRegion {
-        if (file !in this)
-            add(file, filter)
+    fun getOrAdd(fileHandle: FileHandle, filter: Texture.Filter = Texture.Filter.NEAREST): TextureRegion {
+        if (fileHandle !in this)
+            add(fileHandle, filter)
 
-        return this[file] ?: Game.graphics2d.missingTexture.asRegion()
+        return this[fileHandle] ?: Game.graphics2d.missingTexture.asRegion()
     }
 
     fun getAtlas(key: TextureKey): TextureAtlas {
@@ -91,5 +87,5 @@ class TextureManager : Disposable {
         }
     }
 
-    operator fun invoke(file: String, filter: Texture.Filter = Texture.Filter.NEAREST) = Getter(file, filter)
+    operator fun invoke(fileHandle: FileHandle, filter: Texture.Filter = Texture.Filter.NEAREST) = Getter(fileHandle, filter)
 }

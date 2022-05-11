@@ -117,8 +117,9 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
             currentTextData?.onCharAction(char)
         }
 
-        override fun onScroll(amount: Float) {
-            currentScrollAmount.y -= amount * style.scrollSpeed
+        override fun onScroll(x: Float, y: Float) {
+            currentScrollAmount.x -= x * style.scrollSpeed
+            currentScrollAmount.y -= y * style.scrollSpeed
         }
     }
 
@@ -312,16 +313,17 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
      * @return The element.
      */
     fun setLastElement(x: Float, y: Float, width: Float, height: Float): GUIElement {
-        return setLastElement(if (isSameLine)
-            object : GUIElement(x, y, width, height) {
-                override val nextX get() = x + width
-                override val nextY get() = y
-            }
-        else
-            object : GUIElement(x, y, width, height) {
-                override val nextX get() = x
-                override val nextY get() = y + height
-            }
+        return setLastElement(
+            if (isSameLine)
+                object : GUIElement(x, y, width, height) {
+                    override val nextX get() = x + width
+                    override val nextY get() = y
+                }
+            else
+                object : GUIElement(x, y, width, height) {
+                    override val nextX get() = x
+                    override val nextY get() = y + height
+                }
         )
     }
 
@@ -511,7 +513,7 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
             state += State.HOVERED
 
             when (behaviour) {
-                ButtonBehaviour.DEFAULT -> if (Kore.input.justTouched) state += State.ACTIVE
+                ButtonBehaviour.DEFAULT -> if (Kore.input.justTouchedUp) state += State.ACTIVE
                 ButtonBehaviour.REPEATED -> if (Kore.input.isTouched) state += State.ACTIVE
                 else -> {}
             }

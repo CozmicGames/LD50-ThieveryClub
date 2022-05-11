@@ -21,40 +21,6 @@ class Canvas(width: Int = Kore.graphics.safeWidth, height: Int = Kore.graphics.s
 
     private val components = arrayListOf<Component>()
 
-    private val keyListener = { key: Key, down: Boolean ->
-        for (component in components)
-            component.onKeyAction(key, down)
-    }
-
-    private val charListener = { char: Char ->
-        for (component in components)
-            component.onCharAction(char)
-    }
-
-    private val touchListener = { x: Int, y: Int, pointer: Int, down: Boolean ->
-        for (component in components)
-            component.onTouchAction(x, y, pointer, down)
-    }
-
-    private val scrollListener = { amount: Float ->
-        for (component in components)
-            component.onScrollAction(amount)
-    }
-
-    private val dropListener = { values: Array<String> ->
-        for (component in components)
-            if (Vector2(Kore.input.x.toFloat(), Kore.input.y.toFloat()) in component.rectangle)
-                component.onDropAction(values)
-    }
-
-    init {
-        Kore.input.addKeyListener(keyListener)
-        Kore.input.addCharListener(charListener)
-        Kore.input.addTouchListener(touchListener)
-        Kore.input.addScrollListener(scrollListener)
-        Kore.addDropListener(dropListener)
-    }
-
     fun resize(width: Int, height: Int, resetPosition: Boolean = true) {
         this.width = width
         this.height = height
@@ -96,11 +62,5 @@ class Canvas(width: Int = Kore.graphics.safeWidth, height: Int = Kore.graphics.s
             if (it is Disposable)
                 it.dispose()
         }
-
-        Kore.input.removeKeyListener(keyListener)
-        Kore.input.removeCharListener(charListener)
-        Kore.input.removeTouchListener(touchListener)
-        Kore.input.removeScrollListener(scrollListener)
-        Kore.removeDropListener(dropListener)
     }
 }

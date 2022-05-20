@@ -16,7 +16,7 @@ import engine.graphics.font.BitmapFont
 import engine.graphics.render
 import kotlin.math.max
 
-class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle()) : Disposable {
+class GUI(val context: GUIContext = GUIContext(), val skin: GUISkin = GUISkin()) : Disposable {
     /**
      * The state an element can have.
      * HOVERED: The mouse is hovering over the element.
@@ -118,8 +118,8 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
         }
 
         override fun onScroll(x: Float, y: Float) {
-            currentScrollAmount.x -= x * style.scrollSpeed
-            currentScrollAmount.y -= y * style.scrollSpeed
+            currentScrollAmount.x -= x * skin.scrollSpeed
+            currentScrollAmount.y -= y * skin.scrollSpeed
         }
     }
 
@@ -185,12 +185,12 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
     /**
      * The font used for text rendering.
      */
-    val drawableFont = BitmapFont(style.font, size = style.contentSize)
+    val drawableFont = BitmapFont(skin.font, size = skin.contentSize)
 
     /**
      * Whether a tooltip should be shown, based on the time the pointer stands still.
      */
-    val shouldShowTooltip get() = tooltipCounter >= style.tooltipDelay
+    val shouldShowTooltip get() = tooltipCounter >= skin.tooltipDelay
 
     init {
         Kore.input.addListener(inputListener)
@@ -349,7 +349,7 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
         lastElement = element
 
         currentGroup?.let {
-            it.width = max(it.width, element.x + element.width - it.x + style.elementPadding)
+            it.width = max(it.width, element.x + element.width - it.x + skin.elementPadding)
 
             if (!isSameLine)
                 it.height += lineHeight
@@ -469,7 +469,7 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
      *
      * @param size The size of the blank line.
      */
-    fun blankLine(size: Float = style.elementSize): GUIElement {
+    fun blankLine(size: Float = skin.elementSize): GUIElement {
         val (x, y) = getLastElement()
         return setLastElement(x, y, 0.0f, size)
     }
@@ -478,9 +478,9 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
      * Adds a spacing element.
      * The spacing is a horizontal gap of the given [width].
      *
-     * @param width The width of the spacing. Defaults to [style.elementSize].
+     * @param width The width of the spacing. Defaults to [skin.elementSize].
      */
-    fun spacing(width: Float = style.elementSize): GUIElement {
+    fun spacing(width: Float = skin.elementSize): GUIElement {
         val (x, y) = getLastElement()
         return setLastElement(x, y, width, 0.0f)
     }
@@ -570,7 +570,7 @@ class GUI(val context: GUIContext = GUIContext(), val style: GUIStyle = GUIStyle
         val commands = recordCommands(block)
 
         backgroundColor?.let {
-            currentCommandList.drawRectFilled(group.x, group.y, group.width, group.height, style.roundedCorners, style.cornerRounding, it)
+            currentCommandList.drawRectFilled(group.x, group.y, group.width, group.height, skin.roundedCorners, skin.cornerRounding, it)
         }
         currentCommandList.addCommandList(commands)
 

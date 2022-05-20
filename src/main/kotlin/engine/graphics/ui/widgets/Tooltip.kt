@@ -8,19 +8,19 @@ import engine.graphics.ui.GUIElement
 import engine.graphics.ui.drawRectFilled
 import engine.graphics.ui.drawText
 
-fun GUI.tooltip(element: GUIElement, text: String, backgroundColor: Color? = style.backgroundColor) {
+fun GUI.tooltip(element: GUIElement, text: String, backgroundColor: Color? = skin.backgroundColor) {
     if (!shouldShowTooltip)
         return
 
     val layout = GlyphLayout(text, drawableFont)
 
     val x = touchPosition.x
-    val y = touchPosition.y - (layout.height + style.elementPadding * 2.0f)
+    val y = touchPosition.y - (layout.height + skin.elementPadding * 2.0f)
 
-    val textX = x + style.elementPadding
-    val textY = y + style.elementPadding
-    val width = layout.width + 2.0f * style.elementPadding
-    val height = layout.height + 2.0f * style.elementPadding
+    val textX = x + skin.elementPadding
+    val textY = y + skin.elementPadding
+    val width = layout.width + 2.0f * skin.elementPadding
+    val height = layout.height + 2.0f * skin.elementPadding
 
     val rectangle = Rectangle()
     rectangle.x = element.x
@@ -31,9 +31,9 @@ fun GUI.tooltip(element: GUIElement, text: String, backgroundColor: Color? = sty
     if (GUI.State.HOVERED in getState(rectangle)) {
         layerUp {
             if (backgroundColor != null)
-                currentCommandList.drawRectFilled(x, y, width, height, style.roundedCorners, style.cornerRounding, backgroundColor)
+                currentCommandList.drawRectFilled(x, y, width, height, skin.roundedCorners, skin.cornerRounding, backgroundColor)
 
-            currentCommandList.drawText(textX, textY, layout, style.fontColor)
+            currentCommandList.drawText(textX, textY, layout, skin.fontColor)
         }
     }
 }

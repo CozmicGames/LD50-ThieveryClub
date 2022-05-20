@@ -17,7 +17,7 @@ import kotlin.math.sin
  * @param minWidth The minimum width of the text field. Should be more than 0, so it can be selected if the text is empty. Defaults to [style.elementSize].
  * @param action The action to perform when the text changed. Defaults to a no-op.
  */
-fun GUI.textField(textData: TextData, minWidth: Float = style.elementSize, action: () -> Unit = {}): GUIElement {
+fun GUI.textField(textData: TextData, minWidth: Float = skin.elementSize, action: () -> Unit = {}): GUIElement {
     val (x, y) = getLastElement()
 
     val layout = GlyphLayout(textData.text, drawableFont)
@@ -25,19 +25,19 @@ fun GUI.textField(textData: TextData, minWidth: Float = style.elementSize, actio
 
     rectangle.x = x
     rectangle.y = y
-    rectangle.width = max(layout.width, minWidth) + style.elementPadding * 2.0f
-    rectangle.height = layout.height + style.elementPadding * 2.0f
+    rectangle.width = max(layout.width, minWidth) + skin.elementPadding * 2.0f
+    rectangle.height = layout.height + skin.elementPadding * 2.0f
 
     val state = getState(rectangle, GUI.ButtonBehaviour.REPEATED)
 
     if (GUI.State.HOVERED in state && GUI.State.ACTIVE in state) {
         currentTextData = textData
-        textData.setCursor(max(0, layout.findCursorIndex(touchPosition.x - x + style.elementPadding, touchPosition.y - y + style.elementPadding)))
+        textData.setCursor(max(0, layout.findCursorIndex(touchPosition.x - x + skin.elementPadding, touchPosition.y - y + skin.elementPadding)))
     } else if (Kore.input.justTouchedDown)
         currentTextData = null
 
-    currentCommandList.drawRectFilled(rectangle.x, rectangle.y, rectangle.width, rectangle.height, style.roundedCorners, style.cornerRounding, style.backgroundColor)
-    currentCommandList.drawText(x + style.elementPadding, y + style.elementPadding, layout, style.fontColor)
+    currentCommandList.drawRectFilled(rectangle.x, rectangle.y, rectangle.width, rectangle.height, skin.roundedCorners, skin.cornerRounding, skin.backgroundColor)
+    currentCommandList.drawText(x + skin.elementPadding, y + skin.elementPadding, layout, skin.fontColor)
 
     if (textData == currentTextData) {
         if (textData.isSelectionActive) {
@@ -66,7 +66,7 @@ fun GUI.textField(textData: TextData, minWidth: Float = style.elementSize, actio
                 quad.x + quad.width - selectionX
             }
 
-            currentCommandList.drawRectFilled(x + selectionX + style.elementPadding, y + selectionY + style.elementPadding, selectionWidth, style.elementSize, Corners.NONE, 0.0f, style.cursorColor)
+            currentCommandList.drawRectFilled(x + selectionX + skin.elementPadding, y + selectionY + skin.elementPadding, selectionWidth, skin.elementSize, Corners.NONE, 0.0f, skin.cursorColor)
         } else if (sin(Kore.graphics.statistics.runTime * 5.0f) > 0.0f) {
             val cursorX: Float
             val cursorY: Float
@@ -86,7 +86,7 @@ fun GUI.textField(textData: TextData, minWidth: Float = style.elementSize, actio
                 cursorY = 0.0f
             }
 
-            currentCommandList.drawRectFilled(x + cursorX + style.elementPadding, y + cursorY + style.elementPadding, 1.0f, style.contentSize, Corners.NONE, 0.0f, style.cursorColor)
+            currentCommandList.drawRectFilled(x + cursorX + skin.elementPadding, y + cursorY + skin.elementPadding, 1.0f, skin.contentSize, Corners.NONE, 0.0f, skin.cursorColor)
         }
     }
 

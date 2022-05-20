@@ -19,7 +19,7 @@ import kotlin.math.min
  *
  * @see [PlotType].
  */
-fun GUI.plot(values: Iterable<Float>, type: GUI.PlotType, width: Float = style.elementSize * 10.0f, height: Float = width, min: Float? = null, max: Float? = null): GUIElement {
+fun GUI.plot(values: Iterable<Float>, type: GUI.PlotType, width: Float = skin.elementSize * 10.0f, height: Float = width, min: Float? = null, max: Float? = null): GUIElement {
     val (x, y) = getLastElement()
 
     var count = 0
@@ -35,11 +35,11 @@ fun GUI.plot(values: Iterable<Float>, type: GUI.PlotType, width: Float = style.e
     val usedMin = min ?: minValue
     val usedMax = max ?: maxValue
 
-    currentCommandList.drawRectFilled(x, y, width, height, style.roundedCorners, style.cornerRounding, style.normalColor)
+    currentCommandList.drawRectFilled(x, y, width, height, skin.roundedCorners, skin.cornerRounding, skin.normalColor)
 
-    val slotWidth = (width - style.elementPadding * 2.0f) / count
-    val slotMaxHeight = height - style.elementPadding * 2.0f
-    var slotX = x + style.elementPadding
+    val slotWidth = (width - skin.elementPadding * 2.0f) / count
+    val slotMaxHeight = height - skin.elementPadding * 2.0f
+    var slotX = x + skin.elementPadding
 
     fun getSlotHeight(value: Float) = value.convertRange(usedMin, usedMax, 0.0f, 1.0f) * slotMaxHeight
 
@@ -47,15 +47,15 @@ fun GUI.plot(values: Iterable<Float>, type: GUI.PlotType, width: Float = style.e
         GUI.PlotType.POINTS -> {
             slotX += slotWidth * 0.5f
             values.forEach {
-                val slotY = y + style.elementPadding + (slotMaxHeight - getSlotHeight(it))
-                currentCommandList.drawCircleFilled(slotX, slotY, style.elementSize * 0.33f, style.highlightColor)
+                val slotY = y + skin.elementPadding + (slotMaxHeight - getSlotHeight(it))
+                currentCommandList.drawCircleFilled(slotX, slotY, skin.elementSize * 0.33f, skin.highlightColor)
                 slotX += slotWidth
             }
         }
         GUI.PlotType.BARS -> {
             values.forEach {
                 val slotHeight = getSlotHeight(it)
-                currentCommandList.drawRectFilled(slotX + 1.0f, y + style.elementPadding + slotMaxHeight - slotHeight, slotWidth - 2.0f, slotHeight, Corners.NONE, 0.0f, style.highlightColor)
+                currentCommandList.drawRectFilled(slotX + 1.0f, y + skin.elementPadding + slotMaxHeight - slotHeight, slotWidth - 2.0f, slotHeight, Corners.NONE, 0.0f, skin.highlightColor)
                 slotX += slotWidth
             }
         }
@@ -64,17 +64,17 @@ fun GUI.plot(values: Iterable<Float>, type: GUI.PlotType, width: Float = style.e
             var lastValue = 0.0f
             var isFirst = true
             values.forEach {
-                val slotY = y + style.elementPadding + (slotMaxHeight - getSlotHeight(it))
+                val slotY = y + skin.elementPadding + (slotMaxHeight - getSlotHeight(it))
 
                 if (isFirst)
                     isFirst = false
                 else {
                     val lastSlotX = slotX - slotWidth
-                    val lastSlotY = y + style.elementPadding + (slotMaxHeight - getSlotHeight(lastValue))
-                    currentCommandList.drawLine(lastSlotX, lastSlotY, slotX, slotY, style.elementSize * 0.25f, style.highlightColor)
+                    val lastSlotY = y + skin.elementPadding + (slotMaxHeight - getSlotHeight(lastValue))
+                    currentCommandList.drawLine(lastSlotX, lastSlotY, slotX, slotY, skin.elementSize * 0.25f, skin.highlightColor)
                 }
 
-                currentCommandList.drawCircleFilled(slotX, slotY, style.elementSize * 0.33f, style.highlightColor)
+                currentCommandList.drawCircleFilled(slotX, slotY, skin.elementSize * 0.33f, skin.highlightColor)
                 slotX += slotWidth
                 lastValue = it
             }

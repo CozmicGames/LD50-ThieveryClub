@@ -4,10 +4,10 @@ import com.cozmicgames.utils.Disposable
 import engine.Game
 import engine.graphics.ui.GUI
 import engine.graphics.ui.GUIContext
-import engine.graphics.ui.GUIStyle
+import engine.graphics.ui.GUISkin
 
 class GUILayout : Disposable {
-    private val styles = hashMapOf<String, GUIStyle>()
+    private val styles = hashMapOf<String, GUISkin>()
     private val guis = hashMapOf<String, GUI>()
     private val regions = hashMapOf<String, GUIRegion>()
 
@@ -15,14 +15,13 @@ class GUILayout : Disposable {
         addStyle("default") {}
     }
 
-    fun addStyle(name: String, block: GUIStyle.() -> Unit) {
-        styles.getOrPut(name) { GUIStyle() }.apply(block)
+    fun addStyle(name: String, block: GUISkin.() -> Unit) {
+        styles.getOrPut(name) { GUISkin() }.apply(block)
     }
 
     fun addRegion(name: String, style: String = "default", block: GUIRegion.() -> Unit) {
         val gui = getGUI(style) ?: requireNotNull(getGUI("default"))
         val region = regions.getOrPut(name) { GUIRegion(gui) }
-        region.gui = gui
         region.apply(block)
     }
 
@@ -35,8 +34,15 @@ class GUILayout : Disposable {
         }
     }
 
-    fun render() {
-        regions.values.forEach { it.render() }
+    fun getRegion(name: String): GUIRegion? {
+        return regions[name]
+    }
+
+    fun render(delta: Float) {
+        regions.values.forEach {
+            it.animator.update(delta)
+            it.render()
+        }
     }
 
     override fun dispose() {

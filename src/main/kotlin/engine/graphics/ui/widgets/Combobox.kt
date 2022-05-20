@@ -14,13 +14,13 @@ fun GUI.combobox(data: ComboboxData<*>, maxDropOutHeight: Float? = null): GUIEle
     data.forEach {
         layout.update(it.toString(), drawableFont)
         maxItemWidth = max(maxItemWidth, layout.width)
-        itemsHeight += layout.height + style.elementPadding * 2.0f
+        itemsHeight += layout.height + skin.elementPadding * 2.0f
     }
 
     val requiresScrollbar = maxDropOutHeight != null && itemsHeight > maxDropOutHeight
 
     if (requiresScrollbar)
-        maxItemWidth += style.scrollbarSize + style.elementPadding
+        maxItemWidth += skin.scrollbarSize + skin.elementPadding
 
     val element = dropdown(data.selectedItem.toString(), data.isOpen, maxItemWidth) {
         data.isOpen = it
@@ -37,14 +37,14 @@ fun GUI.combobox(data: ComboboxData<*>, maxDropOutHeight: Float? = null): GUIEle
     maxItemWidth = max(maxItemWidth, element.width)
 
     if (requiresScrollbar)
-        maxItemWidth -= style.scrollbarSize + style.elementPadding
+        maxItemWidth -= skin.scrollbarSize + skin.elementPadding
 
     if (data.isOpen) {
         val previousSameLine =
 
         layerUp {
             transient {
-                scrollPane(maxHeight = maxDropOutHeight, scroll = data.scrollAmount, backgroundColor = style.normalColor) {
+                scrollPane(maxHeight = maxDropOutHeight, scroll = data.scrollAmount, backgroundColor = skin.normalColor) {
                     repeat(data.size) {
                         comboboxElement(data, it, maxItemWidth)
                     }
@@ -65,27 +65,27 @@ private fun GUI.comboboxElement(data: ComboboxData<*>, index: Int, itemWidth: Fl
 
     rectangle.x = x
     rectangle.y = y
-    rectangle.width = itemWidth + style.elementPadding * 2.0f
-    rectangle.height = itemLayout.height + style.elementPadding + 2.0f
+    rectangle.width = itemWidth + skin.elementPadding * 2.0f
+    rectangle.height = itemLayout.height + skin.elementPadding + 2.0f
 
-    val textX = x + style.elementPadding
-    val textY = y + style.elementPadding
+    val textX = x + skin.elementPadding
+    val textY = y + skin.elementPadding
 
     val state = getState(rectangle, GUI.ButtonBehaviour.DEFAULT)
 
     val color = if (GUI.State.ACTIVE in state) {
         data.selectedIndex = index
         data.isOpen = false
-        style.highlightColor
+        skin.highlightColor
     } else if (GUI.State.HOVERED in state)
-        style.hoverColor
+        skin.hoverColor
     else
         null
 
     if (color != null)
         currentCommandList.drawRectFilled(rectangle.x, rectangle.y, rectangle.width, rectangle.height, Corners.NONE, 0.0f, color)
 
-    currentCommandList.drawText(textX, textY, itemLayout, style.fontColor)
+    currentCommandList.drawText(textX, textY, itemLayout, skin.fontColor)
 
     setLastElement(x, y, rectangle.width, rectangle.height)
 }

@@ -13,12 +13,12 @@ import engine.graphics.ui.drawRectFilled
  */
 fun GUI.checkBox(isChecked: Boolean, action: (Boolean) -> Unit): GUIElement {
     val (x, y) = getLastElement()
-    val size = style.elementSize
+    val size = skin.elementSize
 
     val rectangle = Rectangle(x, y, size, size)
     val state = getState(rectangle, GUI.ButtonBehaviour.DEFAULT)
 
-    currentCommandList.drawRectFilled(x, y, size, size, style.roundedCorners, style.cornerRounding, if (GUI.State.HOVERED in state) style.hoverColor else style.normalColor)
+    currentCommandList.drawRectFilled(x, y, size, size, skin.roundedCorners, skin.cornerRounding, if (GUI.State.HOVERED in state) skin.hoverColor else skin.normalColor)
     val isClicked = GUI.State.ACTIVE in state
     var newChecked = isChecked
 
@@ -28,11 +28,11 @@ fun GUI.checkBox(isChecked: Boolean, action: (Boolean) -> Unit): GUIElement {
     }
 
     if (newChecked) {
-        val checkMarkX = x + style.elementPadding
-        val checkMarkY = y + style.elementPadding
-        val checkMarkSize = style.contentSize
+        val checkMarkX = x + skin.elementPadding
+        val checkMarkY = y + skin.elementPadding
+        val checkMarkSize = skin.contentSize
 
-        currentCommandList.drawRectFilled(checkMarkX, checkMarkY, checkMarkSize, checkMarkSize, style.roundedCorners, style.cornerRounding, style.highlightColor)
+        currentCommandList.drawRectFilled(checkMarkX, checkMarkY, checkMarkSize, checkMarkSize, skin.roundedCorners, skin.cornerRounding, skin.highlightColor)
     }
 
     return setLastElement(x, y, size, size)

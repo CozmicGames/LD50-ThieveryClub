@@ -11,7 +11,6 @@ import com.cozmicgames.utils.use
 import common.levels.Level
 import common.levels.TileSet
 import common.levels.TileType
-import common.levels.createTestTileSet
 import engine.Game
 import engine.GameState
 import engine.graphics.Canvas
@@ -42,7 +41,7 @@ class LevelEditState(val width: Int, val height: Int, val backgroundColor: Color
         ui = GUI()
         textData = TextData(name) {}
         levelCanvas = Canvas()
-        tileSet = createTestTileSet() //TODO: load from file
+        //tileSet = createTestTileSet() //TODO: load from file
         level = Level(levelCanvas, tileSet)
         level.initialize(width, height)
     }

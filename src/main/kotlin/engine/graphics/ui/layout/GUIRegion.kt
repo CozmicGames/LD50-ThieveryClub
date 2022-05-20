@@ -1,55 +1,41 @@
 package engine.graphics.ui.layout
 
-import com.cozmicgames.Kore
-import com.cozmicgames.graphics
 import com.cozmicgames.utils.Color
-import com.cozmicgames.utils.maths.Rectangle
-import com.cozmicgames.utils.maths.Vector2
-import engine.Game
-import engine.graphics.render
+import com.cozmicgames.utils.Disposable
 import engine.graphics.ui.GUI
-import engine.graphics.ui.drawRectFilled
-import engine.graphics.ui.widgets.scrollArea
-import engine.graphics.ui.widgets.scrollPane
+import engine.graphics.ui.drawCircleFilled
+import engine.graphics.ui.drawRect
 
-class GUIRegion(internal var gui: GUI) {
-    companion object {
-        internal val DEFAULT_CONSTRAINTS = GUIConstraints()
-        internal val DEFAULT_PARENT = Rectangle()
-            get() {
-                field.x = Kore.graphics.safeInsetLeft.toFloat()
-                field.y = Kore.graphics.safeInsetTop.toFloat()
-                field.width = Kore.graphics.width.toFloat()
-                field.height = Kore.graphics.height.toFloat()
-                return field
-            }
-    }
+class GUIRegion(val gui: GUI, private val ownsGUI: Boolean = false) : Disposable {
+    constructor() : this(GUI(), true)
 
-    val rectangle = Rectangle()
-        get() {
-            field.x = constraints.x.getValue(parent, field)
-            field.y = constraints.y.getValue(parent, field)
-            field.width = constraints.width.getValue(parent, field)
-            field.height = constraints.height.getValue(parent, field)
-            return field
-        }
+    val constraints = GUIConstraints()
 
-    var parent: Rectangle = DEFAULT_PARENT
+    val animator = GUIAnimator()
 
-    var constraints: GUIConstraints = DEFAULT_CONSTRAINTS
+    val x get() = constraints.x.getValue(parent, this) + animator.x
 
-    var layout: (GUI) -> Unit = {}
+    val y get() = constraints.y.getValue(parent, this) + animator.y
 
-    private val scrollAmount = Vector2()
+    val width get() = constraints.width.getValue(parent, this) * animator.width
+
+    val height get() = constraints.height.getValue(parent, this) * animator.height
+
+    var parent: GUIRegion? = null
+
+    var layoutElements: (GUI) -> Unit = {}
 
     fun render() {
-        val rectangle = this.rectangle
-
         gui.begin()
-        gui.setLastElement(gui.absolute(rectangle.x, rectangle.y))
-        gui.scrollPane(rectangle.width, rectangle.height, scrollAmount) {
-            layout(gui)
-        }
+        gui.setLastElement(gui.absolute(x, y))
+        layoutElements(gui)
+        gui.currentCommandList.drawRect(x, y, width, height, 0, 0.0f, 1.5f, Color.RED)
+        gui.currentCommandList.drawCircleFilled(x, y, 5.0f, Color.RED)
         gui.end()
+    }
+
+    override fun dispose() {
+        if (ownsGUI)
+            gui.dispose()
     }
 }

@@ -11,6 +11,8 @@ import com.cozmicgames.utils.maths.VectorPath
 import engine.graphics.TextureRegion
 import engine.graphics.drawRect
 import engine.graphics.font.GlyphLayout
+import engine.graphics.ui.style.GUIStyle
+import kotlin.math.min
 
 class GUICommandList {
     private val commands = arrayListOf<GUIContext.() -> Unit>()
@@ -156,4 +158,53 @@ fun GUICommandList.drawPath(path: VectorPath, thickness: Float, closed: Boolean,
 
 fun GUICommandList.drawPathFilled(path: VectorPath, color: Color) = addCommand {
     renderer.drawPathFilled(path, color)
+}
+
+fun GUICommandList.drawStretchingImage(x: Float, y: Float, width: Float, height: Float, texture: TextureRegion, color: Color = Color.WHITE, left: Float = 1.0f / 3.0f, right: Float = 1.0f / 3.0f, top: Float = 1.0f / 3.0f, bottom: Float = 1.0f / 3.0f) = addCommand {
+    val u0 = 0.0f
+    val u1 = u0 + left
+    val u2 = 1.0f - right
+    val u3 = 1.0f
+
+    val v0 = 0.0f
+    val v1 = v0 + top
+    val v2 = 1.0f - bottom
+    val v3 = 1.0f
+
+    val texture00 = texture.getSubRegion(u0, v0, u1, v1)
+    val texture01 = texture.getSubRegion(u0, v1, u1, v2)
+    val texture02 = texture.getSubRegion(u0, v2, u1, v3)
+    val texture10 = texture.getSubRegion(u1, v0, u2, v1)
+    val texture11 = texture.getSubRegion(u1, v1, u2, v2)
+    val texture12 = texture.getSubRegion(u1, v2, u2, v3)
+    val texture20 = texture.getSubRegion(u2, v0, u3, v1)
+    val texture21 = texture.getSubRegion(u2, v1, u3, v2)
+    val texture22 = texture.getSubRegion(u2, v2, u3, v3)
+
+    val x0 = x
+    val x1 = x0 + texture.width * left
+    val x2 = x0 + width - texture.width * right
+
+    val y0 = y + height - texture.height * bottom
+    val y1 = y + texture.height * top
+    val y2 = y
+
+
+    val w0 = texture.width * left
+    val w2 = texture.width * right
+    val w1 = width - w0 - w2
+
+    val h0 = texture.height * top
+    val h2 = texture.height * bottom
+    val h1 = height - h0 - h2
+
+    renderer.draw(texture00, x0, y0, w0, h0, color)
+    renderer.draw(texture01, x0, y1, w0, h1, color)
+    renderer.draw(texture02, x0, y2, w0, h2, color)
+    renderer.draw(texture10, x1, y0, w1, h0, color)
+    renderer.draw(texture11, x1, y1, w1, h1, color)
+    renderer.draw(texture12, x1, y2, w1, h2, color)
+    renderer.draw(texture20, x2, y0, w2, h0, color)
+    renderer.draw(texture21, x2, y1, w2, h1, color)
+    renderer.draw(texture22, x2, y2, w2, h2, color)
 }

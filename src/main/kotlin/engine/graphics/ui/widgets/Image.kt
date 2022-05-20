@@ -16,13 +16,13 @@ import engine.graphics.ui.drawRect
  * @param color The color to tint the image with. Defaults to [Color.WHITE].
  * @param borderThickness The thickness of the border. Defaults to 4.0f.
  */
-fun GUI.image(texture: TextureRegion, width: Float = style.elementSize, height: Float = width, color: Color = Color.WHITE, borderThickness: Float = style.strokeThickness): GUIElement {
+fun GUI.image(texture: TextureRegion, width: Float = skin.elementSize, height: Float = width, color: Color = Color.WHITE, borderThickness: Float = skin.strokeThickness): GUIElement {
     val (x, y) = getLastElement()
 
     currentCommandList.drawImage(x, y, width, height, texture, color)
 
     if (borderThickness > 0.0f)
-        currentCommandList.drawRect(x, y, width, height, style.roundedCorners, style.cornerRounding, borderThickness, style.normalColor)
+        currentCommandList.drawRect(x, y, width, height, skin.roundedCorners, skin.cornerRounding, borderThickness, skin.normalColor)
 
     return setLastElement(x, y, width, height)
 }

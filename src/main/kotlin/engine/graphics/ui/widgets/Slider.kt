@@ -13,12 +13,12 @@ import engine.graphics.ui.drawRectFilled
  * @param width The width of the slider. Defaults to [style.elementSize] * 10.
  * @param action The action to perform when the slider is changed. It is passed the new amount, between 0 and 1.
  */
-fun GUI.slider(amount: Float, width: Float = style.elementSize * 10.0f, action: (Float) -> Unit): GUIElement {
+fun GUI.slider(amount: Float, width: Float = skin.elementSize * 10.0f, action: (Float) -> Unit): GUIElement {
     val (x, y) = getLastElement()
 
-    val handleRadius = style.elementSize * 0.5f
+    val handleRadius = skin.elementSize * 0.5f
 
-    val sliderHeight = style.elementSize / 3.0f
+    val sliderHeight = skin.elementSize / 3.0f
     val sliderWidth = width - handleRadius * 2.0f
     val sliderX = x + handleRadius
     val sliderY = y + sliderHeight
@@ -26,13 +26,13 @@ fun GUI.slider(amount: Float, width: Float = style.elementSize * 10.0f, action: 
     var handleX = x + handleRadius + sliderWidth * amount
     val handleY = y + handleRadius
 
-    currentCommandList.drawRectFilled(sliderX, sliderY, sliderWidth, sliderHeight, style.roundedCorners, style.cornerRounding, style.normalColor)
+    currentCommandList.drawRectFilled(sliderX, sliderY, sliderWidth, sliderHeight, skin.roundedCorners, skin.cornerRounding, skin.normalColor)
 
     val rectangle = Rectangle()
     rectangle.x = x
     rectangle.y = y
     rectangle.width = width
-    rectangle.height = style.elementSize
+    rectangle.height = skin.elementSize
 
     val state = getState(rectangle, GUI.ButtonBehaviour.REPEATED)
 
@@ -42,13 +42,13 @@ fun GUI.slider(amount: Float, width: Float = style.elementSize * 10.0f, action: 
             handleX = x + handleRadius + sliderWidth * newAmount
 
             action(newAmount)
-            style.highlightColor
+            skin.highlightColor
         } else
-            style.hoverColor
+            skin.hoverColor
 
         currentCommandList.drawCircleFilled(handleX, handleY, handleRadius, color)
     } else
-        currentCommandList.drawCircleFilled(handleX, handleY, handleRadius, style.normalColor)
+        currentCommandList.drawCircleFilled(handleX, handleY, handleRadius, skin.normalColor)
 
-    return setLastElement(x, y, width, style.elementSize)
+    return setLastElement(x, y, width, skin.elementSize)
 }

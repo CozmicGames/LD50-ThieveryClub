@@ -21,24 +21,24 @@ fun GUI.textButton(text: String, action: () -> Unit): GUIElement {
     rectangle.y = y
 
     val layout = GlyphLayout(text, drawableFont)
-    val textX = x + style.elementPadding
-    val textY = y + style.elementPadding
+    val textX = x + skin.elementPadding
+    val textY = y + skin.elementPadding
 
-    rectangle.width = layout.width + style.elementPadding * 2.0f
-    rectangle.height = layout.height + style.elementPadding * 2.0f
+    rectangle.width = layout.width + skin.elementPadding * 2.0f
+    rectangle.height = layout.height + skin.elementPadding * 2.0f
 
     val state = getState(rectangle, GUI.ButtonBehaviour.DEFAULT)
 
     val color = if (GUI.State.ACTIVE in state) {
         action()
-        style.highlightColor
+        skin.highlightColor
     } else if (GUI.State.HOVERED in state)
-        style.hoverColor
+        skin.hoverColor
     else
-        style.normalColor
+        skin.normalColor
 
-    currentCommandList.drawRectFilled(rectangle.x, rectangle.y, rectangle.width, rectangle.height, style.roundedCorners, style.cornerRounding, color)
-    currentCommandList.drawText(textX, textY, layout, style.fontColor)
+    currentCommandList.drawRectFilled(rectangle.x, rectangle.y, rectangle.width, rectangle.height, skin.roundedCorners, skin.cornerRounding, color)
+    currentCommandList.drawText(textX, textY, layout, skin.fontColor)
 
     return setLastElement(x, y, rectangle.width, rectangle.height)
 }

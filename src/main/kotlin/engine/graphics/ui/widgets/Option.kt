@@ -14,12 +14,12 @@ import engine.graphics.ui.drawCircleFilled
  */
 fun GUI.option(option: Int, selectedOption: Int, action: (Int) -> Unit): GUIElement {
     val (x, y) = getLastElement()
-    val size = style.elementSize
+    val size = skin.elementSize
 
     val rectangle = Rectangle(x, y, size, size)
     val state = getState(rectangle, GUI.ButtonBehaviour.DEFAULT)
 
-    currentCommandList.drawCircleFilled(x + size * 0.5f, y + size * 0.5f, size * 0.5f, if (GUI.State.HOVERED in state) style.hoverColor else style.normalColor)
+    currentCommandList.drawCircleFilled(x + size * 0.5f, y + size * 0.5f, size * 0.5f, if (GUI.State.HOVERED in state) skin.hoverColor else skin.normalColor)
     val isClicked = GUI.State.ACTIVE in state
     var newChecked = option == selectedOption
 
@@ -29,11 +29,11 @@ fun GUI.option(option: Int, selectedOption: Int, action: (Int) -> Unit): GUIElem
     }
 
     if (newChecked) {
-        val middleX = x + style.elementPadding
-        val middleY = y + style.elementPadding
-        val middleSize = style.contentSize
+        val middleX = x + skin.elementPadding
+        val middleY = y + skin.elementPadding
+        val middleSize = skin.contentSize
 
-        currentCommandList.drawCircleFilled(middleX + middleSize * 0.5f, middleY + middleSize * 0.5f, middleSize * 0.5f, style.highlightColor)
+        currentCommandList.drawCircleFilled(middleX + middleSize * 0.5f, middleY + middleSize * 0.5f, middleSize * 0.5f, skin.highlightColor)
     }
 
     return setLastElement(x, y, size, size)

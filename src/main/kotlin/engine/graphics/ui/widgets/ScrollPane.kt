@@ -15,7 +15,7 @@ import engine.graphics.ui.drawRectFilled
  * @param maxHeight The maximum height of the scroll pane. If null, the height of the scroll pane is calculated automatically to fit all elements.
  * @param scroll The current scroll position of the scroll pane. This function will update the scroll position automatically.
  */
-fun GUI.scrollPane(maxWidth: Float? = null, maxHeight: Float? = null, scroll: Vector2, backgroundColor: Color = style.backgroundColor, block: () -> Unit): GUIElement {
+fun GUI.scrollPane(maxWidth: Float? = null, maxHeight: Float? = null, scroll: Vector2, backgroundColor: Color = skin.backgroundColor, block: () -> Unit): GUIElement {
     lateinit var element: GUIElement
 
     val commands = recordCommands {

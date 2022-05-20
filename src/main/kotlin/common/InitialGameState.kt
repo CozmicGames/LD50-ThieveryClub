@@ -63,6 +63,11 @@ class InitialGameState : GameState {
         ui.textButton("New Tileset") {
             returnState = TileSetEditState()
         }
+
+        ui.textButton("UI Test") {
+            returnState = TestGameState()
+        }
+
         ui.end()
 
         return returnState

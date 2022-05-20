@@ -3,7 +3,6 @@ package engine.graphics.ui.widgets
 import com.cozmicgames.Kore
 import com.cozmicgames.graphics
 import com.cozmicgames.input
-import com.cozmicgames.utils.Color
 import com.cozmicgames.utils.maths.Rectangle
 import com.cozmicgames.utils.maths.Vector2
 import engine.graphics.ui.*
@@ -26,8 +25,8 @@ fun GUI.scrollArea(maxWidth: Float? = null, maxHeight: Float? = null, scroll: Ve
     if (maxHeight == null)
         scroll.y = 0.0f
 
-    val contentX = x + style.elementPadding
-    val contentY = y + style.elementPadding
+    val contentX = x + skin.elementPadding
+    val contentY = y + skin.elementPadding
 
     val scissorRectangle = Rectangle(x, y, maxWidth ?: (Kore.graphics.width - x), maxHeight ?: (Kore.graphics.height - y))
     val previousScissorRectangle = currentScissorRectangle
@@ -51,10 +50,10 @@ fun GUI.scrollArea(maxWidth: Float? = null, maxHeight: Float? = null, scroll: Ve
 
     if (maxWidth == null) {
         contentWidth = content.width
-        areaWidth = contentWidth + style.elementPadding * 2.0f
+        areaWidth = contentWidth + skin.elementPadding * 2.0f
     } else {
-        areaWidth = min(content.width + style.elementPadding * 2.0f, maxWidth) + style.elementPadding * 2.0f
-        contentWidth = areaWidth - style.elementPadding * 2.0f
+        areaWidth = min(content.width + skin.elementPadding * 2.0f, maxWidth) + skin.elementPadding * 2.0f
+        contentWidth = areaWidth - skin.elementPadding * 2.0f
 
         if (scroll.x < 0.0f)
             scroll.x = 0.0f
@@ -65,10 +64,10 @@ fun GUI.scrollArea(maxWidth: Float? = null, maxHeight: Float? = null, scroll: Ve
 
     if (maxHeight == null) {
         contentHeight = content.height
-        areaHeight = contentHeight + style.elementPadding * 2.0f
+        areaHeight = contentHeight + skin.elementPadding * 2.0f
     } else {
-        areaHeight = min(content.height + style.elementPadding * 2.0f, maxHeight) + style.elementPadding * 2.0f
-        contentHeight = areaHeight - style.elementPadding * 2.0f
+        areaHeight = min(content.height + skin.elementPadding * 2.0f, maxHeight) + skin.elementPadding * 2.0f
+        contentHeight = areaHeight - skin.elementPadding * 2.0f
 
         if (scroll.y < 0.0f)
             scroll.y = 0.0f
@@ -93,14 +92,14 @@ fun GUI.scrollArea(maxWidth: Float? = null, maxHeight: Float? = null, scroll: Ve
 
     val scrollbarCommands = GUICommandList()
 
-    if (areaWidth - style.elementPadding * 2.0f < content.width) {
+    if (areaWidth - skin.elementPadding * 2.0f < content.width) {
         val scrollbarX = x
-        val scrollbarY = y + contentHeight + style.elementPadding * 2.0f
+        val scrollbarY = y + contentHeight + skin.elementPadding * 2.0f
         val scrollbarWidth = areaWidth
-        val scrollbarHeight = style.scrollbarSize
+        val scrollbarHeight = skin.scrollbarSize
 
         val scrollbarGripX = scrollbarX + scroll.x * contentWidth / content.width
-        val scrollbarGripWidth = (contentWidth / content.width) * scrollbarWidth + style.elementPadding
+        val scrollbarGripWidth = (contentWidth / content.width) * scrollbarWidth + skin.elementPadding
 
         val scrollbarState = getState(rectangle.apply {
             this.x = scrollbarX
@@ -116,31 +115,31 @@ fun GUI.scrollArea(maxWidth: Float? = null, maxHeight: Float? = null, scroll: Ve
             this.height = scrollbarHeight
         }, GUI.ButtonBehaviour.REPEATED)
 
-        val scrollbarColor = if (GUI.State.HOVERED in scrollbarState) style.hoverColor else style.normalColor
+        val scrollbarColor = if (GUI.State.HOVERED in scrollbarState) skin.hoverColor else skin.normalColor
 
         val scrollbarGripColor = if (GUI.State.ACTIVE in scrollbarGripState && GUI.State.HOVERED in scrollbarGripState) {
             scroll.x += Kore.input.deltaX * content.width / contentWidth
-            style.highlightColor
+            skin.highlightColor
         } else if (GUI.State.HOVERED in scrollbarGripState)
-            style.normalColor
+            skin.normalColor
         else
-            style.backgroundColor
+            skin.backgroundColor
 
-        scrollbarCommands.drawRectFilled(scrollbarX, scrollbarY, scrollbarWidth, scrollbarHeight, style.roundedCorners, style.cornerRounding, scrollbarColor)
-        scrollbarCommands.drawRectFilled(scrollbarGripX, scrollbarY, scrollbarGripWidth, scrollbarHeight, style.roundedCorners, style.cornerRounding, scrollbarGripColor)
+        scrollbarCommands.drawRectFilled(scrollbarX, scrollbarY, scrollbarWidth, scrollbarHeight, skin.roundedCorners, skin.cornerRounding, scrollbarColor)
+        scrollbarCommands.drawRectFilled(scrollbarGripX, scrollbarY, scrollbarGripWidth, scrollbarHeight, skin.roundedCorners, skin.cornerRounding, scrollbarGripColor)
 
         totalHeight += scrollbarHeight
     } else
         scroll.x = 0.0f
 
-    if (areaHeight - style.elementPadding * 2.0f < content.height) {
-        val scrollbarX = x + contentWidth + style.elementPadding * 2.0f
+    if (areaHeight - skin.elementPadding * 2.0f < content.height) {
+        val scrollbarX = x + contentWidth + skin.elementPadding * 2.0f
         val scrollbarY = y
-        val scrollbarWidth = style.scrollbarSize
+        val scrollbarWidth = skin.scrollbarSize
         val scrollbarHeight = areaHeight
 
         val scrollbarGripY = scrollbarY + scroll.y * contentHeight / content.height
-        val scrollbarGripHeight = (contentHeight / content.height) * scrollbarHeight + style.elementPadding
+        val scrollbarGripHeight = (contentHeight / content.height) * scrollbarHeight + skin.elementPadding
 
         val scrollbarState = getState(rectangle.apply {
             this.x = scrollbarX
@@ -156,18 +155,18 @@ fun GUI.scrollArea(maxWidth: Float? = null, maxHeight: Float? = null, scroll: Ve
             this.height = scrollbarGripHeight
         }, GUI.ButtonBehaviour.REPEATED)
 
-        val scrollbarColor = if (GUI.State.HOVERED in scrollbarState) style.hoverColor else style.normalColor
+        val scrollbarColor = if (GUI.State.HOVERED in scrollbarState) skin.hoverColor else skin.normalColor
 
         val scrollbarGripColor = if (GUI.State.ACTIVE in scrollbarGripState && GUI.State.HOVERED in scrollbarGripState) {
             scroll.y -= Kore.input.deltaY * content.height / contentHeight
-            style.highlightColor
+            skin.highlightColor
         } else if (GUI.State.HOVERED in scrollbarGripState)
-            style.normalColor
+            skin.normalColor
         else
-            style.backgroundColor
+            skin.backgroundColor
 
-        scrollbarCommands.drawRectFilled(scrollbarX, scrollbarY, scrollbarWidth, scrollbarHeight, style.roundedCorners, style.cornerRounding, scrollbarColor)
-        scrollbarCommands.drawRectFilled(scrollbarX, scrollbarGripY, scrollbarWidth, scrollbarGripHeight, style.roundedCorners, style.cornerRounding, scrollbarGripColor)
+        scrollbarCommands.drawRectFilled(scrollbarX, scrollbarY, scrollbarWidth, scrollbarHeight, skin.roundedCorners, skin.cornerRounding, scrollbarColor)
+        scrollbarCommands.drawRectFilled(scrollbarX, scrollbarGripY, scrollbarWidth, scrollbarGripHeight, skin.roundedCorners, skin.cornerRounding, scrollbarGripColor)
 
         totalWidth += scrollbarWidth
     } else

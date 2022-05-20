@@ -24,8 +24,8 @@ fun GUI.colorEdit(color: Color): GUIElement {
     var totalHeight = 0.0f
 
     val commands = recordCommands {
-        rectangle.x = x + style.elementPadding
-        rectangle.y = y + style.elementPadding + 15.0f
+        rectangle.x = x + skin.elementPadding
+        rectangle.y = y + skin.elementPadding + 15.0f
         rectangle.width = size
         rectangle.height = size
 
@@ -34,14 +34,14 @@ fun GUI.colorEdit(color: Color): GUIElement {
 
         var state = getState(rectangle, GUI.ButtonBehaviour.REPEATED)
 
-        var crossHairColor = style.normalColor
+        var crossHairColor = skin.normalColor
         if (GUI.State.HOVERED in state) {
             if (GUI.State.ACTIVE in state) {
                 hsv[1] = (touchPosition.x - rectangle.x) / rectangle.width
                 hsv[2] = 1.0f - (touchPosition.y - rectangle.y) / rectangle.height
-                crossHairColor = style.highlightColor
+                crossHairColor = skin.highlightColor
             } else
-                crossHairColor = style.hoverColor
+                crossHairColor = skin.hoverColor
         }
 
         val crossHairX = rectangle.x + hsv[1] * rectangle.width
@@ -53,9 +53,9 @@ fun GUI.colorEdit(color: Color): GUIElement {
         rectangle.x += 105.0f
         rectangle.width = 20.0f
 
-        val hueBarX = rectangle.x + style.elementPadding
+        val hueBarX = rectangle.x + skin.elementPadding
         val hueBarY = rectangle.y
-        val hueBarWidth = rectangle.width - style.elementPadding * 2.0f
+        val hueBarWidth = rectangle.width - skin.elementPadding * 2.0f
         val hueBarSubHeight = rectangle.height / Color.HUE_COLORS.size
 
         Color.HUE_COLORS.forEachIndexed { index, c0 ->
@@ -65,13 +65,13 @@ fun GUI.colorEdit(color: Color): GUIElement {
 
         state = getState(rectangle, GUI.ButtonBehaviour.REPEATED)
 
-        var hueLineColor = style.normalColor
+        var hueLineColor = skin.normalColor
         if (GUI.State.HOVERED in state) {
             if (GUI.State.ACTIVE in state) {
                 hsv[0] = (touchPosition.y - rectangle.y) / rectangle.height * 360.0f
-                hueLineColor = style.highlightColor
+                hueLineColor = skin.highlightColor
             } else
-                hueLineColor = style.hoverColor
+                hueLineColor = skin.hoverColor
         }
 
         val hueLineY = rectangle.y + (hsv[0] / 360.0f) * rectangle.height - 0.5f - 2.0f
@@ -80,37 +80,37 @@ fun GUI.colorEdit(color: Color): GUIElement {
         rectangle.x += 25.0f
         rectangle.width = 20.0f
 
-        val alphaBarX = rectangle.x + style.elementPadding
+        val alphaBarX = rectangle.x + skin.elementPadding
         val alphaBarY = rectangle.y
-        val alphaBarWidth = rectangle.width - style.elementPadding * 2.0f
+        val alphaBarWidth = rectangle.width - skin.elementPadding * 2.0f
         val alphaBarHeight = rectangle.height
 
         currentCommandList.drawRectMultiColor(alphaBarX + alphaBarWidth * 0.5f, alphaBarY + alphaBarHeight * 0.5f, alphaBarWidth, alphaBarHeight, Color.WHITE, Color.WHITE, Color.BLACK, Color.BLACK)
 
         state = getState(rectangle, GUI.ButtonBehaviour.REPEATED)
 
-        var alphaLineColor = style.normalColor
+        var alphaLineColor = skin.normalColor
         if (GUI.State.HOVERED in state) {
             if (GUI.State.ACTIVE in state) {
                 newAlpha = 1.0f - (touchPosition.y - rectangle.y) / rectangle.height
-                alphaLineColor = style.highlightColor
+                alphaLineColor = skin.highlightColor
             } else
-                alphaLineColor = style.hoverColor
+                alphaLineColor = skin.hoverColor
         }
 
         val alphaLineY = rectangle.y + (1.0f - color.a) * rectangle.height - 0.5f - 2.0f
         currentCommandList.drawRectFilled(rectangle.x, alphaLineY, rectangle.width, 4.0f, Corners.NONE, 0.0f, alphaLineColor)
 
-        totalWidth = rectangle.x + rectangle.width - (x + style.elementPadding)
-        totalHeight = rectangle.y + rectangle.height - (y + style.elementPadding)
-        currentCommandList.drawRectFilled(x + style.elementPadding, y + style.elementPadding, totalWidth, 12.0f, style.roundedCorners, style.cornerRounding, color)
+        totalWidth = rectangle.x + rectangle.width - (x + skin.elementPadding)
+        totalHeight = rectangle.y + rectangle.height - (y + skin.elementPadding)
+        currentCommandList.drawRectFilled(x + skin.elementPadding, y + skin.elementPadding, totalWidth, 12.0f, skin.roundedCorners, skin.cornerRounding, color)
     }
 
     color.fromHSV(hsv)
     color.a = newAlpha
 
-    currentCommandList.drawRectFilled(x, y, totalWidth + style.elementPadding * 2.0f, totalHeight + style.elementPadding * 2.0f, style.roundedCorners, style.cornerRounding, style.backgroundColor)
+    currentCommandList.drawRectFilled(x, y, totalWidth + skin.elementPadding * 2.0f, totalHeight + skin.elementPadding * 2.0f, skin.roundedCorners, skin.cornerRounding, skin.backgroundColor)
     currentCommandList.addCommandList(commands)
 
-    return setLastElement(x, y, totalWidth + style.elementPadding * 2.0f, totalHeight + style.elementPadding * 2.0f)
+    return setLastElement(x, y, totalWidth + skin.elementPadding * 2.0f, totalHeight + skin.elementPadding * 2.0f)
 }

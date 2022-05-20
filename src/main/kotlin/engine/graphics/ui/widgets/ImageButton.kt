@@ -15,7 +15,7 @@ import engine.graphics.ui.drawImage
  * @param height The height of the image. Defaults to the same as [width].
  * @param action The action to perform when the image is clicked.
  */
-fun GUI.imageButton(texture: TextureRegion, width: Float = style.elementSize, height: Float = width, action: () -> Unit): GUIElement {
+fun GUI.imageButton(texture: TextureRegion, width: Float = skin.elementSize, height: Float = width, action: () -> Unit): GUIElement {
     val (x, y) = getLastElement()
 
     val rectangle = Rectangle()
@@ -28,9 +28,9 @@ fun GUI.imageButton(texture: TextureRegion, width: Float = style.elementSize, he
 
     val color = if (GUI.State.ACTIVE in state) {
         action()
-        style.highlightColor
+        skin.highlightColor
     } else if (GUI.State.HOVERED in state)
-        style.hoverColor
+        skin.hoverColor
     else
         Color.WHITE
 

@@ -9,15 +9,15 @@ fun GUI.dropdown(title: String, isOpen: Boolean, minWidth: Float? = null, action
     val (x, y) = getLastElement()
 
     val layout = GlyphLayout(title, drawableFont)
-    val textX = x + style.elementPadding
-    val textY = y + style.elementPadding
+    val textX = x + skin.elementPadding
+    val textY = y + skin.elementPadding
 
-    val requiredWidth = layout.width + style.contentSize + style.elementPadding * 3.0f
+    val requiredWidth = layout.width + skin.contentSize + skin.elementPadding * 3.0f
     val width = if (minWidth == null) requiredWidth else max(requiredWidth, minWidth)
-    val height = layout.height + style.elementPadding * 2.0f
+    val height = layout.height + skin.elementPadding * 2.0f
 
-    val dropdownX = width - style.elementPadding - style.contentSize
-    val dropDownY = y + style.elementPadding
+    val dropdownX = width - skin.elementPadding - skin.contentSize
+    val dropDownY = y + skin.elementPadding
 
     val rectangle = Rectangle()
     rectangle.x = x
@@ -28,14 +28,14 @@ fun GUI.dropdown(title: String, isOpen: Boolean, minWidth: Float? = null, action
     val state = getState(rectangle, GUI.ButtonBehaviour.DEFAULT)
 
     val color = if (GUI.State.ACTIVE in state)
-        style.highlightColor
+        skin.highlightColor
     else if (GUI.State.HOVERED in state)
-        style.hoverColor
+        skin.hoverColor
     else
-        style.normalColor
+        skin.normalColor
 
-    currentCommandList.drawRectFilled(x, y, width, height, style.roundedCorners, style.cornerRounding, color)
-    currentCommandList.drawText(textX, textY, layout, style.fontColor)
+    currentCommandList.drawRectFilled(x, y, width, height, skin.roundedCorners, skin.cornerRounding, color)
+    currentCommandList.drawText(textX, textY, layout, skin.fontColor)
 
     val isClicked = GUI.State.ACTIVE in state
     var newOpen = isOpen
@@ -47,26 +47,26 @@ fun GUI.dropdown(title: String, isOpen: Boolean, minWidth: Float? = null, action
 
     if (newOpen) {
         val triangleX0 = dropdownX
-        val triangleY0 = dropDownY + style.contentSize
+        val triangleY0 = dropDownY + skin.contentSize
 
-        val triangleX1 = dropdownX + style.contentSize
-        val triangleY1 = dropDownY + style.contentSize
+        val triangleX1 = dropdownX + skin.contentSize
+        val triangleY1 = dropDownY + skin.contentSize
 
-        val triangleX2 = dropdownX + style.contentSize * 0.5f
+        val triangleX2 = dropdownX + skin.contentSize * 0.5f
         val triangleY2 = dropDownY
 
-        currentCommandList.drawTriangleFilled(triangleX0, triangleY0, triangleX1, triangleY1, triangleX2, triangleY2, style.fontColor)
+        currentCommandList.drawTriangleFilled(triangleX0, triangleY0, triangleX1, triangleY1, triangleX2, triangleY2, skin.fontColor)
     } else {
         val triangleX0 = dropdownX
         val triangleY0 = dropDownY
 
-        val triangleX1 = dropdownX + style.contentSize
+        val triangleX1 = dropdownX + skin.contentSize
         val triangleY1 = dropDownY
 
-        val triangleX2 = dropdownX + style.contentSize * 0.5f
-        val triangleY2 = dropDownY + style.contentSize
+        val triangleX2 = dropdownX + skin.contentSize * 0.5f
+        val triangleY2 = dropDownY + skin.contentSize
 
-        currentCommandList.drawTriangleFilled(triangleX0, triangleY0, triangleX1, triangleY1, triangleX2, triangleY2, style.fontColor)
+        currentCommandList.drawTriangleFilled(triangleX0, triangleY0, triangleX1, triangleY1, triangleX2, triangleY2, skin.fontColor)
     }
 
     return setLastElement(x, y, width, height)

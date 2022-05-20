@@ -1,14 +1,16 @@
 package engine.graphics.ui
 
 import com.cozmicgames.Kore
+import com.cozmicgames.files
 import com.cozmicgames.graphics
 import com.cozmicgames.utils.Color
 import com.cozmicgames.utils.maths.Corners
+import engine.Game
 
 /**
  * Represents the style of GUI elements.
  */
-open class GUIStyle {
+open class GUISkin {
     open var font = Kore.graphics.defaultFont
     open var contentSize = 14.0f
     open var elementSize = 20.0f

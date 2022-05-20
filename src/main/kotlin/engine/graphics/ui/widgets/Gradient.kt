@@ -15,7 +15,7 @@ import engine.utils.GradientColor
  *
  * TODO: Add gradient editor
  */
-fun GUI.gradient(gradient: Gradient, width: Float = style.elementSize * 10.0f, height: Float = style.elementSize): GUIElement {
+fun GUI.gradient(gradient: Gradient, width: Float = skin.elementSize * 10.0f, height: Float = skin.elementSize): GUIElement {
     val (x, y) = getLastElement()
 
     lateinit var last: GradientColor

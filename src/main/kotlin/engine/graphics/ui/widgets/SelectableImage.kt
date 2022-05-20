@@ -17,7 +17,7 @@ import engine.graphics.ui.drawRect
  * @param isSelected Whether the image is selected.
  * @param action The action to perform when the image is clicked.
  */
-fun GUI.selectableImage(texture: TextureRegion, width: Float = style.elementSize, height: Float = width, isSelected: Boolean, action: () -> Unit): GUIElement {
+fun GUI.selectableImage(texture: TextureRegion, width: Float = skin.elementSize, height: Float = width, isSelected: Boolean, action: () -> Unit): GUIElement {
     val (x, y) = getLastElement()
 
     val rectangle = Rectangle()
@@ -34,9 +34,9 @@ fun GUI.selectableImage(texture: TextureRegion, width: Float = style.elementSize
         action()
 
     if (GUI.State.HOVERED in state && !isSelected)
-        currentCommandList.drawRect(x, y, width, height, style.roundedCorners, style.cornerRounding, style.strokeThickness, style.hoverColor)
+        currentCommandList.drawRect(x, y, width, height, skin.roundedCorners, skin.cornerRounding, skin.strokeThickness, skin.hoverColor)
     else if (isSelected)
-        currentCommandList.drawRect(x, y, width, height, style.roundedCorners, style.cornerRounding, style.strokeThickness, style.highlightColor)
+        currentCommandList.drawRect(x, y, width, height, skin.roundedCorners, skin.cornerRounding, skin.strokeThickness, skin.highlightColor)
 
     return setLastElement(x, y, width, height)
 }

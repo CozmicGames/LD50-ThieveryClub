@@ -11,8 +11,8 @@ import engine.graphics.ui.drawRectFilled
  * @param color The color.
  * @param size The size of the square. Defaults to [style.elementSize].
  */
-fun GUI.colorSquare(color: Color, size: Float = style.elementSize): GUIElement {
+fun GUI.colorSquare(color: Color, size: Float = skin.elementSize): GUIElement {
     val (x, y) = getLastElement()
-    currentCommandList.drawRectFilled(x, y, size, size, style.roundedCorners, style.cornerRounding, color)
+    currentCommandList.drawRectFilled(x, y, size, size, skin.roundedCorners, skin.cornerRounding, color)
     return setLastElement(x, y, size, size)
 }

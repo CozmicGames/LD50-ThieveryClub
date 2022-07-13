@@ -4,7 +4,6 @@ import com.cozmicgames.Kore
 import com.cozmicgames.files
 import com.cozmicgames.utils.Disposable
 import engine.Game
-import engine.graphics.sprite.StaticSprite
 import engine.physics.AxisAlignedRectangleShape
 import engine.physics.Body
 import engine.physics.PlatformerController
@@ -14,7 +13,7 @@ import game.levels.Level
 class Player(x: Float, y: Float) : Disposable {
     private val texture by Game.textures(Kore.files.asset("images/player.png"))
     private val transform = Transform()
-    private val sprite = StaticSprite(texture, transform)
+   // private val sprite = StaticSprite(texture, transform)
     private val body = Body(transform)
     private val controller = PlatformerController(body)
 
@@ -31,7 +30,7 @@ class Player(x: Float, y: Float) : Disposable {
         body.calculateMassAndInertia()
         body.restitution = 0.0f
         Game.physics.addBody(body)
-        Game.canvas.addComponent(sprite)
+       // Game.canvas.addComponent(sprite)
     }
 
     fun update(delta: Float) {
@@ -44,14 +43,14 @@ class Player(x: Float, y: Float) : Disposable {
         if (movement != 0.0f)
             isFacingRight = movement > 0.0f
 
-        sprite.isFlippedX = !isFacingRight
+      //  sprite.isFlippedX = !isFacingRight
 
         controller.move(movement, crouch, jump, delta)
         controller.update()
     }
 
     override fun dispose() {
-        Game.canvas.removeComponent(sprite)
+     //    Game.canvas.removeComponent(sprite)
         Game.physics.removeBody(body)
     }
 }

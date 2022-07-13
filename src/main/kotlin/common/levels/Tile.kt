@@ -2,14 +2,14 @@ package common.levels
 
 import com.cozmicgames.utils.Disposable
 import engine.Game
-import engine.graphics.sprite.StaticSprite
+import engine.graphics.sprite.Sprite
 import engine.physics.AxisAlignedRectangleShape
 import engine.physics.Body
 import engine.utils.Transform
 
 class Tile(val type: TileType) : Disposable {
     private val transform = Transform()
-    private val sprite = StaticSprite(type.defaultTexture, transform)
+    private val sprite = Sprite(transform)
     private var body: Body? = null
 
     lateinit var level: Level
@@ -60,7 +60,7 @@ class Tile(val type: TileType) : Disposable {
     }
 
     internal fun updateSprite() {
-        sprite.texture = type.getTexture(this)
+        //sprite.texture = type.getTexture(this)
     }
 
     fun activate() {

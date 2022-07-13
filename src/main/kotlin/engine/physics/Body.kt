@@ -19,7 +19,6 @@ open class Body(val transform: Transform = Transform()) {
     var scaleX by transform::scaleX
     var scaleY by transform::scaleY
 
-
     val force = Vector2()
     var torque = 0.0f
 

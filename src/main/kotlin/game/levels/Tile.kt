@@ -5,7 +5,6 @@ import com.cozmicgames.files
 import com.cozmicgames.utils.Disposable
 import com.cozmicgames.utils.Properties
 import engine.Game
-import engine.graphics.sprite.StaticSprite
 import engine.physics.AxisAlignedRectangleShape
 import engine.physics.Body
 import engine.utils.Transform
@@ -13,7 +12,7 @@ import engine.utils.Transform
 abstract class Tile(textureName: String, val isSolid: Boolean) : Disposable {
     private val texture by Game.textures(Kore.files.asset(textureName))
     private val transform = Transform()
-    private val sprite = StaticSprite(texture, transform)
+    //private val sprite = StaticSprite(texture, transform)
     private var body: Body? = null
 
     lateinit var level: Level
@@ -47,7 +46,7 @@ abstract class Tile(textureName: String, val isSolid: Boolean) : Disposable {
             this.body = body
         }
 
-        Game.canvas.addComponent(sprite)
+        //Game.canvas.addComponent(sprite)
     }
 
     open fun update(delta: Float) {}
@@ -57,7 +56,7 @@ abstract class Tile(textureName: String, val isSolid: Boolean) : Disposable {
     open fun read(properties: Properties) {}
 
     override fun dispose() {
-        Game.canvas.removeComponent(sprite)
+        //Game.canvas.removeComponent(sprite)
 
         body?.let {
             Game.physics.removeBody(it)

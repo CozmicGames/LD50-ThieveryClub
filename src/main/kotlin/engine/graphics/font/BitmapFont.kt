@@ -5,6 +5,7 @@ import com.cozmicgames.graphics.Image
 import com.cozmicgames.graphics.gpu.Texture2D
 import com.cozmicgames.graphics.toTexture2D
 import com.cozmicgames.utils.rectpack.RectPacker
+import engine.Game
 import engine.graphics.font.DrawableFont.Companion.defaultChars
 
 class BitmapFont(val font: Font, override val drawableCharacters: String = defaultChars(), padding: Int = 4, override val size: Float = 14.0f) : DrawableFont {
@@ -53,7 +54,7 @@ class BitmapFont(val font: Font, override val drawableCharacters: String = defau
             break
         }
 
-        texture = image.toTexture2D()
+        texture = image.toTexture2D(Game.graphics2d.pointClampSampler)
     }
 
     override operator fun get(char: Char) = glyphs.getOrElse(char) { requireNotNull(glyphs[' ']) }

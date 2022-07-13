@@ -227,7 +227,7 @@ class TileSetEditState : GameState {
     }
 
     private fun drawVisualEditor() {
-        Game.renderer.render {
+        Game.uiRenderer.render {
             val tile = selectedTileType
 
             val imageSize = min(Kore.graphics.width, Kore.graphics.height) * 0.75f / 3.0f

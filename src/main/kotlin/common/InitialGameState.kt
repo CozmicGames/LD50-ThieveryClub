@@ -4,23 +4,12 @@ import com.cozmicgames.Kore
 import com.cozmicgames.graphics
 import com.cozmicgames.input.Keys
 import com.cozmicgames.utils.Color
-import com.cozmicgames.utils.collections.FixedSizeStack
-import com.cozmicgames.utils.injector
 import engine.Game
 import engine.GameState
-import engine.graphics.render.RenderGraph
-import engine.graphics.render.onRender
-import engine.graphics.render.passes.ColorRenderPass
-import engine.graphics.render.present.SimplePresentFunction
 import engine.graphics.ui.GUI
-import engine.graphics.ui.TextData
 import engine.graphics.ui.widgets.*
-import game.graphics.LightmapRenderFunction
-import game.graphics.MainRenderFunction
-import game.graphics.RenderManager
 import leveleditor.LevelEditState
 import tileseteditor.TileSetEditState
-import kotlin.math.min
 
 class InitialGameState : GameState {
     private lateinit var ui: GUI
@@ -68,6 +57,10 @@ class InitialGameState : GameState {
             returnState = TestGameState()
         }
 
+        ui.textButton("Scene Test") {
+            returnState = SceneGameState()
+        }
+
         ui.end()
 
         return returnState
@@ -76,14 +69,4 @@ class InitialGameState : GameState {
     override fun onDestroy() {
         ui.dispose()
     }
-}
-
-val Game.renderManager by Kore.context.injector(true) { RenderManager() }
-val Game.renderGraph by Kore.context.injector(true) { createRenderGraph() }
-
-fun createRenderGraph(): RenderGraph {
-    val renderGraph = RenderGraph(SimplePresentFunction("main", 0))
-    renderGraph.onRender("lightmap", ColorRenderPass(), LightmapRenderFunction())
-    renderGraph.onRender("main", ColorRenderPass(), MainRenderFunction())
-    return renderGraph
 }

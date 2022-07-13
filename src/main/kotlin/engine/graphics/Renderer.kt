@@ -188,13 +188,6 @@ class Renderer : Disposable {
         context.drawPathStroke(path, thickness, closed, color, extrusionOffset)
     }
 
-    fun draw(sprite: Sprite) {
-        require(isActive)
-
-        this.texture = sprite.texture.texture
-        context.drawSprite(sprite)
-    }
-
     fun draw(glyphLayout: GlyphLayout, x: Float, y: Float, color: Color = Color.WHITE) {
         require(isActive)
 

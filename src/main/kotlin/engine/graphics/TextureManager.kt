@@ -39,10 +39,10 @@ class TextureManager : Disposable {
             return
         }
 
-        add(fileHandle.toString(), image, filter)
+        add(fileHandle.fullPath, image, filter)
     }
 
-    operator fun contains(fileHandle: FileHandle) = fileHandle.toString() in keys
+    operator fun contains(fileHandle: FileHandle) = fileHandle.fullPath in keys
 
     operator fun contains(name: String) = name in keys
 
@@ -58,7 +58,7 @@ class TextureManager : Disposable {
         textures[key]?.remove(file)
     }
 
-    operator fun get(fileHandle: FileHandle) = get(fileHandle.toString())
+    operator fun get(fileHandle: FileHandle) = get(fileHandle.fullPath)
 
     operator fun get(name: String): TextureRegion? {
         val key = keys[name] ?: return null
@@ -75,8 +75,9 @@ class TextureManager : Disposable {
 
     fun getAtlas(key: TextureKey): TextureAtlas {
         return textures.getOrPut(key) {
-            TextureAtlas().also {
-                it.texture.setFilter(key.filter, key.filter)
+            when(key.filter) {
+                Texture.Filter.NEAREST -> TextureAtlas(sampler = Game.graphics2d.pointClampSampler)
+                Texture.Filter.LINEAR -> TextureAtlas(sampler = Game.graphics2d.linearClampSampler)
             }
         }
     }

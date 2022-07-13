@@ -6,6 +6,7 @@ import com.cozmicgames.graphics.gpu.Framebuffer
 import com.cozmicgames.graphics.gpu.Texture
 import com.cozmicgames.graphics.gpu.Texture2D
 import com.cozmicgames.utils.Disposable
+import engine.Game
 
 open class RenderPass(val resolution: Resolution, block: RenderPass.() -> Unit = {}) : Disposable {
     interface Resolution {
@@ -158,15 +159,15 @@ open class RenderPass(val resolution: Resolution, block: RenderPass.() -> Unit =
                     else -> throw RuntimeException("Too many color rendertargets, up to 8 are supported")
                 }
 
-                framebuffer.addAttachment(attachment, it.format)
+                framebuffer.addAttachment(attachment, it.format, Game.graphics2d.pointClampSampler)
             }
 
             depthRenderTarget?.let {
-                framebuffer.addAttachment(Framebuffer.Attachment.DEPTH, it.format)
+                framebuffer.addAttachment(Framebuffer.Attachment.DEPTH, it.format, Game.graphics2d.pointClampSampler)
             }
 
             stencilRenderTarget?.let {
-                framebuffer.addAttachment(Framebuffer.Attachment.STENCIL, it.format)
+                framebuffer.addAttachment(Framebuffer.Attachment.STENCIL, it.format, Game.graphics2d.pointClampSampler)
             }
 
             width = resolution.getWidth(this.resizeWidth)

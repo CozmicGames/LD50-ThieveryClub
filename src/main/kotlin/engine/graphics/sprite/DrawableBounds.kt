@@ -3,7 +3,7 @@ package engine.graphics.sprite
 import com.cozmicgames.utils.maths.Rectangle
 import com.cozmicgames.utils.maths.VectorPath
 
-class SpriteBounds {
+class DrawableBounds {
     val path = VectorPath()
     val rectangle = Rectangle()
 

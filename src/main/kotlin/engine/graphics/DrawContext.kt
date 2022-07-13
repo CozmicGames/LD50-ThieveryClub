@@ -7,9 +7,7 @@ import com.cozmicgames.memory.StructBuffer
 import com.cozmicgames.memory.clear
 import com.cozmicgames.utils.Color
 import com.cozmicgames.utils.Disposable
-import com.cozmicgames.utils.maths.Matrix3x2
-import com.cozmicgames.utils.maths.Vector2
-import com.cozmicgames.utils.maths.VectorPath
+import com.cozmicgames.utils.maths.*
 import engine.graphics.font.GlyphLayout
 import engine.graphics.sprite.Sprite
 import kotlin.math.*
@@ -195,6 +193,13 @@ fun DrawContext2D.drawRect(x: Float, y: Float, width: Float, height: Float, colo
 }
 
 fun DrawContext2D.drawPathFilled(path: VectorPath, color: Color = Color.WHITE, uMin: Float = 0.0f, vMin: Float = 0.0f, uMax: Float = 1.0f, vMax: Float = 1.0f) {
+    if (path.isConvex)
+        drawPathFilledConvex(path, color, uMin, vMin, uMax, vMax)
+    else
+        drawPathFilledConcave(path, color, uMin, vMin, uMax, vMax)
+}
+
+fun DrawContext2D.drawPathFilledConvex(path: VectorPath, color: Color = Color.WHITE, uMin: Float = 0.0f, vMin: Float = 0.0f, uMax: Float = 1.0f, vMax: Float = 1.0f) {
     val vertexCount = path.count
     val indexCount = (vertexCount - 2) * 3
 
@@ -215,6 +220,33 @@ fun DrawContext2D.drawPathFilled(path: VectorPath, color: Color = Color.WHITE, u
     }
 
     currentIndex += vertexCount
+}
+
+fun DrawContext2D.drawPathFilledConcave(path: VectorPath, color: Color = Color.WHITE, uMin: Float = 0.0f, vMin: Float = 0.0f, uMax: Float = 1.0f, vMax: Float = 1.0f) {
+    val indices = Triangulator().computeTriangles(path)
+
+    repeat(indices.size / 3) {
+        val i0 = it * 3
+        val i1 = it * 3 + 1
+        val i2 = it * 3 + 2
+
+        val p0 = path[i0]
+        val p1 = path[i1]
+        val p2 = path[i2]
+
+        val triangleMinX = minOf(p0.x, p1.x, p2.x)
+        val triangleMinY = minOf(p0.y, p1.y, p2.y)
+        val triangleMaxX = maxOf(p0.x, p1.x, p2.x)
+        val triangleMaxY = maxOf(p0.y, p1.y, p2.y)
+
+        val triangleUMin = uMin + (uMax - uMin) * (triangleMaxX - triangleMinX) / (path.maxX - path.minX)
+        val triangleVMin = vMin + (vMax - vMin) * (triangleMaxY - triangleMinY) / (path.maxY - path.minY)
+
+        val triangleUMax = triangleUMin + (uMax - uMin) * (triangleMaxX - triangleMinX) / (path.maxX - path.minX)
+        val triangleVMax = triangleVMin + (vMax - vMin) * (triangleMaxY - triangleMinY) / (path.maxY - path.minY)
+
+        drawTriangle(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y, color, uMin = triangleUMin, vMin = triangleVMin, uMax = triangleUMax, vMax = triangleVMax)
+    }
 }
 
 fun DrawContext2D.drawPathStroke(path: VectorPath, thickness: Float, closed: Boolean = true, color: Color = Color.WHITE, extrusionOffset: Float = 0.5f, uMin: Float = 0.0f, vMin: Float = 0.0f, uMax: Float = 1.0f, vMax: Float = 1.0f) {
@@ -355,7 +387,7 @@ fun DrawContext2D.drawPathStroke(path: VectorPath, thickness: Float, closed: Boo
     currentIndex += pointsCount * 2
 }
 
-fun DrawContext2D.draw(drawable: Drawable, u0: Float = 0.0f, v0: Float = 0.0f, u1: Float = 1.0f, v1: Float = 1.0f, color: Color) {
+fun DrawContext2D.drawDrawable(drawable: Drawable, u0: Float = 0.0f, v0: Float = 0.0f, u1: Float = 1.0f, v1: Float = 1.0f, color: Color) {
     ensureSize(drawable.vertices.size, drawable.indices.size)
 
     val colorBits = color.bits
@@ -373,16 +405,14 @@ fun DrawContext2D.draw(drawable: Drawable, u0: Float = 0.0f, v0: Float = 0.0f, u
     currentIndex += drawable.vertices.size
 }
 
-fun DrawContext2D.drawSprite(sprite: Sprite) {
-    draw(sprite, sprite.texture.u0, sprite.texture.v0, sprite.texture.u1, sprite.texture.v1, sprite.color)
-}
+fun DrawContext2D.drawSprite(sprite: Sprite) = drawDrawable(sprite, color = Color.WHITE)
 
 fun DrawContext2D.drawGlyphs(glyphLayout: GlyphLayout, x: Float, y: Float, color: Color = Color.WHITE) {
     for (quad in glyphLayout)
         drawRect(quad.x + x, quad.y + y, quad.width, quad.height, color, 0.0f, quad.u0, quad.v0, quad.u1, quad.v1)
 }
 
-fun DrawContext2D.drawTriangle(x0: Float, y0: Float, x1: Float, y1: Float, x2: Float, y2: Float, color0: Color, color1: Color = color0, color2: Color = color0) {
+fun DrawContext2D.drawTriangle(x0: Float, y0: Float, x1: Float, y1: Float, x2: Float, y2: Float, color0: Color, color1: Color = color0, color2: Color = color0, uMin: Float = 0.0f, vMin: Float = 0.0f, uMax: Float = 1.0f, vMax: Float = 1.0f) {
     ensureSize(3, 3)
 
     val minX = min(x0, min(x1, x2))
@@ -390,9 +420,9 @@ fun DrawContext2D.drawTriangle(x0: Float, y0: Float, x1: Float, y1: Float, x2: F
     val maxX = max(x0, min(x1, x2))
     val maxY = max(y0, min(y1, y2))
 
-    vertex(minX, minY, maxX, maxY, x0, y0, color0.bits, 0.0f, 0.0f, 1.0f, 1.0f)
-    vertex(minX, minY, maxX, maxY, x1, y1, color1.bits, 0.0f, 0.0f, 1.0f, 1.0f)
-    vertex(minX, minY, maxX, maxY, x2, y2, color2.bits, 0.0f, 0.0f, 1.0f, 1.0f)
+    vertex(minX, minY, maxX, maxY, x0, y0, color0.bits, uMin, vMin, uMax, vMax)
+    vertex(minX, minY, maxX, maxY, x1, y1, color1.bits, uMin, vMin, uMax, vMax)
+    vertex(minX, minY, maxX, maxY, x2, y2, color2.bits, uMin, vMin, uMax, vMax)
 
     index(currentIndex)
     index(currentIndex + 1)

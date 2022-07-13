@@ -1,10 +1,9 @@
 package engine.graphics.ui.layout
 
-import com.cozmicgames.utils.Color
 import com.cozmicgames.utils.Disposable
+import com.cozmicgames.utils.maths.Vector2
 import engine.graphics.ui.GUI
-import engine.graphics.ui.drawCircleFilled
-import engine.graphics.ui.drawRect
+import engine.graphics.ui.widgets.panel
 
 class GUIRegion(val gui: GUI, private val ownsGUI: Boolean = false) : Disposable {
     constructor() : this(GUI(), true)
@@ -25,12 +24,14 @@ class GUIRegion(val gui: GUI, private val ownsGUI: Boolean = false) : Disposable
 
     var layoutElements: (GUI) -> Unit = {}
 
+    private val scrollAmount = Vector2()
+
     fun render() {
         gui.begin()
         gui.setLastElement(gui.absolute(x, y))
-        layoutElements(gui)
-        gui.currentCommandList.drawRect(x, y, width, height, 0, 0.0f, 1.5f, Color.RED)
-        gui.currentCommandList.drawCircleFilled(x, y, 5.0f, Color.RED)
+        gui.panel(width, height, scrollAmount, gui.skin.backgroundColor) {
+            layoutElements(gui)
+        }
         gui.end()
     }
 

@@ -7,6 +7,7 @@ import com.cozmicgames.graphics.gpu.Texture2D
 import com.cozmicgames.graphics.toTexture2D
 import com.cozmicgames.utils.Color
 import com.cozmicgames.utils.rectpack.RectPacker
+import engine.Game
 import engine.graphics.font.DrawableFont.Companion.defaultChars
 import engine.graphics.shaders.DistanceFieldShader
 
@@ -58,9 +59,7 @@ class DistanceFieldFont(val font: Font, override val drawableCharacters: String 
             break
         }
 
-        texture = image.toTexture2D {
-            setFilter(Texture.Filter.LINEAR, Texture.Filter.LINEAR)
-        }
+        texture = image.toTexture2D(Game.graphics2d.linearClampSampler)
     }
 
     override operator fun get(char: Char) = glyphs.getOrElse(char) { requireNotNull(glyphs[' ']) }

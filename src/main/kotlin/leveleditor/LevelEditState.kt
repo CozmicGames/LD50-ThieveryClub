@@ -65,7 +65,7 @@ class LevelEditState(val width: Int, val height: Int, val backgroundColor: Color
 
         val gridColor = Color(0.5f, 0.5f, 0.5f, 0.5f)
 
-        Game.renderer.render(levelCanvas.camera) {
+        Game.uiRenderer.render(levelCanvas.camera) {
             repeat(width) { tileX ->
                 repeat(height) { tileY ->
                     val isHoveredTile = tileX == mouseTileX && tileY == mouseTileY

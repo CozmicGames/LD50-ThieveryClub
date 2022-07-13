@@ -10,7 +10,7 @@ import kotlin.math.min
 
 /**
  * Adds a scrollable area to the GUI.
- * A scroll pane is a container of GUI elements that can be scrolled.
+ * A scroll area is a container of GUI elements that can be scrolled.
  *
  * @param maxWidth The maximum width of the scroll pane. If null, the width of the scroll pane is calculated automatically to fit all elements.
  * @param maxHeight The maximum height of the scroll pane. If null, the height of the scroll pane is calculated automatically to fit all elements.

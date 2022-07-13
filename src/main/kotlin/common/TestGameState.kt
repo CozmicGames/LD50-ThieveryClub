@@ -7,6 +7,7 @@ import com.cozmicgames.input.Keys
 import com.cozmicgames.utils.Color
 import engine.GameState
 import engine.graphics.ui.layout.*
+import engine.graphics.ui.widgets.label
 import engine.graphics.ui.widgets.textButton
 
 class TestGameState : GameState {
@@ -18,14 +19,25 @@ class TestGameState : GameState {
         layout.addRegion("test1") {
             with(constraints) {
                 x = absolute(0.0f)
-                y = center()
+                y = absolute(0.0f)
                 width = relative(0.2f)
                 height = relative(0.8f)
             }
 
             layoutElements = {
-                it.textButton("Hello") {
-                    println("Test1")
+                it.sameLine {
+                    it.label("Hello")
+                    it.label("World")
+                    it.label("ABSA")
+                    it.label("Snpva")
+                    it.label("av<bv")
+                    it.label("AGVASVnerg")
+                }
+
+                repeat(50) { v ->
+                    it.textButton("Hello") {
+                        println("Test$v")
+                    }
                 }
             }
         }
@@ -33,7 +45,7 @@ class TestGameState : GameState {
         layout.addRegion("test2") {
             with(constraints) {
                 x = absolute(0.0f, true)
-                y = center()
+                y = absolute(0.0f)
                 width = relative(0.2f)
                 height = relative(0.8f)
             }

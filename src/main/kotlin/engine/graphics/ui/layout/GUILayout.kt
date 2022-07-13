@@ -30,7 +30,7 @@ class GUILayout : Disposable {
             return null
 
         return guis.getOrPut(style) {
-            GUI(GUIContext(Game.renderer), requireNotNull(styles[style]))
+            GUI(GUIContext(Game.uiRenderer), requireNotNull(styles[style]))
         }
     }
 
